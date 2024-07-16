@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerCliente">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="ControllerCliente">
     <stylesheets>
-        <URL value="@/View/CSS/cliente.css"/>
+        <URL value="@/View/CSS/cliente.css" />
     </stylesheets>
+   <children>
+      <Button layoutX="81.0" layoutY="35.0" mnemonicParsing="false" onAction="#voltarMenuPrincipal" text="Voltar Menu" />
+   </children>
 </AnchorPane>

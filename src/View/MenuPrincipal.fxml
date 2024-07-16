@@ -7,15 +7,44 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerMenuPrincipal">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMenuPrincipal">
     <stylesheets>
         <URL value="@/View/CSS/menuprincipal.css" />
     </stylesheets>
    <children>
-      <Button fx:id="btnCaixa" layoutX="51.0" layoutY="14.0" mnemonicParsing="false" onAction="#entrarCaixa" prefHeight="201.0" prefWidth="201.0" text="Caixa" />
-      <Button fx:id="btnDespesas" layoutX="51.0" layoutY="217.0" mnemonicParsing="false" onAction="#entrarDespesas" prefHeight="201.0" prefWidth="201.0" text="Despesas" />
-      <Button fx:id="btnClientes" layoutX="51.0" layoutY="420.0" mnemonicParsing="false" onAction="#entrarClientes" prefHeight="201.0" prefWidth="201.0" text="Clientes" />
-      <Button fx:id="btnItens" layoutX="51.0" layoutY="623.0" mnemonicParsing="false" onAction="#entrarItens" prefHeight="201.0" prefWidth="201.0" text="Itens" />
+      <Button fx:id="btnCaixa" layoutX="63.0" layoutY="17.0" mnemonicParsing="false" onAction="#entrarCaixa" prefHeight="170.0" prefWidth="170.0" text="Caixa" textAlignment="JUSTIFY" textOverrun="CLIP">
+         <graphic>
+            <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/icons8-cashier-60.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnDespesas" layoutX="63.0" layoutY="220.0" mnemonicParsing="false" onAction="#entrarDespesas" prefHeight="170.0" prefWidth="170.0" text="Despesa">
+         <graphic>
+            <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/icons8-dinheiro-dividido-50%201.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnClientes" layoutX="63.0" layoutY="423.0" mnemonicParsing="false" onAction="#entrarClientes" prefHeight="170.0" prefWidth="170.0" text="Clientes">
+         <graphic>
+            <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/icons8-customer-100%201.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnItens" layoutX="63.0" layoutY="626.0" mnemonicParsing="false" onAction="#entrarItens" prefHeight="170.0" prefWidth="161.0" text="Itens">
+         <graphic>
+            <ImageView fitHeight="149.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/caracteristicas%201.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ImageView fitHeight="270.0" fitWidth="304.0" layoutX="821.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Logo%20Farofoto.png" />

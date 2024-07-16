@@ -1,4 +1,4 @@
-package View;
+
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,10 +18,10 @@ public class DQSApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MenuPrincipal.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
         
         Scene scene = new Scene(root);
-        stage.setTitle("Menu Principal");
+        stage.setTitle("DQS - Sistema de informação");
         stage.setScene(scene);
         stage.show();
     }
