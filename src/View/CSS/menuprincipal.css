@@ -6,4 +6,12 @@
     
 }
 
+.root {
+    -fx-background-color: #B0B9BC
+}
+
+.btnCaixa {
+     -fx-image: url()
+}
+
 
