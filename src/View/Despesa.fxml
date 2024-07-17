@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -22,7 +24,14 @@
             <Font size="62.0" />
          </font>
       </Label>
-      <Button layoutX="1075.0" layoutY="25.0" mnemonicParsing="false" onAction="#entrarRegistrarDespesa" prefHeight="168.0" prefWidth="201.0" text="Registrar Despesa" />
+      <Button layoutX="1108.0" layoutY="19.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#entrarRegistrarDespesa" prefHeight="170.0" prefWidth="170.0">
+         <graphic>
+            <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/registrarDespesaIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <TableView layoutX="14.0" layoutY="302.0" prefHeight="476.0" prefWidth="1273.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
