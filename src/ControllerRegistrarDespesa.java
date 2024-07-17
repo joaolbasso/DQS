@@ -20,24 +20,16 @@ import javafx.stage.Stage;
  *
  * @author VIDEO
  */
-public class ControllerCliente implements Initializable {
+public class ControllerRegistrarDespesa implements Initializable {
+    
+    public void voltarParaDespesa(ActionEvent event) throws IOException {
+        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
+        Scene despesaScene = new Scene(despesaView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(despesaScene);
+        window.show();
+    }
 
-    public void voltarMenuPrincipal(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
-        window.show();
-    }
-    
-    public void entrarCadastrarCliente(ActionEvent event) throws IOException {
-        Parent cadastrarClienteView = FXMLLoader.load(getClass().getResource("/View/CadastrarCliente.fxml"));
-        Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(cadastrarClienteScene);
-        window.show();
-    }
-    
     /**
      * Initializes the controller class.
      */

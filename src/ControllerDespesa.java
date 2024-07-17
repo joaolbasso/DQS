@@ -24,10 +24,16 @@ public class ControllerDespesa implements Initializable {
 
     
     public void voltarMenuPrincipal(ActionEvent event) throws IOException {
-        
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
+        Parent menuPrincipalView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
+        Scene MenuPrincipalScene = new Scene(menuPrincipalView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(MenuPrincipalScene);
+        window.show();
+    }
+    
+    public void entrarRegistrarDespesa(ActionEvent event) throws IOException {
+        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/RegistrarDespesa.fxml"));
         Scene caixaScene = new Scene(caixaView);
-        
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(caixaScene);
         window.show();

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,21 +19,14 @@ import javafx.stage.Stage;
  *
  * @author VIDEO
  */
-public class ControllerCliente implements Initializable {
+public class ControllerCadastrarCliente implements Initializable {
 
-    public void voltarMenuPrincipal(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
-        window.show();
-    }
     
-    public void entrarCadastrarCliente(ActionEvent event) throws IOException {
-        Parent cadastrarClienteView = FXMLLoader.load(getClass().getResource("/View/CadastrarCliente.fxml"));
-        Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
+    public void voltarParaClientes(ActionEvent event) throws IOException {
+        Parent clienteView = FXMLLoader.load(getClass().getResource("/View/Cliente.fxml"));
+        Scene clienteScene = new Scene(clienteView);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(cadastrarClienteScene);
+        window.setScene(clienteScene);
         window.show();
     }
     

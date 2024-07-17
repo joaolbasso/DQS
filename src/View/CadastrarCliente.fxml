@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="ControllerCadastrarCliente">
+    <stylesheets>
+        <URL value="@/View/CSS/cadastrarcliente.css" />
+    </stylesheets>
+   <children>
+      <Button layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onAction="#voltarParaClientes" prefHeight="37.0" prefWidth="46.0" text="&lt;-" />
+      <Label layoutX="201.0" layoutY="14.0" prefHeight="67.0" prefWidth="199.0" text="Cadastrar Cliente">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

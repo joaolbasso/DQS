@@ -32,6 +32,14 @@ public class ControllerItem implements Initializable {
         window.show();
     }
     
+    public void entrarCadastrarItem(ActionEvent event) throws IOException {
+        Parent cadastrarItemView = FXMLLoader.load(getClass().getResource("/View/CadastrarItem.fxml"));
+        Scene cadastrarItemScene = new Scene(cadastrarItemView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(cadastrarItemScene);
+        window.show();
+    }
+    
     /**
      * Initializes the controller class.
      */

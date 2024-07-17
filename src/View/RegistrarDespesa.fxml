@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
+    <stylesheets>
+        <URL value="@/View/CSS/registrardespesa.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="183.0" layoutY="15.0" prefHeight="48.0" prefWidth="235.0" text="Registro de Despesa">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Button layoutX="28.0" layoutY="26.0" mnemonicParsing="false" onAction="#voltarParaDespesa" prefHeight="25.0" prefWidth="44.0" text="&lt;-" />
+   </children>
+</AnchorPane>
