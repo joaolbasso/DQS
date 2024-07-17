@@ -12,36 +12,36 @@
         <URL value="@/View/CSS/menuprincipal.css" />
     </stylesheets>
    <children>
-      <Button fx:id="btnCaixa" layoutX="63.0" layoutY="17.0" mnemonicParsing="false" onAction="#entrarCaixa" prefHeight="170.0" prefWidth="170.0" text="Caixa" textAlignment="JUSTIFY" textOverrun="CLIP">
+      <Button fx:id="btnCaixa" layoutX="63.0" layoutY="36.0" mnemonicParsing="false" onAction="#entrarCaixa" prefHeight="170.0" prefWidth="170.0" textAlignment="JUSTIFY" textOverrun="CLIP">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagens/Icons/icons8-cashier-60.png" />
+                  <Image url="@Imagens/Icons/caixaIcon.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnDespesas" layoutX="63.0" layoutY="220.0" mnemonicParsing="false" onAction="#entrarDespesas" prefHeight="170.0" prefWidth="170.0" text="Despesa">
+      <Button fx:id="btnDespesas" layoutX="63.0" layoutY="217.0" mnemonicParsing="false" onAction="#entrarDespesas" prefHeight="170.0" prefWidth="170.0">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagens/Icons/icons8-dinheiro-dividido-50%201.png" />
+                  <Image url="@Imagens/Icons/despesaIcon.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnClientes" layoutX="63.0" layoutY="423.0" mnemonicParsing="false" onAction="#entrarClientes" prefHeight="170.0" prefWidth="170.0" text="Clientes">
+      <Button fx:id="btnClientes" layoutX="63.0" layoutY="400.0" mnemonicParsing="false" onAction="#entrarClientes" prefHeight="170.0" prefWidth="170.0">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagens/Icons/icons8-customer-100%201.png" />
+                  <Image url="@Imagens/Icons/ClientesIcon.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnItens" layoutX="63.0" layoutY="626.0" mnemonicParsing="false" onAction="#entrarItens" prefHeight="170.0" prefWidth="161.0" text="Itens">
+      <Button fx:id="btnItens" layoutX="63.0" layoutY="581.0" mnemonicParsing="false" onAction="#entrarItens" prefHeight="170.0" prefWidth="170.0">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagens/Icons/caracteristicas%201.png" />
+                  <Image url="@Imagens/Icons/ItensIcon.png" />
                </image>
             </ImageView>
          </graphic></Button>

@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 /**
@@ -25,6 +26,13 @@ public class DQSApp extends Application {
         Image icon = new Image("/View/Imagens/icon.png");
         stage.getIcons().add(icon);
         stage.setScene(scene);
+        
+        /*
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("Aperte q");
+        stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
+        */
+        
         stage.show();
     }
 
