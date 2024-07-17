@@ -1,5 +1,6 @@
 
 
+import javafx.scene.image.Image;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,9 +20,10 @@ public class DQSApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
-        
         Scene scene = new Scene(root);
         stage.setTitle("DQS - Sistema de informação");
+        Image icon = new Image("/View/Imagens/icon.png");
+        stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
     }
