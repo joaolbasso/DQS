@@ -24,7 +24,7 @@
             <Font size="62.0" />
          </font>
       </Label>
-      <Button layoutX="1108.0" layoutY="19.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#entrarRegistrarDespesa" prefHeight="170.0" prefWidth="170.0">
+      <Button fx:id="btnRegistrarDespesa" layoutX="1108.0" layoutY="19.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#entrarRegistrarDespesa" prefHeight="170.0" prefWidth="170.0">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
                <image>

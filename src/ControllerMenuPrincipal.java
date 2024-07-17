@@ -35,10 +35,8 @@ public class ControllerMenuPrincipal implements Initializable {
     
     @FXML
     public void entrarCaixa(ActionEvent event) throws IOException {
-        
         Parent caixaView = FXMLLoader.load(getClass().getResource("/View/Caixa.fxml"));
         Scene caixaScene = new Scene(caixaView);
-        
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(caixaScene);
         window.show();
@@ -46,31 +44,28 @@ public class ControllerMenuPrincipal implements Initializable {
     
     @FXML
     public void entrarDespesas(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        
+        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
+        Scene despesaScene = new Scene(despesaView);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
+        window.setScene(despesaScene);
         window.show();
     }
     
     @FXML
     public void entrarClientes(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/Cliente.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        
+        Parent clienteView = FXMLLoader.load(getClass().getResource("/View/Cliente.fxml"));
+        Scene clienteScene = new Scene(clienteView);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
+        window.setScene(clienteScene);
         window.show();
     }
     
     @FXML
     public void entrarItens(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/Item.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        
+        Parent itemView = FXMLLoader.load(getClass().getResource("/View/Item.fxml"));
+        Scene itemScene = new Scene(itemView);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
+        window.setScene(itemScene);
         window.show();
     }
     
