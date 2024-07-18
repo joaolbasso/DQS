@@ -99,12 +99,12 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <TextField fx:id="txtfldLogradouro1" layoutX="300.0" layoutY="440.0" prefHeight="35.0" prefWidth="61.0">
+            <TextField fx:id="txtfldNumero" layoutX="300.0" layoutY="440.0" prefHeight="35.0" prefWidth="61.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <TextField fx:id="txtfldTelefone12" layoutX="18.0" layoutY="514.0" prefHeight="35.0" prefWidth="274.0">
+            <TextField fx:id="txtfldComplemento" layoutX="18.0" layoutY="514.0" prefHeight="35.0" prefWidth="274.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
@@ -124,7 +124,7 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="txtfldTelefone121" layoutX="300.0" layoutY="514.0" prefHeight="35.0" prefWidth="259.0">
+            <TextField fx:id="txtfldBairro" layoutX="300.0" layoutY="514.0" prefHeight="35.0" prefWidth="259.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>

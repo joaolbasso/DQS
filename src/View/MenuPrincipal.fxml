@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -22,6 +23,9 @@
                </image>
             </ImageView>
          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button fx:id="btnDespesas" layoutX="63.0" layoutY="231.0" mnemonicParsing="false" onAction="#entrarDespesas" prefHeight="170.0" prefWidth="170.0">
          <graphic>
@@ -30,7 +34,10 @@
                   <Image url="@Imagens/Icons/despesaIcon.png" />
                </image>
             </ImageView>
-         </graphic></Button>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button fx:id="btnClientes" layoutX="63.0" layoutY="414.0" mnemonicParsing="false" onAction="#entrarClientes" prefHeight="170.0" prefWidth="170.0">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
@@ -38,7 +45,10 @@
                   <Image url="@Imagens/Icons/ClientesIcon.png" />
                </image>
             </ImageView>
-         </graphic></Button>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button fx:id="btnItens" layoutX="63.0" layoutY="595.0" mnemonicParsing="false" onAction="#entrarItens" prefHeight="170.0" prefWidth="170.0">
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true">
@@ -46,7 +56,10 @@
                   <Image url="@Imagens/Icons/ItensIcon.png" />
                </image>
             </ImageView>
-         </graphic></Button>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <ImageView fitHeight="270.0" fitWidth="304.0" layoutX="821.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Logo%20Farofoto.png" />
