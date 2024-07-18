@@ -18,7 +18,6 @@
         <URL value="@/View/CSS/item.css" />
     </stylesheets>
    <children>
-      <Button layoutX="40.0" layoutY="35.0" mnemonicParsing="false" onAction="#voltarMenuPrincipal" prefHeight="43.0" prefWidth="51.0" text="&lt;-" />
       <Label layoutX="594.0" layoutY="29.0" prefHeight="90.0" prefWidth="133.0" text="Itens">
          <font>
             <Font size="62.0" />
@@ -54,5 +53,11 @@
       </Label>
       <TextField layoutX="282.0" layoutY="249.0" prefHeight="43.0" prefWidth="806.0" promptText="Pesquise aqui..." />
       <Button layoutX="1121.0" layoutY="249.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="163.0" text="Consultar" />
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="33.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagens/Icons/voltarIcon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="33.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarMenuPrincipal" opacity="0.0" prefHeight="43.0" prefWidth="42.0" />
    </children>
 </AnchorPane>

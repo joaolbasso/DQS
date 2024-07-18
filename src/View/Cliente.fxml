@@ -18,7 +18,12 @@
         <URL value="@/View/CSS/cliente.css" />
     </stylesheets>
    <children>
-      <Button layoutX="23.0" layoutY="26.0" mnemonicParsing="false" onAction="#voltarMenuPrincipal" prefHeight="43.0" prefWidth="51.0" text="&lt;-" />
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="23.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagens/Icons/voltarIcon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="23.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarMenuPrincipal" opacity="0.0" prefHeight="43.0" prefWidth="42.0" />
       <TableView layoutX="14.0" layoutY="310.0" prefHeight="476.0" prefWidth="1273.0">
          <columns>
             <TableColumn prefWidth="75.0" text="C1" />

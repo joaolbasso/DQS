@@ -2,13 +2,20 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="ControllerCaixa">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCaixa">
     <stylesheets>
         <URL value="@View/CSS/caixa.css" />
     </stylesheets>
    <children>
-      <Button layoutX="26.0" layoutY="31.0" mnemonicParsing="false" onAction="#voltarMenuPrincipal" text="Voltar Menu" />
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="43.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagens/Icons/voltarIcon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarMenuPrincipal" opacity="0.0" prefHeight="43.0" prefWidth="42.0" />
    </children>
 </AnchorPane>
