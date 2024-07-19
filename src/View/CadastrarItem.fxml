@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,9 +28,85 @@
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarParaItens" opacity="0.0" prefHeight="43.0" prefWidth="42.0" />
-      <AnchorPane layoutX="43.0" layoutY="108.0" prefHeight="691.0" prefWidth="513.0" />
-      <Button layoutX="126.0" layoutY="706.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" text="Cadastrar Cliente" />
-      <Button layoutX="310.0" layoutY="706.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" text="Limpar Campos" />
+      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarParaItens" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <AnchorPane layoutX="10.0" layoutY="108.0" prefHeight="685.0" prefWidth="582.0">
+         <children>
+            <Button fx:id="btnCadastrarItem" layoutX="117.0" layoutY="597.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="54.0" prefWidth="164.0" text="Cadastrar Item" />
+            <Button fx:id="btnLimparCampos" layoutX="301.0" layoutY="597.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="54.0" prefWidth="164.0" text="Limpar Campos" />
+            <TextField fx:id="txtfldNomeItem" layoutX="16.0" layoutY="72.0" prefHeight="54.0" prefWidth="550.0" promptText="Digite o NOME do item aqui...">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="17.0" layoutY="37.0" prefHeight="35.0" prefWidth="175.0" text="Nome do item *">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtfldPrecoCusto" layoutX="17.0" layoutY="187.0" prefHeight="54.0" prefWidth="250.0">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="18.0" layoutY="152.0" prefHeight="35.0" prefWidth="182.0" text="Preço de Custo *">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtfldPrecoVenda" layoutX="316.0" layoutY="187.0" prefHeight="54.0" prefWidth="250.0">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="316.0" layoutY="152.0" prefHeight="35.0" prefWidth="190.0" text="Preço de Venda *">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dtpckrDataCompra" layoutX="14.0" layoutY="289.0" prefHeight="54.0" prefWidth="250.0" />
+            <Label layoutX="14.0" layoutY="254.0" prefHeight="35.0" prefWidth="190.0" text="Data da Compra *">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="spnrQuantidade" layoutX="288.0" layoutY="289.0" prefHeight="54.0" prefWidth="88.0" />
+            <Label layoutX="282.0" layoutY="254.0" prefHeight="35.0" prefWidth="100.0" text="Quantidade:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <RadioButton layoutX="419.0" layoutY="289.0" mnemonicParsing="false" selected="true" text="Produto">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <RadioButton layoutX="419.0" layoutY="316.0" mnemonicParsing="false" text="Serviço">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <TextField fx:id="txtfldDescricao" layoutX="16.0" layoutY="401.0" prefHeight="140.0" prefWidth="550.0">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <Label layoutX="17.0" layoutY="366.0" prefHeight="35.0" prefWidth="190.0" text="Descrição:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

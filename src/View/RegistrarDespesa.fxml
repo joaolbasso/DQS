@@ -53,9 +53,9 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <Label layoutX="39.0" layoutY="17.0" prefHeight="25.0" prefWidth="141.0" text="Nome da Despesa *">
+            <Label layoutX="39.0" layoutY="7.0" prefHeight="35.0" prefWidth="215.0" text="Nome da Despesa *">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <TextField fx:id="txtfldValor" layoutX="39.0" layoutY="130.0" prefHeight="43.0" prefWidth="164.0">
@@ -66,9 +66,9 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <Label layoutX="39.0" layoutY="105.0" prefHeight="25.0" prefWidth="141.0" text="Valor *">
+            <Label layoutX="39.0" layoutY="95.0" prefHeight="35.0" prefWidth="72.0" text="Valor *">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <Label layoutX="251.0" layoutY="109.0" prefHeight="17.0" prefWidth="116.0" text="Recorrente (em dias)" wrapText="true" />
@@ -93,9 +93,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <Label layoutX="39.0" layoutY="198.0" prefHeight="25.0" prefWidth="174.0" text="Selecionar Beneficiário *">
+            <Label layoutX="39.0" layoutY="188.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Beneficiário *">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <ChoiceBox fx:id="cmbboxBeneficiario" layoutX="39.0" layoutY="223.0" prefHeight="43.0" prefWidth="302.0" />
@@ -114,14 +114,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </DatePicker>
-            <Label layoutX="39.0" layoutY="291.0" prefHeight="25.0" prefWidth="174.0" text="Data de Pagamento:">
+            <Label layoutX="39.0" layoutY="281.0" prefHeight="35.0" prefWidth="233.0" text="Data de Pagamento:">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="312.0" layoutY="291.0" prefHeight="25.0" prefWidth="174.0" text="Data de Vencimento:">
+            <Label layoutX="312.0" layoutY="281.0" prefHeight="35.0" prefWidth="233.0" text="Data de Vencimento:">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <TextField fx:id="txtfldDescricao" layoutX="39.0" layoutY="409.0" prefHeight="140.0" prefWidth="506.0">
@@ -129,9 +129,9 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <Label layoutX="39.0" layoutY="384.0" prefHeight="25.0" prefWidth="174.0" text="Descrição:">
+            <Label layoutX="39.0" layoutY="374.0" prefHeight="25.0" prefWidth="174.0" text="Descrição:">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <Label layoutX="457.0" layoutY="109.0" prefHeight="17.0" prefWidth="116.0" wrapText="true" />
