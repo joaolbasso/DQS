@@ -30,6 +30,14 @@ public class ControllerCadastrarItem implements Initializable {
         window.show();
     }
     
+    public void cadastrarItem(ActionEvent event) throws IOException {
+        System.out.println("CADASTRADO");
+    }
+    
+    public void limparCampos(ActionEvent event) throws IOException {
+        System.out.println("CADASTRADO");
+    }
+    
     /**
      * Initializes the controller class.
      */
