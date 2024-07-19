@@ -5,3 +5,8 @@
 .mainFxmlClass {
 
 }
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url(../Fontes/OpenSans.ttf);
+}

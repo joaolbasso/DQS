@@ -29,6 +29,14 @@ public class ControllerRegistrarDespesa implements Initializable {
         window.setScene(despesaScene);
         window.show();
     }
+    
+    public void entrarCadastrarBeneficiario(ActionEvent event) throws IOException {
+        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
+        Scene despesaScene = new Scene(despesaView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(despesaScene);
+        window.show();
+    }
 
     /**
      * Initializes the controller class.
