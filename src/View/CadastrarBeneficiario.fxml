@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="ControllerCadastrarBeneficiario">
+<AnchorPane id="AnchorPane" prefHeight="307.0" prefWidth="532.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCadastrarBeneficiario">
     <stylesheets>
         <URL value="@/View/CSS/cadastrarbeneficiario.css" />
     </stylesheets>
+   <children>
+      <Label layoutX="48.0" layoutY="118.0" text="Nome Beneficiário*">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtfldNomeBeneficiario" layoutX="48.0" layoutY="153.0" prefHeight="35.0" prefWidth="416.0" />
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="27.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagens/Icons/voltarIcon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="27.0" layoutY="21.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarParaDespesa" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="147.0" layoutY="25.0" text="Cadastro de Beneficiário">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnRegistrarDespesa" layoutX="92.0" layoutY="228.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Registrar Beneficiário">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnLimparCampos" layoutX="276.0" layoutY="228.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="54.0" prefWidth="164.0" text="Limpar Campos">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
 </AnchorPane>
