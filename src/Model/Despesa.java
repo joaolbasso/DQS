@@ -10,10 +10,10 @@ public class Despesa {
     private int id_despesa;
     private Double valor_despesa;
     private String descricao_despesa;
-    private int recorrencia;
-    private Date data_vencimento;
-    private Date data_pagamento;
-
+    private int recorrencia_despesa;
+    private Date data_vencimento_despesa;
+    private Date data_pagamento_despesa;
+    
     public int getId_despesa() {
         return id_despesa;
     }
@@ -39,27 +39,27 @@ public class Despesa {
     }
 
     public int getRecorrencia() {
-        return recorrencia;
+        return recorrencia_despesa;
     }
 
     public void setRecorrencia(int recorrencia) {
-        this.recorrencia = recorrencia;
+        this.recorrencia_despesa = recorrencia;
     }
 
     public Date getData_vencimento() {
-        return data_vencimento;
+        return data_vencimento_despesa;
     }
 
     public void setData_vencimento(Date data_vencimento) {
-        this.data_vencimento = data_vencimento;
+        this.data_vencimento_despesa = data_vencimento;
     }
 
     public Date getData_pagamento() {
-        return data_pagamento;
+        return data_pagamento_despesa;
     }
 
     public void setData_pagamento(Date data_pagamento) {
-        this.data_pagamento = data_pagamento;
+        this.data_pagamento_despesa = data_pagamento;
     }
     
     

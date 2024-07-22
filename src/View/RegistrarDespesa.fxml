@@ -36,12 +36,12 @@
          </cursor></Button>
       <AnchorPane layoutX="9.0" layoutY="116.0" prefHeight="674.0" prefWidth="584.0">
          <children>
-            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" text="Registrar Despesa">
+            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Registrar Despesa">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnLimparCampos" layoutX="298.0" layoutY="590.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" text="Limpar Campos">
+            <Button fx:id="btnLimparCampos" layoutX="298.0" layoutY="590.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="54.0" prefWidth="164.0" text="Limpar Campos">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -73,7 +73,7 @@
                </font>
             </Label>
             <Label layoutX="251.0" layoutY="109.0" prefHeight="17.0" prefWidth="116.0" text="Recorrente (em dias)" wrapText="true" />
-            <Spinner fx:id="spnrRecorrente" layoutX="269.0" layoutY="130.0" prefHeight="43.0" prefWidth="72.0">
+            <Spinner fx:id="spnrRecorrente" editable="true" layoutX="269.0" layoutY="130.0" prefHeight="43.0" prefWidth="72.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
