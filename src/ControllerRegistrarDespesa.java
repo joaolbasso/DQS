@@ -71,7 +71,9 @@ public class ControllerRegistrarDespesa implements Initializable {
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
-        System.out.println("LIMPOU CAMPOS");
+        txtfldNomeDespesa.setText("");
+        txtfldValor.setText("");
+        txtfldDescricao.setText("");
     }
 
     /**
