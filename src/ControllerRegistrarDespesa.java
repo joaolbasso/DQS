@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +23,11 @@ import javafx.stage.Stage;
  * @author VIDEO
  */
 public class ControllerRegistrarDespesa implements Initializable {
+    
+    @FXML
+    private ComboBox<String> cmbboxBeneficiario;
+    private String[] beneficiarios = {"LUZ", "AGUA", "INTERNET"}; //Essa collection virá do Banco de DADOS
+    
     
     public void voltarParaDespesa(ActionEvent event) throws IOException {
         Parent despesaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
@@ -43,7 +50,7 @@ public class ControllerRegistrarDespesa implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        cmbboxBeneficiario.getItems().addAll(beneficiarios);
     }    
     
 }
