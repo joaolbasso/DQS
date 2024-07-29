@@ -1,6 +1,9 @@
 package Model;
 
+@Entity
 public class Cliente {
+    @Id
+    @GeneratedValue
     private int id_cliente;
     private String nome_cliente;
     private String telefone;
