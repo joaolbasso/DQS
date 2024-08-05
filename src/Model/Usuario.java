@@ -1,8 +1,34 @@
 package Model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Usuario {
+    @Id
+    @GeneratedValue
+    private int id_usuario;
     private String usuario;
     private String senha;
 
+    public Usuario() {
+    }
+
+    public Usuario(String usuario, String senha) {
+        this.usuario = usuario;
+        this.senha = senha;
+    }
+    
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    
     public String getUsuario() {
         return usuario;
     }
