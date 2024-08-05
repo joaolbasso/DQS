@@ -12,6 +12,7 @@
       <property name="hibernate.show_sql" value="true"/>
       <!-- Show SQL in console -->
       <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto">update</property>
       <!-- Show SQL formatted -->
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/DQS"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
