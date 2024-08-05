@@ -13,6 +13,17 @@ public class Item_caixa {
     private String descricao;
     private char tipo_operacao;
     private String metodo_pagamento;
+    private Caixa caixa;
+
+    public Caixa getCaixa() {
+        return caixa;
+    }
+
+    public void setCaixa(Caixa caixa) {
+        this.caixa = caixa;
+    }
+    
+    
 
     public int getId_item_caixa() {
         return id_item_caixa;

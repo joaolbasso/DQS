@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author VIDEO
@@ -8,6 +10,17 @@ public class Item_venda {
     private int id_item_venda;
     private int quantidade;
     private Double valor_unitario;
+    private ArrayList<Item> itens_venda;
+
+    public ArrayList<Item> getItens_venda() {
+        return itens_venda;
+    }
+
+    public void setItens_venda(ArrayList<Item> itens_venda) {
+        this.itens_venda = itens_venda;
+    }
+    
+    
 
     public int getId_item_venda() {
         return id_item_venda;

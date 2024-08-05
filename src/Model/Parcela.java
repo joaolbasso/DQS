@@ -12,7 +12,18 @@ public class Parcela {
     private Date data_pagamento;
     private Date data_vencimento;
     private String metodo_pagamento;
+    private Venda venda;
 
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    
+    
     public int getId_parcela() {
         return id_parcela;
     }

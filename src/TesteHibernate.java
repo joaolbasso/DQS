@@ -9,7 +9,7 @@ public class TesteHibernate {
         EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("DQSPU");
         EntityManager gerente = fabrica.createEntityManager();
         
-        Usuario joao = new Usuario("joaolbasso", "joao12345");
+        Usuario joao = new Usuario("joaolbasso", "joao1234567");
         
         gerente.getTransaction().begin();
         gerente.persist(joao);

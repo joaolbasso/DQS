@@ -14,6 +14,7 @@ public class Despesa {
     private int recorrencia_despesa;
     private Date data_vencimento_despesa;
     private Date data_pagamento_despesa;
+    private Beneficiario beneficiario;
     
     public int getId_despesa() {
         return id_despesa;
