@@ -1,13 +1,11 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Venda {
     private int id_venda;
     private Double valor_venda;
     private Date data_venda;
-    private ArrayList<Parcela> parcela;
     private Cliente cliente;
 
     public Cliente getCliente() {
@@ -18,16 +16,6 @@ public class Venda {
         this.cliente = cliente;
     }
     
-    
-
-    public ArrayList<Parcela> getParcela() {
-        return parcela;
-    }
-
-    public void setParcela(ArrayList<Parcela> parcela) {
-        this.parcela = parcela;
-    }
-
     public int getId_venda() {
         return id_venda;
     }

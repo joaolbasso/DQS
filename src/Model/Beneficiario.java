@@ -1,9 +1,5 @@
 package Model;
 
-/**
- *
- * @author VIDEO
- */
 public class Beneficiario {
     private int id_beneficiario;
     private String nome_beneficiario;

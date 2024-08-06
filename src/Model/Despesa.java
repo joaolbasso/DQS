@@ -15,6 +15,49 @@ public class Despesa {
     private Date data_vencimento_despesa;
     private Date data_pagamento_despesa;
     private Beneficiario beneficiario;
+    private Item_caixa item_caixa;
+
+    public int getRecorrencia_despesa() {
+        return recorrencia_despesa;
+    }
+
+    public void setRecorrencia_despesa(int recorrencia_despesa) {
+        this.recorrencia_despesa = recorrencia_despesa;
+    }
+
+    public Date getData_vencimento_despesa() {
+        return data_vencimento_despesa;
+    }
+
+    public void setData_vencimento_despesa(Date data_vencimento_despesa) {
+        this.data_vencimento_despesa = data_vencimento_despesa;
+    }
+
+    public Date getData_pagamento_despesa() {
+        return data_pagamento_despesa;
+    }
+
+    public void setData_pagamento_despesa(Date data_pagamento_despesa) {
+        this.data_pagamento_despesa = data_pagamento_despesa;
+    }
+
+    public Beneficiario getBeneficiario() {
+        return beneficiario;
+    }
+
+    public void setBeneficiario(Beneficiario beneficiario) {
+        this.beneficiario = beneficiario;
+    }
+
+    public Item_caixa getItem_caixa() {
+        return item_caixa;
+    }
+
+    public void setItem_caixa(Item_caixa item_caixa) {
+        this.item_caixa = item_caixa;
+    }
+    
+    
     
     public int getId_despesa() {
         return id_despesa;

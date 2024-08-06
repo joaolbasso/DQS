@@ -14,6 +14,17 @@ public class Item_caixa {
     private char tipo_operacao;
     private String metodo_pagamento;
     private Caixa caixa;
+    private Pagamento pagamento;
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+    
+    
 
     public Caixa getCaixa() {
         return caixa;

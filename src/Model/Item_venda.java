@@ -1,27 +1,28 @@
 package Model;
 
-import java.util.ArrayList;
-
-/**
- *
- * @author VIDEO
- */
 public class Item_venda {
     private int id_item_venda;
     private int quantidade;
     private Double valor_unitario;
-    private ArrayList<Item> itens_venda;
+    private Venda venda;
+    private Item item; //Serviço ou Produto
 
-    public ArrayList<Item> getItens_venda() {
-        return itens_venda;
+    public Venda getVenda() {
+        return venda;
     }
 
-    public void setItens_venda(ArrayList<Item> itens_venda) {
-        this.itens_venda = itens_venda;
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
     
-    
-
     public int getId_item_venda() {
         return id_item_venda;
     }
@@ -45,7 +46,5 @@ public class Item_venda {
     public void setValor_unitario(Double valor_unitario) {
         this.valor_unitario = valor_unitario;
     }
-    
-    
     
 }

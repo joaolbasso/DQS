@@ -12,7 +12,16 @@ public class Pagamento {
     private String metodo_pagamento;
     private Date data_pagamento;
     private Double valor_pagamento;
+    private Parcela parcela;
 
+    public Parcela getParcela() {
+        return parcela;
+    }
+
+    public void setParcela(Parcela parcela) {
+        this.parcela = parcela;
+    }
+    
     public int getId_pagamento() {
         return id_pagamento;
     }

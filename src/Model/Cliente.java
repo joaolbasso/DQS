@@ -12,7 +12,6 @@ public class Cliente {
     private String numero;
     private String complemento;
     private Cidade cidade;
-    private Estado estado;
 
     public int getId_cliente() {
         return id_cliente;
@@ -94,15 +93,4 @@ public class Cliente {
         this.cidade = cidade;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    
-    
-    
 }

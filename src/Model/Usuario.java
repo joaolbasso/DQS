@@ -1,15 +1,21 @@
 package Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Usuario {
+    
     @Id
     @GeneratedValue
     private int id_usuario;
+    
+    @Column(nullable = false, unique = true)
     private String usuario;
+    
+    @Column(nullable = false)
     private String senha;
 
     public Usuario() {

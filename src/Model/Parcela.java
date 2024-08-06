@@ -9,7 +9,6 @@ import java.util.Date;
 public class Parcela {
     private int id_parcela;
     private Double valor_parcela;
-    private Date data_pagamento;
     private Date data_vencimento;
     private String metodo_pagamento;
     private Venda venda;
@@ -21,8 +20,6 @@ public class Parcela {
     public void setVenda(Venda venda) {
         this.venda = venda;
     }
-
-    
     
     public int getId_parcela() {
         return id_parcela;
@@ -38,14 +35,6 @@ public class Parcela {
 
     public void setValor_parcela(Double valor_parcela) {
         this.valor_parcela = valor_parcela;
-    }
-
-    public Date getData_pagamento() {
-        return data_pagamento;
-    }
-
-    public void setData_pagamento(Date data_pagamento) {
-        this.data_pagamento = data_pagamento;
     }
 
     public Date getData_vencimento() {
