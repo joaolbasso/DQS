@@ -1,28 +1,21 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author JOAO
- */
 public class Caixa {
     
     private int id_caixa;
     private Date data_hora_abertura;
     private Date data_hora_fechamento;
-    private ArrayList<Item_caixa> itens_caixa;
+    private Usuario usuario_que_abriu;
 
-    public ArrayList<Item_caixa> getItens_caixa() {
-        return itens_caixa;
+    public Usuario getUsuario_que_abriu() {
+        return usuario_que_abriu;
     }
 
-    public void setItens_caixa(ArrayList<Item_caixa> itens_caixa) {
-        this.itens_caixa = itens_caixa;
+    public void setUsuario_que_abriu(Usuario usuario_que_abriu) {
+        this.usuario_que_abriu = usuario_que_abriu;
     }
-    
-    
 
     public int getId_caixa() {
         return id_caixa;

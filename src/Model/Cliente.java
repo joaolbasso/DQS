@@ -11,8 +11,8 @@ public class Cliente {
     private String cep;
     private String numero;
     private String complemento;
-    private String cidade;
-    private String estado;
+    private Cidade cidade;
+    private Estado estado;
 
     public int getId_cliente() {
         return id_cliente;
@@ -86,21 +86,23 @@ public class Cliente {
         this.complemento = complemento;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    
     
     
 }
