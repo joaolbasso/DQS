@@ -1,16 +1,36 @@
 package Model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
+@Entity
 public class Cliente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cliente;
+    
+    @Column(nullable = false)
     private String nome_cliente;
+    
+    @Column(nullable = false)
     private String telefone;
+    
+    @Column(nullable = false, unique = true)
     private String cpf;
+    
     private String logradouro;
     private String bairro;
     private String cep;
     private String numero;
     private String complemento;
+    
+    @javax.persistence.OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
     public int getId_cliente() {
