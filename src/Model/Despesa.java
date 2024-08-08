@@ -1,20 +1,41 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
-/**
- *
- * @author VIDEO
- */
-
-public class Despesa {
+@Entity
+public class Despesa implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_despesa;
+    
+    @Column(nullable = false)
     private Double valor_despesa;
+    
     private String descricao_despesa;
     private int recorrencia_despesa;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_vencimento_despesa;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_pagamento_despesa;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_beneficiario")
     private Beneficiario beneficiario;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_item_caixa")
     private Item_caixa item_caixa;
 
     public int getRecorrencia_despesa() {

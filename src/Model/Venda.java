@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Venda {
@@ -7,6 +8,17 @@ public class Venda {
     private Double valor_venda;
     private Date data_venda;
     private Cliente cliente;
+    private ArrayList<Item_venda> itens_venda;
+
+    public ArrayList<Item_venda> getItens_venda() {
+        return itens_venda;
+    }
+
+    public void setItens_venda(ArrayList<Item_venda> itens_venda) {
+        this.itens_venda = itens_venda;
+    }
+    
+    
 
     public Cliente getCliente() {
         return cliente;

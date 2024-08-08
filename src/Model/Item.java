@@ -1,16 +1,28 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
 
-/**
- *
- * @author VIDEO
- */
-public class Item {
+@Entity
+public class Item implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item;
+    
+    @Column(nullable = false)
     private String nome_item;
     private String descricao_item;
+    
+    @Column(nullable = false)
     private Double valor_item;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_preco_item;
     private int quantidade;
     private Double preco_custo_item;

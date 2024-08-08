@@ -2,10 +2,6 @@ package Model;
 
 import java.util.Date;
 
-/**
- *
- * @author VIDEO
- */
 public class Item_caixa {
     private int id_item_caixa;
     private Double valor;

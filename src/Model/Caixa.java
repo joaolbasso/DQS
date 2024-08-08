@@ -1,12 +1,30 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
-public class Caixa {
-    
+@Entity
+public class Caixa implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_caixa;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_hora_abertura;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_hora_fechamento;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario_que_abriu;
 
     public Usuario getUsuario_que_abriu() {
