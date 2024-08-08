@@ -3,6 +3,9 @@
   <persistence-unit name="DQSPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>Model.Usuario</class>
+    <class>Model.Cidade</class>
+    <class>Model.Cliente</class>
+    <class>Model.Estado</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <!-- DB Driver -->
@@ -12,7 +15,7 @@
       <!-- DB User -->
       <property name="javax.persistence.jdbc.password" value="admin"/>
       <!-- DB Password -->
-      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
       <!-- DB Dialect -->
       <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
       <!-- create / create-drop / update -->
@@ -20,7 +23,7 @@
       <!-- Show SQL in console -->
       <property name="hibernate.format_sql" value="true"/>
       <!-- Show SQL formatted -->
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

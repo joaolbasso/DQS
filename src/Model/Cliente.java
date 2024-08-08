@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cliente;
@@ -32,6 +33,35 @@ public class Cliente {
     @javax.persistence.OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
+
+    public Cliente(String nome_cliente, String telefone, String cpf) {
+        this.nome_cliente = nome_cliente;
+        this.telefone = telefone;
+        this.cpf = cpf;
+    }
+
+    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento, Cidade cidade) {
+        this.nome_cliente = nome_cliente;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cidade = cidade;
+    }
+    
+    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento) {
+        this.nome_cliente = nome_cliente;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.numero = numero;
+        this.complemento = complemento;
+    }
 
     public int getId_cliente() {
         return id_cliente;

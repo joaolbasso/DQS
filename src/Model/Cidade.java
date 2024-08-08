@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class Cidade {
+public class Cidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cidade;
@@ -23,6 +24,14 @@ public class Cidade {
     @JoinColumn(name = "id_estado")
     private Estado estado;
 
+    public Cidade(int id_cidade, String nome_cidade, Estado estado) {
+        this.id_cidade = id_cidade;
+        this.nome_cidade = nome_cidade;
+        this.estado = estado;
+    }
+
+    
+    
     public int getId_cidade() {
         return id_cidade;
     }
