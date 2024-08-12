@@ -5,10 +5,8 @@ import Model.Item;
 public class ItemDAO extends AbstractDAO {
     
     public void insert(Item item) {
-        emf = EntityManagerFactorySingleton.getInstance();
-        em = null; 
-        
         try {
+            emf = EntityManagerFactorySingleton.getInstance();
             em = emf.createEntityManager();
             em.getTransaction().begin();
             em.persist(item);

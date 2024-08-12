@@ -16,6 +16,13 @@ public class Beneficiario implements Serializable {
     @Column(nullable = false, unique = true)
     private String nome_beneficiario;
 
+    public Beneficiario() {
+    }
+
+    public Beneficiario(String nome_beneficiario) {
+        this.nome_beneficiario = nome_beneficiario;
+    }
+
     public int getId_beneficiario() {
         return id_beneficiario;
     }
