@@ -86,7 +86,7 @@
                </font>
             </Label>
             <Spinner fx:id="spnrQuantidade" layoutX="288.0" layoutY="289.0" prefHeight="54.0" prefWidth="88.0" />
-            <RadioButton layoutX="419.0" layoutY="289.0" mnemonicParsing="false" selected="true" text="Produto">
+            <RadioButton fx:id="rdbtnProduto" layoutX="419.0" layoutY="289.0" mnemonicParsing="false" selected="true" text="Produto">
                <font>
                   <Font size="16.0" />
                </font>
@@ -94,7 +94,7 @@
                   <ToggleGroup fx:id="tipoItem" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="419.0" layoutY="316.0" mnemonicParsing="false" text="Serviço" toggleGroup="$tipoItem">
+            <RadioButton fx:id="rdbtnServico" layoutX="419.0" layoutY="316.0" mnemonicParsing="false" text="Serviço" toggleGroup="$tipoItem">
                <font>
                   <Font size="16.0" />
                </font>

@@ -1,4 +1,5 @@
-package Hibernate;
+package DAO;
+
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

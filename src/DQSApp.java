@@ -1,5 +1,6 @@
 
 
+import DAO.EntityManagerFactorySingleton;
 import javafx.scene.image.Image;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +34,12 @@ public class DQSApp extends Application {
         */
         
         stage.show();
+    }
+    
+    @Override
+    public void stop() {
+        EntityManagerFactorySingleton.close();
+        System.out.println("Aplicação encerrada");
     }
 
     /**

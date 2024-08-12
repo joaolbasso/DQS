@@ -1,11 +1,21 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class Item_caixa {
+//@Entity
+public class Item_caixa implements Serializable {
+  // @Id
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item_caixa;
+  //  @Column(nullable = false)
     private Double valor;
-    private Date data_hota;
+    private Date data_hora;
     private String descricao;
     private char tipo_operacao;
     private String metodo_pagamento;
@@ -48,12 +58,12 @@ public class Item_caixa {
         this.valor = valor;
     }
 
-    public Date getData_hota() {
-        return data_hota;
+    public Date getData_hora() {
+        return data_hora;
     }
 
-    public void setData_hota(Date data_hota) {
-        this.data_hota = data_hota;
+    public void setData_hora(Date data_hora) {
+        this.data_hora = data_hora;
     }
 
     public String getDescricao() {
