@@ -10,7 +10,7 @@ package DAO;
  */
 public class BeneficiarioDAO implements FuncoesDAO {
 
-    @Override
+        @Override
     public void insert() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

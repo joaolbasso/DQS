@@ -1,4 +1,5 @@
 package DAO;
+
 public interface FuncoesDAO {
     void insert();
     void update();
