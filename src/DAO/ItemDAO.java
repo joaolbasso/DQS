@@ -1,15 +1,12 @@
 package DAO;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import Model.Item;
 
-public class ItemDAO {
-
+public class ItemDAO extends AbstractDAO {
     
     public void insert(Item item) {
-        EntityManagerFactory emf = EntityManagerFactorySingleton.getInstance();
-        EntityManager em = null; 
+        emf = EntityManagerFactorySingleton.getInstance();
+        em = null; 
         
         try {
             em = emf.createEntityManager();

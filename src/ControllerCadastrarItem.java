@@ -58,8 +58,8 @@ public class ControllerCadastrarItem implements Initializable {
     public void cadastrarItem(ActionEvent event) throws IOException {
         //Ver sobre clicar no botão com campos vazios, fazer os campos não receberem caracteres inválidos
         Item itemSalvar = criarItem();
-        ItemDAO item = new ItemDAO();
-        item.insert(itemSalvar);
+        ItemDAO itemDAO = new ItemDAO();
+        itemDAO.insert(itemSalvar);
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
