@@ -19,6 +19,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 public class ControllerCadastrarItem implements Initializable {
     
@@ -55,23 +56,23 @@ public class ControllerCadastrarItem implements Initializable {
     }
     
     public void cadastrarItem(ActionEvent event) throws IOException {
-        /*
-        System.out.println(itemSalvar.getNome_item());
-        System.out.println(itemSalvar.getPreco_custo_item());
-        System.out.println(itemSalvar.getValor_item());
-        System.out.println(itemSalvar.getData_preco_item());
-        System.out.println(itemSalvar.getQuantidade());
-        System.out.println(itemSalvar.getTipo_item());
-        System.out.println(itemSalvar.getDescricao_item());
-        */
+        //Ver sobre clicar no botão com campos vazios, fazer os campos não receberem caracteres inválidos
         Item itemSalvar = criarItem();
         ItemDAO item = new ItemDAO();
         item.insert(itemSalvar);
-        System.out.println("CADASTRADO");
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
-        System.out.println("LIMPOU");
+        //Você tem certeza que deseja limpar os campos? CRIAR POPUP COM SIM NAO E ESSA PERGUNTA
+        int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (resposta == JOptionPane.YES_OPTION) {
+            txtfldNomeItem.setText("");
+            txtfldPrecoCusto.setText("");
+            txtfldPrecoVenda.setText("");
+            txtfldDescricao.setText("");
+            criaSpinnerValueFactory();
+            dtpckrDataCompra.setValue(LocalDate.now());
+        }
     }
     
     /**
@@ -82,14 +83,17 @@ public class ControllerCadastrarItem implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        dtpckrDataCompra.setValue(LocalDate.now());
+        criaSpinnerValueFactory();
+    } 
+    
+    public void criaSpinnerValueFactory() {
         SpinnerValueFactory<Integer> valueFactory = 
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30);
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999);
         
-        valueFactory.setValue(0);
+        valueFactory.setValue(1);
         spnrQuantidade.setValueFactory(valueFactory);
-        
-    }    
+    }
 
     private char checkSelectedRadioButton() {
         RadioButton selectedRadioButton = (RadioButton) tipoItem.getSelectedToggle();
