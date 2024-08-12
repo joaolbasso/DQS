@@ -34,6 +34,9 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
+    public Cliente() {
+    }
+
     public Cliente(String nome_cliente, String telefone, String cpf) {
         this.nome_cliente = nome_cliente;
         this.telefone = telefone;

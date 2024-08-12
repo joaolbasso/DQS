@@ -1,13 +1,33 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
-public class Venda {
+@Entity
+public class Venda implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_venda;
+    
+    @Column(nullable = false)
     private Double valor_venda;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_venda;
     private Cliente cliente;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_item_venda")
     private ArrayList<Item_venda> itens_venda;
 
     public ArrayList<Item_venda> getItens_venda() {

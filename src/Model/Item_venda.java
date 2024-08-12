@@ -1,10 +1,30 @@
 package Model;
 
-public class Item_venda {
+import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Item_venda implements Serializable {
+    @Id
+    @GeneratedValue()
     private int id_item_venda;
     private int quantidade;
+    @Column(nullable = false)
     private Double valor_unitario;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_venda")
     private Venda venda;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_item")
     private Item item; //Serviço ou Produto
 
     public Venda getVenda() {

@@ -1,16 +1,37 @@
 package Model;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author VIDEO
  */
-public class Parcela {
+@Entity
+public class Parcela implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_parcela;
+    
+    @Column(nullable = false)
     private Double valor_parcela;
-    private Date data_vencimento;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private LocalDate data_vencimento;
     private String metodo_pagamento;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_venda")
     private Venda venda;
 
     public Venda getVenda() {
@@ -37,11 +58,11 @@ public class Parcela {
         this.valor_parcela = valor_parcela;
     }
 
-    public Date getData_vencimento() {
+    public LocalDate getData_vencimento() {
         return data_vencimento;
     }
 
-    public void setData_vencimento(Date data_vencimento) {
+    public void setData_vencimento(LocalDate data_vencimento) {
         this.data_vencimento = data_vencimento;
     }
 

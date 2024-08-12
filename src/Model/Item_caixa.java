@@ -1,25 +1,40 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
-//@Entity
+@Entity
 public class Item_caixa implements Serializable {
-  // @Id
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item_caixa;
-  //  @Column(nullable = false)
+    
+    @Column(nullable = false)
     private Double valor;
-    private Date data_hora;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private LocalDate data_hora;
+    
     private String descricao;
     private char tipo_operacao;
     private String metodo_pagamento;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_caixa")
     private Caixa caixa;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pagamento")
     private Pagamento pagamento;
 
     public Pagamento getPagamento() {
@@ -58,11 +73,11 @@ public class Item_caixa implements Serializable {
         this.valor = valor;
     }
 
-    public Date getData_hora() {
+    public LocalDate getData_hora() {
         return data_hora;
     }
 
-    public void setData_hora(Date data_hora) {
+    public void setData_hora(LocalDate data_hora) {
         this.data_hora = data_hora;
     }
 
