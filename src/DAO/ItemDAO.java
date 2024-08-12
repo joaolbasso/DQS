@@ -23,6 +23,7 @@ public class ItemDAO {
         } finally {
             if (em != null) {
                 em.close();
+                emf.close();
             }
         }
     }
