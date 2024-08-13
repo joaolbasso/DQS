@@ -15,19 +15,24 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cliente;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String nome_cliente;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 11)
     private String telefone;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
     
+    @Column(length = 60)
     private String logradouro;
+    @Column(length = 60)
     private String bairro;
+    @Column(length = 8)
     private String cep;
+    @Column(length = 20)
     private String numero;
+    @Column(length = 60)
     private String complemento;
     
     @javax.persistence.OneToOne(cascade = CascadeType.ALL)

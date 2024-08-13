@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Item implements Serializable {
@@ -14,13 +16,15 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 60)
     private String nome_item;
+    @Column(length = 150)
     private String descricao_item;
     
     @Column(nullable = false)
     private Double valor_item;
     
+    @Temporal(TemporalType.DATE)
     private LocalDate data_preco_item;
     
     private int quantidade;

@@ -1,6 +1,5 @@
 package DAO;
 
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -8,7 +7,6 @@ public class EntityManagerFactorySingleton {
     private static EntityManagerFactory entityManagerFactory;
 
     public EntityManagerFactorySingleton() {
-        
     }
     
     public static synchronized EntityManagerFactory getInstance() {
@@ -23,7 +21,6 @@ public class EntityManagerFactorySingleton {
             entityManagerFactory.close();
         }
     }
-    
     
     
 }

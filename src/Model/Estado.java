@@ -13,7 +13,7 @@ public class Estado implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_estado;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String nome_estado;
     
     @Column(nullable = false, length = 2, unique = true)

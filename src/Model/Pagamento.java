@@ -22,7 +22,7 @@ public class Pagamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_pagamento;
     private char tipo_recebimento;
-    private String metodo_pagamento;
+    private char metodo_pagamento;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_pagamento;
@@ -58,11 +58,11 @@ public class Pagamento implements Serializable {
         this.tipo_recebimento = tipo_recebimento;
     }
 
-    public String getMetodo_pagamento() {
+    public char getMetodo_pagamento() {
         return metodo_pagamento;
     }
 
-    public void setMetodo_pagamento(String metodo_pagamento) {
+    public void setMetodo_pagamento(char metodo_pagamento) {
         this.metodo_pagamento = metodo_pagamento;
     }
 

@@ -13,7 +13,7 @@ public class Beneficiario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_beneficiario;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String nome_beneficiario;
 
     public Beneficiario() {

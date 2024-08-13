@@ -17,7 +17,7 @@ public class Cidade implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cidade;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String nome_cidade;
     
     @OneToOne(cascade = CascadeType.ALL)

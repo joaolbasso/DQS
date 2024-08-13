@@ -25,9 +25,10 @@ public class Item_caixa implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_hora;
     
+    @Column(length = 150)
     private String descricao;
     private char tipo_operacao;
-    private String metodo_pagamento;
+    private char metodo_pagamento;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_caixa")
@@ -97,11 +98,11 @@ public class Item_caixa implements Serializable {
         this.tipo_operacao = tipo_operacao;
     }
 
-    public String getMetodo_pagamento() {
+    public char getMetodo_pagamento() {
         return metodo_pagamento;
     }
 
-    public void setMetodo_pagamento(String metodo_pagamento) {
+    public void setMetodo_pagamento(char metodo_pagamento) {
         this.metodo_pagamento = metodo_pagamento;
     }
     

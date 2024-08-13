@@ -8,7 +8,14 @@
     <class>Model.Caixa</class>
     <class>Model.Cidade</class>
     <class>Model.Cliente</class>
+    <class>Model.Despesa</class>
     <class>Model.Estado</class>
+    <class>Model.Item_caixa</class>
+    <class>Model.Item_venda</class>
+    <class>Model.Pagamento</class>
+    <class>Model.Parcela</class>
+    <class>Model.Venda</class>
+    <validation-mode>CALLBACK</validation-mode>
     <properties>
       <!-- DB Driver -->
       <!-- BD Mane -->
@@ -17,11 +24,12 @@
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
       <!-- DB Dialect -->
       <!-- create / create-drop / update -->
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
       <property name="hibernate.show_sql" value="true"/>
       <!-- Show SQL in console -->
       <property name="hibernate.format_sql" value="true"/>
       <!-- Show SQL formatted -->
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/DQS?useTimeServer=true&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/DQSBD?useTimeServer=true&amp;serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="admin"/>

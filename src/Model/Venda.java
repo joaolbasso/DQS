@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -24,6 +25,9 @@ public class Venda implements Serializable {
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_venda;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
     
     @OneToMany(cascade = CascadeType.ALL)
@@ -38,8 +42,6 @@ public class Venda implements Serializable {
         this.itens_venda = itens_venda;
     }
     
-    
-
     public Cliente getCliente() {
         return cliente;
     }

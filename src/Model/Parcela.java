@@ -28,7 +28,7 @@ public class Parcela implements Serializable {
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_vencimento;
-    private String metodo_pagamento;
+    private char metodo_pagamento;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_venda")
@@ -66,11 +66,11 @@ public class Parcela implements Serializable {
         this.data_vencimento = data_vencimento;
     }
 
-    public String getMetodo_pagamento() {
+    public char getMetodo_pagamento() {
         return metodo_pagamento;
     }
 
-    public void setMetodo_pagamento(String metodo_pagamento) {
+    public void setMetodo_pagamento(char metodo_pagamento) {
         this.metodo_pagamento = metodo_pagamento;
     }
     
