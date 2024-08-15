@@ -33,6 +33,13 @@ public class Cidade implements Serializable {
         this.estado = estado;
     }
 
+    public Cidade(String nome_cidade, Estado estado) {
+        this.nome_cidade = nome_cidade;
+        this.estado = estado;
+    }
+    
+    
+
     
     
     public int getId_cidade() {

@@ -29,8 +29,6 @@ public class Estado implements Serializable {
         this.sigla_uf = sigla_uf;
     }
     
-    
-    
     public Estado(String nome_estado, String sigla_uf) {
         this.nome_estado = nome_estado;
         this.sigla_uf = sigla_uf;
