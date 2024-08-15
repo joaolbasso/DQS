@@ -14,5 +14,8 @@ public class TesteHib {
         gerente.persist(joao);
         gerente.getTransaction().commit();
         
+        gerente.close();
+        fabrica.close();
+        
     }
 }

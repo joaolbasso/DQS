@@ -22,7 +22,6 @@ public class Item_caixa implements Serializable {
     @Column(nullable = false)
     private Double valor;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_hora;
     
     @Column(length = 150)

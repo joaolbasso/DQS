@@ -26,7 +26,6 @@ public class Parcela implements Serializable {
     @Column(nullable = false)
     private Double valor_parcela;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_vencimento;
     private char metodo_pagamento;
     

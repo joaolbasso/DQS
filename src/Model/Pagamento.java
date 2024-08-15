@@ -24,7 +24,6 @@ public class Pagamento implements Serializable {
     private char tipo_recebimento;
     private char metodo_pagamento;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_pagamento;
     
     @Column(nullable = false)

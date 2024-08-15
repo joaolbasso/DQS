@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Item implements Serializable {
@@ -24,7 +22,6 @@ public class Item implements Serializable {
     @Column(nullable = false)
     private Double valor_item;
     
-    @Temporal(TemporalType.DATE)
     private LocalDate data_preco_item;
     
     private int quantidade;

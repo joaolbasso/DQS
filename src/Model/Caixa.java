@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -19,16 +20,14 @@ public class Caixa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_caixa;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date data_hora_abertura;
+    private LocalDate data_hora_abertura;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date data_hora_fechamento;
+    private LocalDate data_hora_fechamento;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario_que_abriu;
-
+    /*
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_item_caixa")
     private ArrayList<Item_caixa> itens_caixa;
@@ -40,7 +39,7 @@ public class Caixa implements Serializable {
     public void setItens_caixa(ArrayList<Item_caixa> itens_caixa) {
         this.itens_caixa = itens_caixa;
     }
-    
+    */
     
     
     public Usuario getUsuario_que_abriu() {
@@ -59,19 +58,19 @@ public class Caixa implements Serializable {
         this.id_caixa = id_caixa;
     }
 
-    public Date getData_hora_abertura() {
+    public LocalDate getData_hora_abertura() {
         return data_hora_abertura;
     }
 
-    public void setData_hora_abertura(Date data_hora_abertura) {
+    public void setData_hora_abertura(LocalDate data_hora_abertura) {
         this.data_hora_abertura = data_hora_abertura;
     }
 
-    public Date getData_hora_fechamento() {
+    public LocalDate getData_hora_fechamento() {
         return data_hora_fechamento;
     }
 
-    public void setData_hora_fechamento(Date data_hora_fechamento) {
+    public void setData_hora_fechamento(LocalDate data_hora_fechamento) {
         this.data_hora_fechamento = data_hora_fechamento;
     }
 

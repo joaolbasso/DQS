@@ -24,10 +24,8 @@ public class Despesa implements Serializable {
     private String descricao_despesa;
     private int recorrencia_despesa;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_vencimento_despesa;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate data_pagamento_despesa;
     
     @OneToOne(cascade = CascadeType.ALL)

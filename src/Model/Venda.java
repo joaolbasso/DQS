@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -23,13 +24,12 @@ public class Venda implements Serializable {
     @Column(nullable = false)
     private Double valor_venda;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date data_venda;
+    private LocalDate data_venda;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
-    
+    /*
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_item_venda")
     private ArrayList<Item_venda> itens_venda;
@@ -41,7 +41,7 @@ public class Venda implements Serializable {
     public void setItens_venda(ArrayList<Item_venda> itens_venda) {
         this.itens_venda = itens_venda;
     }
-    
+    */
     public Cliente getCliente() {
         return cliente;
     }
@@ -66,11 +66,11 @@ public class Venda implements Serializable {
         this.valor_venda = valor_venda;
     }
 
-    public Date getData_venda() {
+    public LocalDate getData_venda() {
         return data_venda;
     }
 
-    public void setData_venda(Date data_venda) {
+    public void setData_venda(LocalDate data_venda) {
         this.data_venda = data_venda;
     }
     
