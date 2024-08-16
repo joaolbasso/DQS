@@ -3,17 +3,18 @@ package Model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 @Entity
 public class Venda implements Serializable {
@@ -29,19 +30,21 @@ public class Venda implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
-    /*
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_item_venda")
-    private ArrayList<Item_venda> itens_venda;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "ITENS_VENDA", joinColumns = @JoinColumn(name = "id_venda"),
+            inverseJoinColumns = @JoinColumn(name = "id_item_venda"))
+    private Collection<Item_venda> itens_venda = new ArrayList<Item_venda>();
 
-    public ArrayList<Item_venda> getItens_venda() {
+    
+    public Collection<Item_venda> getItens_venda() {
         return itens_venda;
     }
 
-    public void setItens_venda(ArrayList<Item_venda> itens_venda) {
+    public void setItens_venda(Collection<Item_venda> itens_venda) {
         this.itens_venda = itens_venda;
     }
-    */
+    
     public Cliente getCliente() {
         return cliente;
     }

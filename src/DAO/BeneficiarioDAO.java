@@ -1,10 +1,14 @@
 package DAO;
 
 import Model.Beneficiario;
+import javax.persistence.EntityManager;
 
 public class BeneficiarioDAO extends AbstractDAO {
 
+    private EntityManager em;
+
     public void insert(Beneficiario beneficiario) {
+        
         try {
             emf = EntityManagerFactorySingleton.getInstance();
             em = emf.createEntityManager();

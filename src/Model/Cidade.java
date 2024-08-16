@@ -1,3 +1,4 @@
+
 package Model;
 
 import java.io.Serializable;
@@ -37,10 +38,6 @@ public class Cidade implements Serializable {
         this.nome_cidade = nome_cidade;
         this.estado = estado;
     }
-    
-    
-
-    
     
     public int getId_cidade() {
         return id_cidade;

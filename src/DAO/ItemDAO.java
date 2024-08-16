@@ -1,8 +1,11 @@
 package DAO;
 
 import Model.Item;
+import javax.persistence.EntityManager;
 
 public class ItemDAO extends AbstractDAO {
+    
+    private EntityManager em;
     
     public void insert(Item item) {
         try {

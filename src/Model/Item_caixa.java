@@ -2,7 +2,6 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 @Entity
 public class Item_caixa implements Serializable {
@@ -23,11 +21,15 @@ public class Item_caixa implements Serializable {
     private Double valor;
     
     private LocalDate data_hora;
+    //private String data_hora;
     
     @Column(length = 150)
     private String descricao;
     private char tipo_operacao;
     private char metodo_pagamento;
+    
+    //private String caixa;
+    //private String pagamento;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_caixa")
@@ -36,7 +38,10 @@ public class Item_caixa implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pagamento")
     private Pagamento pagamento;
-
+    
+    public Item_caixa() {
+    }
+    
     public Pagamento getPagamento() {
         return pagamento;
     }
@@ -45,8 +50,6 @@ public class Item_caixa implements Serializable {
         this.pagamento = pagamento;
     }
     
-    
-
     public Caixa getCaixa() {
         return caixa;
     }
@@ -54,7 +57,6 @@ public class Item_caixa implements Serializable {
     public void setCaixa(Caixa caixa) {
         this.caixa = caixa;
     }
-    
     
 
     public int getId_item_caixa() {
@@ -72,7 +74,6 @@ public class Item_caixa implements Serializable {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-
     public LocalDate getData_hora() {
         return data_hora;
     }
@@ -80,7 +81,7 @@ public class Item_caixa implements Serializable {
     public void setData_hora(LocalDate data_hora) {
         this.data_hora = data_hora;
     }
-
+    
     public String getDescricao() {
         return descricao;
     }

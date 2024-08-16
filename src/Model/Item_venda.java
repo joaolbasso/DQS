@@ -3,8 +3,10 @@ package Model;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -12,26 +14,24 @@ import javax.persistence.OneToOne;
 @Entity
 public class Item_venda implements Serializable {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item_venda;
+    
     private int quantidade;
+    
     @Column(nullable = false)
     private Double valor_unitario;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_venda")
-    private Venda venda;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_item")
     private Item item; //Serviço ou Produto
 
-    public Venda getVenda() {
-        return venda;
+    public int getId_item_venda() {
+        return id_item_venda;
     }
 
-    public void setVenda(Venda venda) {
-        this.venda = venda;
+    public void setId_item_venda(int id_item_venda) {
+        this.id_item_venda = id_item_venda;
     }
 
     public Item getItem() {
@@ -42,14 +42,6 @@ public class Item_venda implements Serializable {
         this.item = item;
     }
     
-    public int getId_item_venda() {
-        return id_item_venda;
-    }
-
-    public void setId_item_venda(int id_item_venda) {
-        this.id_item_venda = id_item_venda;
-    }
-
     public int getQuantidade() {
         return quantidade;
     }

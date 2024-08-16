@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cliente implements Serializable {
@@ -35,7 +36,7 @@ public class Cliente implements Serializable {
     @Column(length = 60)
     private String complemento;
     
-    @javax.persistence.OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
