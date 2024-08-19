@@ -1,5 +1,10 @@
+import DAO.DespesaDAO;
+import Model.Beneficiario;
+import Model.Despesa;
+import Model.Item;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,13 +66,9 @@ public class ControllerRegistrarDespesa implements Initializable {
     }
     
     public void registrarDespesa(ActionEvent event) throws IOException {
-        System.out.println("Nome: " + txtfldNomeDespesa.getText());
-        System.out.println("Valor: " + txtfldValor.getText());
-        System.out.println("Recorrente: " + spnrRecorrente.getValue());
-        System.out.println("Beneficiário: " + cmbboxBeneficiario.getSelectionModel().getSelectedItem());
-        System.out.println("Data Pagamento: " + dtpkrDataPagamento.getValue());
-        System.out.println("Data Vencimento: " + dtpkrDataVencimento.getValue());
-        System.out.println("Descricao: " + txtfldDescricao.getText());
+        //Despesa despesaSalvar = criarDespesa();
+        DespesaDAO despesa = new DespesaDAO();
+        //despesa.insert(despesaSalvar);
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
@@ -92,5 +93,16 @@ public class ControllerRegistrarDespesa implements Initializable {
         
         cmbboxBeneficiario.getItems().addAll(beneficiarios);
     }    
-    
+/*
+    private Despesa criarDespesa() {
+        String nome_despesa = txtfldNomeDespesa.getText();
+        Double valor_despesa = Double.valueOf(txtfldValor.getText());
+        int recorrencia_despesa = spnrRecorrente.getValue();
+        LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
+        LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
+        String descricao_despesa = txtfldDescricao.getText();
+        
+        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
+    }
+    */
 }

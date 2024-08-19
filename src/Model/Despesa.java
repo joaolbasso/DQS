@@ -11,13 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 @Entity
 public class Despesa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_despesa;
+
+    private String nome_despesa;
     
     @Column(nullable = false)
     private Double valor_despesa;
@@ -37,6 +38,28 @@ public class Despesa implements Serializable {
     @JoinColumn(name = "id_item_caixa")
     private Item_caixa item_caixa;
 
+    public Despesa() {
+    }
+
+    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa, Beneficiario beneficiario, Item_caixa item_caixa) {
+        this.nome_despesa = nome_despesa;
+        this.valor_despesa = valor_despesa;
+        this.descricao_despesa = descricao_despesa;
+        this.recorrencia_despesa = recorrencia_despesa;
+        this.data_vencimento_despesa = data_vencimento_despesa;
+        this.data_pagamento_despesa = data_pagamento_despesa;
+        this.beneficiario = beneficiario;
+        this.item_caixa = item_caixa;
+    }
+
+    public String getNome_despesa() {
+        return nome_despesa;
+    }
+
+    public void setNome_despesa(String nome_despesa) {
+        this.nome_despesa = nome_despesa;
+    }
+    
     public int getRecorrencia_despesa() {
         return recorrencia_despesa;
     }

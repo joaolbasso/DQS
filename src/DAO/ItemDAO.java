@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 
 public class ItemDAO extends AbstractDAO {
     
-    private EntityManager em;
     
     public void insert(Item item) {
         try {
@@ -21,7 +20,6 @@ public class ItemDAO extends AbstractDAO {
         } finally {
             if (em != null) {
                 em.close();
-                emf.close();
             }
         }
     }

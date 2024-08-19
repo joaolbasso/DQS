@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 
 public class BeneficiarioDAO extends AbstractDAO {
 
-    private EntityManager em;
 
     public void insert(Beneficiario beneficiario) {
         
@@ -22,7 +21,6 @@ public class BeneficiarioDAO extends AbstractDAO {
         } finally {
             if (em != null) {
                 em.close();
-                emf.close();
             }
         }
     }

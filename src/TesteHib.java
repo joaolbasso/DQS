@@ -1,7 +1,9 @@
+import DAO.CidadeDAO;
 import Model.Caixa;
 import Model.Estado;
 import Model.Usuario;
 import Model.Cidade;
+import Model.Cliente;
 import Model.Item;
 import Model.Item_caixa;
 import Model.Item_venda;
@@ -17,7 +19,7 @@ public class TesteHib {
     public static void main(String[] args) {
         EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("DQSPU");
         EntityManager gerente = fabrica.createEntityManager();
-        
+        /*
         Item_venda iv3 = new Item_venda();
         Item_venda iv4 = new Item_venda();
         
@@ -34,16 +36,23 @@ public class TesteHib {
         v2.getItens_venda().add(iv3);
         v2.getItens_venda().add(iv4);
         v2.setValor_venda(15.00);
+        /*
         
-        gerente.getTransaction().begin();
-        
+        /*
         gerente.persist(item3);
         gerente.persist(item4);
         gerente.persist(iv3);
         gerente.persist(iv4);
         gerente.persist(v2);
+        */
         
         
+        
+        gerente.getTransaction().begin();
+            CidadeDAO cidadeDAO = new CidadeDAO();
+            Cidade cidade = gerente.find(Cidade.class, 348);
+            Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406834", "07886858998", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
+            gerente.persist(cliente);
         gerente.getTransaction().commit();
         
         /*
