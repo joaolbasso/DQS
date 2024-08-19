@@ -68,20 +68,25 @@ public class ControllerCadastrarCliente implements Initializable {
         Cliente cliente = criarCliente();
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.insert(cliente);
+        limpezaCampos();
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
         int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (resposta == JOptionPane.YES_OPTION) {
-            txtfldNome.setText("");
-            txtfldCPF.setText("");
-            txtfldTelefone.setText("");
-            txtfldCEP.setText("");
-            txtfldLogradouro.setText("");
-            txtfldNumero.setText("");
-            txtfldComplemento.setText("");
-            txtfldBairro.setText("");
+            limpezaCampos();
         }
+    }
+    
+    private void limpezaCampos() {
+        txtfldNome.setText("");
+        txtfldCPF.setText("");
+        txtfldTelefone.setText("");
+        txtfldCEP.setText("");
+        txtfldLogradouro.setText("");
+        txtfldNumero.setText("");
+        txtfldComplemento.setText("");
+        txtfldBairro.setText("");
     }
     
     private Cliente criarCliente() {
