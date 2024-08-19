@@ -11,6 +11,7 @@ import Model.Pagamento;
 import Model.Parcela;
 import Model.Venda;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -50,8 +51,8 @@ public class TesteHib {
         
         gerente.getTransaction().begin();
             CidadeDAO cidadeDAO = new CidadeDAO();
-            Cidade cidade = gerente.find(Cidade.class, 348);
-            Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406834", "07886858998", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
+            Cidade cidade = cidadeDAO.buscaCidadePorId(348);
+            Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406830", "10086858990", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
             gerente.persist(cliente);
         gerente.getTransaction().commit();
         

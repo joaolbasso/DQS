@@ -12,16 +12,18 @@ public class CidadeDAO extends AbstractDAO {
     
     public Cidade buscaCidadePorId(int id_cidade) {
         Cidade cidade = null;
+        Cidade cidadeNova = null;
         try {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             cidade = em.find(Cidade.class, id_cidade);
+            cidadeNova = (Cidade) em.merge(cidade);
         }   
         finally {
             if (em != null) {
             em.close();
             }
-    }
-    return cidade;
+        }
+    return cidadeNova;
 }
     
     public List<Cidade> todasAsCidades(int estadoId) {

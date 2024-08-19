@@ -1,7 +1,9 @@
+import Config.MascarasFX;
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import Model.Cidade;
 import Model.Cliente;
+import Model.Estado;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -37,7 +39,7 @@ public class ControllerCadastrarCliente implements Initializable {
     private ComboBox<Cidade> cmbboxCidade;
     
     @FXML
-    private ComboBox<String> cmbboxEstado;
+    private ComboBox<Estado> cmbboxEstado;
     
     @FXML
     private TextField txtfldCEP;
@@ -98,7 +100,12 @@ public class ControllerCadastrarCliente implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*
+        
+        MascarasFX.mascaraCPF(txtfldCPF);
+        //MascarasFX.mascaraCEP(txtfldCEP);
+        //MascarasFX.mascaraTelefone(txtfldTelefone);
+        
+        
         CidadeDAO cidadeDAO = new CidadeDAO();
         
         ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
@@ -118,7 +125,7 @@ public class ControllerCadastrarCliente implements Initializable {
         
         cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
         cmbboxCidade.setValue(cidades.get(347));
-*/
+
     }    
 
     
