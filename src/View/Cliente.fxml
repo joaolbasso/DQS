@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCliente">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCliente">
     <stylesheets>
         <URL value="@/View/CSS/cliente.css" />
     </stylesheets>
@@ -30,8 +30,8 @@
          </cursor></Button>
       <TableView layoutX="14.0" layoutY="310.0" prefHeight="476.0" prefWidth="1273.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="318.0" text="Nome" />
+            <TableColumn prefWidth="186.0" text="CPF" />
          </columns>
       </TableView>
       <SplitMenuButton layoutX="131.0" layoutY="248.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0" text="Nome">

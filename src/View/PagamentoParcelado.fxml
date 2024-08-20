@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerVenda">
+    <stylesheets>
+        <URL value="@/View/CSS/venda.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="205.0" layoutY="25.0" prefHeight="67.0" prefWidth="230.0" text="Venda a Prazo">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="58.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagens/Icons/voltarIcon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="58.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarParaVenda" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="txtfldValorRestante" layoutX="79.0" layoutY="241.0" prefHeight="35.0" prefWidth="190.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Label layoutX="79.0" layoutY="206.0" prefHeight="35.0" prefWidth="179.0" text="Valor Restante:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="80.0" layoutY="115.0" prefHeight="35.0" prefWidth="230.0" text="Selecionar Cliente">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbboxCliente" layoutX="80.0" layoutY="150.0" prefHeight="35.0" prefWidth="300.0" />
+      <Button fx:id="btnRegistrar" layoutX="106.0" layoutY="514.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Registrar">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txtfldValorParcela" layoutX="79.0" layoutY="446.0" prefHeight="35.0" prefWidth="190.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Label layoutX="79.0" layoutY="411.0" prefHeight="35.0" prefWidth="179.0" text="Valor da Parcela:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="310.0" layoutY="206.0" prefHeight="35.0" prefWidth="179.0" text="Nº de Parcelas:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbboxParcelas" layoutX="310.0" layoutY="241.0" prefHeight="35.0" prefWidth="179.0" />
+      <DatePicker fx:id="dtpkrDataVencimento" layoutX="79.0" layoutY="342.0" prefHeight="43.0" prefWidth="233.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </DatePicker>
+      <Label layoutX="79.0" layoutY="307.0" prefHeight="35.0" prefWidth="233.0" text="Data de Vencimento:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnLimpar" layoutX="312.0" layoutY="514.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="204.0" text="Limpar Campos">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCadastrarCliente" layoutX="400.0" layoutY="148.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="162.0" text="Cadastrar Cliente">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
