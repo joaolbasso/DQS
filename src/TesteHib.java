@@ -1,16 +1,18 @@
+import DAO.BeneficiarioDAO;
 import DAO.CidadeDAO;
+import Model.Beneficiario;
 import Model.Caixa;
 import Model.Estado;
 import Model.Usuario;
 import Model.Cidade;
 import Model.Cliente;
+import Model.Despesa;
 import Model.Item;
 import Model.Item_caixa;
 import Model.Item_venda;
 import Model.Pagamento;
 import Model.Parcela;
 import Model.Venda;
-import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -50,11 +52,22 @@ public class TesteHib {
         
         
         gerente.getTransaction().begin();
+            BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
+            List<Beneficiario> benefiL = beneficiarioDAO.todosOsBeneficiarios();
+            Beneficiario bene = benefiL.get(2);
+            Despesa despesa = new Despesa("Linguiça", 41.00, "Linguiça do pote", 0,bene);
+            gerente.persist(despesa);
+            
+        
+        
+        gerente.getTransaction().commit();
+        /*
             CidadeDAO cidadeDAO = new CidadeDAO();
             Cidade cidade = cidadeDAO.buscaCidadePorId(348);
             Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406830", "10086858990", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
             gerente.persist(cliente);
-        gerente.getTransaction().commit();
+        */
+        
         
         /*
         Exemplo pegando do BANCO
@@ -69,7 +82,6 @@ public class TesteHib {
         
         gerente.close();
         fabrica.close();
-        
         
     }
 }

@@ -7,7 +7,7 @@ public class DespesaDAO extends AbstractDAO {
     public void insert(Despesa despesa) {
         
         try {
-            em = emf.createEntityManager();
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             em.persist(despesa);
             em.getTransaction().commit();
