@@ -29,11 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerRegistrarDespesa implements Initializable {
     
     @FXML
@@ -139,14 +134,13 @@ public class ControllerRegistrarDespesa implements Initializable {
         LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
         LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
         String descricao_despesa = txtfldDescricao.getText();
-        //Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
+        Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
 
-        if (/*beneficiario == null ||*/ nome_despesa.isEmpty() || valor_despesa == null) {
-            // Retornar null ou lançar uma exceção personalizada caso algum campo obrigatório esteja vazio.
+        if (nome_despesa.isEmpty() || valor_despesa.isNaN()) {
             return null;
         }
 
-        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa); //beneficiario);
+        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
     } catch (NumberFormatException e) {
         // Tratar caso o valor da despesa não seja um número válido.
         e.printStackTrace();
