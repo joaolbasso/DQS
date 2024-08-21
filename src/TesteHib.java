@@ -51,13 +51,25 @@ public class TesteHib {
         
         
         
-        gerente.getTransaction().begin();
+        
+        /*
             BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
             List<Beneficiario> benefiL = beneficiarioDAO.todosOsBeneficiarios();
             Beneficiario bene = benefiL.get(2);
             Despesa despesa = new Despesa("Linguiça", 41.00, "Linguiça do pote", 0,bene);
             gerente.persist(despesa);
-            
+          */  
+        
+        gerente.getTransaction().begin();
+        /*
+        Despesa edit = gerente.find(Despesa.class, 6);
+        edit.setValor_despesa(100.00);
+        gerente.merge(edit);
+        */
+        
+        Despesa delete = gerente.find(Despesa.class, 7);
+        gerente.remove(delete);
+        
         
         
         gerente.getTransaction().commit();

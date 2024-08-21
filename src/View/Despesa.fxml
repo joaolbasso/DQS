@@ -43,8 +43,11 @@
             <TableColumn fx:id="data_vencimento_despesa" minWidth="0.0" prefWidth="150.0" text="Data de Vencimento" />
             <TableColumn fx:id="beneficiario" minWidth="0.0" prefWidth="300.0" text="Beneficiario" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-      <SplitMenuButton layoutX="131.0" layoutY="240.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0" text="Nome">
+      <SplitMenuButton layoutX="131.0" layoutY="240.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="149.0" text="Nome">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -58,8 +61,8 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField layoutX="272.0" layoutY="239.0" prefHeight="43.0" prefWidth="806.0" />
-      <Button layoutX="1111.0" layoutY="239.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="163.0" text="Consultar">
+      <TextField layoutX="288.0" layoutY="241.0" prefHeight="37.0" prefWidth="772.0" />
+      <Button layoutX="1072.0" layoutY="241.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="72.0" text="Consultar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -72,5 +75,29 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Button fx:id="btnEditar" layoutX="1157.0" layoutY="241.0" mnemonicParsing="false" onAction="#editarDespesa" prefHeight="37.0" prefWidth="51.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/editar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnDeletar" layoutX="1221.0" layoutY="241.0" mnemonicParsing="false" onAction="#deletarDespesa" prefHeight="37.0" prefWidth="51.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/deletar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

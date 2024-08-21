@@ -63,6 +63,24 @@ public class ControllerDespesa implements Initializable {
         window.show();
     }
     
+    public void editarDespesa(ActionEvent event) throws IOException {
+        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/EditarDespesa.fxml"));
+        Scene despesaScene = new Scene(despesaView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(despesaScene);
+        window.show();
+    }
+    
+    public int getId_Despesa_selecionada() {
+        Despesa despesa_seleceionada = tbvwDespesas.getSelectionModel().getSelectedItem();
+        int id_despesa_selecionada = despesa_seleceionada.getId_despesa();
+        return id_despesa_selecionada;
+    }
+    
+    public void deletarDespesa(ActionEvent event) throws IOException {
+        System.out.println("BOTAO Deletar DESPESA CLICK");
+    }
+    
     DespesaDAO despesaDAO = new DespesaDAO();
     ObservableList<Despesa> despesas = FXCollections.observableArrayList(despesaDAO.todasAsDespesas());
     
