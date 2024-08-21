@@ -1,6 +1,7 @@
 
 import DAO.BeneficiarioDAO;
 import DAO.CidadeDAO;
+import DAO.ClienteDAO;
 import Model.Beneficiario;
 import Model.Cidade;
 import Model.Cliente;
@@ -34,11 +35,18 @@ public class TesteMetodos {
             System.out.println(cidade.getNome_cidade());
         }
 */
-        
+        /*
         BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
         List<Beneficiario> beneL = beneficiarioDAO.todosOsBeneficiarios();
         for (Beneficiario beneficiario : beneL) {
             System.out.println(beneficiario.getNome_beneficiario());
+        }
+        */
+        
+        ClienteDAO clienteDAO = new ClienteDAO();
+        List<Cliente> clientes = clienteDAO.todosOsClientes();
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente.getNome_cliente());
         }
         
         gerente.close();

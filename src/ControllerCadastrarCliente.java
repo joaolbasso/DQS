@@ -93,6 +93,9 @@ public class ControllerCadastrarCliente implements Initializable {
         String nome_cliente = txtfldNome.getText();
         String telefone = txtfldTelefone.getText();
         String cpf = txtfldCPF.getText();
+        
+        System.out.println(cpf);
+        
         String cep = txtfldCEP.getText();
         String logradouro = txtfldLogradouro.getText();
         String bairro = txtfldBairro.getText();

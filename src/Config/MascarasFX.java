@@ -188,15 +188,28 @@ public class MascarasFX {
 
             }else{ // escrevendo
 
-                if(textField.getText().length()==11) 
-                    event.consume();
+                if(textField.getText().length()==14) event.consume();
+
+                if(textField.getText().length()==3){
+                    textField.setText(textField.getText()+".");
+                    textField.positionCaret(textField.getText().length());
+                }
+                if(textField.getText().length()==7){
+                    textField.setText(textField.getText()+".");
+                    textField.positionCaret(textField.getText().length());
+                }
+                if(textField.getText().length()==11){
+                    textField.setText(textField.getText()+"-");
+                    textField.positionCaret(textField.getText().length());
+                }
+
             }
         });
 
         textField.setOnKeyReleased((KeyEvent evt) -> {
 
             if(!textField.getText().matches("\\d.-*")){
-                textField.setText(textField.getText().replaceAll("[^\\d.-]", ""));
+                textField.setText(textField.getText().replaceAll("[^\\d]", ""));
                 textField.positionCaret(textField.getText().length());
             }
         });

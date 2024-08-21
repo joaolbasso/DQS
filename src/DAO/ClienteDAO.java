@@ -1,6 +1,9 @@
 package DAO;
 
 import Model.Cliente;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.TypedQuery;
 
 public class ClienteDAO extends AbstractDAO {
 
@@ -20,6 +23,35 @@ public class ClienteDAO extends AbstractDAO {
                 em.close();
             }
         }
+    }
+    
+    public List<Cliente> todosOsClientes() {
+        List<Cliente> todosOsClientes = new ArrayList<>();
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            
+            em.getTransaction().begin();
+            
+                String jpql = "SELECT c FROM Cliente c";
+                TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
+                todosOsClientes = query.getResultList();
+                
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null) {
+            em.getTransaction().rollback();
+            }
+             e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        if (todosOsClientes != null) {
+            return todosOsClientes;
+        }
+            List<Cliente> clientesVazio = new ArrayList<>();
+            return clientesVazio;
     }
 
     public void update() {
