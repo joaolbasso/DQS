@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
     <stylesheets>
         <URL value="@/View/CSS/registrardespesa.css" />
     </stylesheets>
@@ -30,7 +30,7 @@
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarParaDespesa" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

@@ -29,6 +29,23 @@ import javafx.stage.Stage;
  */
 public class ControllerRegistrarDespesa implements Initializable {
     
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
+    
     @FXML
     private TextField txtfldNomeDespesa;
     @FXML
@@ -49,21 +66,25 @@ public class ControllerRegistrarDespesa implements Initializable {
     @FXML
     private TextField txtfldDescricao;
     
-    public void voltarParaDespesa(ActionEvent event) throws IOException {
-        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
-        Scene despesaScene = new Scene(despesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(despesaScene);
-        window.show();
-    }
     
     public void entrarCadastrarBeneficiario(ActionEvent event) throws IOException {
-        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
-        Scene despesaScene = new Scene(despesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(despesaScene);
-        window.show();
-    }
+    // Carregar a nova tela
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
+    Parent cadastrarBeneficiarioView = loader.load();
+
+    // Obter o controlador da nova tela
+    ControllerCadastrarBeneficiario controllerCadastrarBeneficiario = loader.getController();
+
+    // Definir a cena atual como a anterior no controlador da nova tela
+    controllerCadastrarBeneficiario.setCenaAnterior(((Node) event.getSource()).getScene());
+
+    // Mudar para a nova cena
+    Scene cadastrarBeneficiarioScene = new Scene(cadastrarBeneficiarioView);
+    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    window.setScene(cadastrarBeneficiarioScene);
+    window.show();
+}
+
     
     public void registrarDespesa(ActionEvent event) throws IOException {
         //Despesa despesaSalvar = criarDespesa();

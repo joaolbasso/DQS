@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerVenda">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamentoParcelado">
     <stylesheets>
         <URL value="@/View/CSS/venda.css" />
     </stylesheets>
@@ -27,7 +27,7 @@
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="58.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarParaVenda" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button layoutX="58.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -84,7 +84,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btnCadastrarCliente" layoutX="400.0" layoutY="148.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="162.0" text="Cadastrar Cliente">
+      <Button fx:id="btnCadastrarCliente" layoutX="400.0" layoutY="148.0" mnemonicParsing="false" onAction="#cadastarCliente" prefHeight="39.0" prefWidth="162.0" text="Cadastrar Cliente">
          <font>
             <Font size="18.0" />
          </font>

@@ -66,7 +66,7 @@
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button accessibleHelp="Voltar ao Menu Principal" accessibleRoleDescription="Voltar ao Menu Principal" accessibleText="Voltar ao Menu Principal" layoutX="33.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarMenuPrincipal" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button accessibleHelp="Voltar ao Menu Principal" accessibleRoleDescription="Voltar ao Menu Principal" accessibleText="Voltar ao Menu Principal" layoutX="33.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

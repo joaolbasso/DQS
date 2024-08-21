@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCaixa">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCaixa">
     <stylesheets>
         <URL value="@View/CSS/caixa.css" />
     </stylesheets>
@@ -25,8 +25,8 @@
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarMenuPrincipal" opacity="0.0" prefHeight="43.0" prefWidth="42.0" />
-      <RadioButton fx:id="rbtnServico" layoutX="252.0" layoutY="234.0" mnemonicParsing="false" selected="true" text="Serviço">
+      <Button layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0" />
+      <RadioButton fx:id="rbtnServico" layoutX="128.0" layoutY="234.0" mnemonicParsing="false" selected="true" text="Serviço">
          <font>
             <Font size="20.0" />
          </font>
@@ -37,7 +37,7 @@
             <ToggleGroup fx:id="situacao" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="rbtnProduto" layoutX="386.0" layoutY="234.0" mnemonicParsing="false" text="Produto">
+      <RadioButton fx:id="rbtnProduto" layoutX="262.0" layoutY="234.0" mnemonicParsing="false" text="Produto">
          <toggleGroup>
             <ToggleGroup fx:id="situacao" />
          </toggleGroup>
@@ -48,44 +48,44 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </RadioButton>
-      <DatePicker fx:id="dtpkrDataVenda" layoutX="718.0" layoutY="162.0" prefHeight="43.0" prefWidth="233.0">
+      <DatePicker fx:id="dtpkrDataVenda" layoutX="594.0" layoutY="163.0" prefHeight="43.0" prefWidth="233.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </DatePicker>
-      <Label layoutX="718.0" layoutY="127.0" prefHeight="35.0" prefWidth="233.0" text="Data:">
+      <Label layoutX="594.0" layoutY="128.0" prefHeight="35.0" prefWidth="233.0" text="Data:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="252.0" layoutY="284.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Item*">
+      <Label layoutX="128.0" layoutY="285.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Item*">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbboxItem" layoutX="252.0" layoutY="319.0" prefHeight="43.0" prefWidth="316.0" />
-      <Label layoutX="252.0" layoutY="127.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Cliente *">
+      <ComboBox fx:id="cmbboxItem" layoutX="128.0" layoutY="320.0" prefHeight="43.0" prefWidth="316.0" />
+      <Label layoutX="128.0" layoutY="128.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Cliente *">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbboxCliente" layoutX="252.0" layoutY="162.0" prefHeight="43.0" prefWidth="391.0" />
-      <Button fx:id="btnCadastrarItem" layoutX="787.0" layoutY="319.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="164.0" text="Cadastrar Item">
+      <ComboBox fx:id="cmbboxCliente" layoutX="128.0" layoutY="163.0" prefHeight="43.0" prefWidth="391.0" />
+      <Button fx:id="btnCadastrarItem" layoutX="663.0" layoutY="320.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="164.0" text="Cadastrar Item">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="614.0" layoutY="284.0" prefHeight="35.0" prefWidth="136.0" text="Quantidade:" wrapText="true">
+      <Label layoutX="490.0" layoutY="285.0" prefHeight="35.0" prefWidth="136.0" text="Quantidade:" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="614.0" layoutY="319.0" prefHeight="43.0" prefWidth="136.0">
+      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="490.0" layoutY="320.0" prefHeight="43.0" prefWidth="136.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </Spinner>
-      <Button fx:id="btnAdicionar" layoutX="705.0" layoutY="419.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="246.0" text="Adicionar Item à Venda">
+      <Button fx:id="btnAdicionar" layoutX="581.0" layoutY="420.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="246.0" text="Adicionar Item à Venda">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -93,7 +93,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="txtfldValorUnitario" layoutX="252.0" layoutY="419.0" prefHeight="43.0" prefWidth="164.0">
+      <TextField fx:id="txtfldValorUnitario" layoutX="128.0" layoutY="420.0" prefHeight="43.0" prefWidth="164.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -101,12 +101,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="252.0" layoutY="384.0" prefHeight="35.0" prefWidth="164.0" text="Valor Unitário*">
+      <Label layoutX="128.0" layoutY="385.0" prefHeight="35.0" prefWidth="164.0" text="Valor Unitário*">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldPreco" layoutX="459.0" layoutY="419.0" prefHeight="43.0" prefWidth="164.0">
+      <TextField fx:id="txtfldPreco" layoutX="335.0" layoutY="420.0" prefHeight="43.0" prefWidth="164.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -114,12 +114,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="459.0" layoutY="384.0" prefHeight="35.0" prefWidth="164.0" text="Preço*">
+      <Label layoutX="335.0" layoutY="385.0" prefHeight="35.0" prefWidth="164.0" text="Preço*">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="btnFinalizar" layoutX="248.0" layoutY="694.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="164.0" text="Finalizar">
+      <Button fx:id="btnFinalizar" layoutX="124.0" layoutY="695.0" mnemonicParsing="false" onAction="#finalizarVenda" prefHeight="43.0" prefWidth="164.0" text="Finalizar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -127,12 +127,12 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="903.0" layoutY="698.0" prefHeight="35.0" prefWidth="136.0" text="Valor Total:" wrapText="true">
+      <Label layoutX="595.0" layoutY="695.0" prefHeight="35.0" prefWidth="136.0" text="Valor Total:" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="548.0" layoutY="34.0" prefHeight="67.0" prefWidth="204.0" text="Nova Venda">
+      <Label layoutX="388.0" layoutY="34.0" prefHeight="67.0" prefWidth="204.0" text="Nova Venda">
          <font>
             <Font size="36.0" />
          </font>

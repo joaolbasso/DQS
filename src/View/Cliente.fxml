@@ -24,7 +24,7 @@
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="23.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltarMenuPrincipal" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button layoutX="23.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

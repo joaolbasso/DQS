@@ -1,25 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
-public class ControllerConsultaCliente implements Initializable {
+public class ControllerPagamento implements Initializable {
 
     private Scene cenaAnterior;
 
@@ -37,10 +28,26 @@ public class ControllerConsultaCliente implements Initializable {
             window.show();
         }
     }
-    
+
+    @FXML
+    public void concluirVenda(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
+        Parent pagamentoView = loader.load();
+        
+        // Obter o controlador da nova tela
+        ControllerPagamentoParcelado controller = loader.getController();
+        
+        // Passar a cena atual para o controlador da nova tela
+        controller.setCenaAnterior(((Node)event.getSource()).getScene());
+
+        Scene pagamentoScene = new Scene(pagamentoView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(pagamentoScene);
+        window.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
 }

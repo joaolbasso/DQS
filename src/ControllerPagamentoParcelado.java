@@ -1,9 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -22,7 +15,7 @@ import javafx.stage.Stage;
  *
  * @author VIDEO
  */
-public class ControllerCliente implements Initializable {
+public class ControllerPagamentoParcelado implements Initializable {
 
     private Scene cenaAnterior;
 
@@ -42,35 +35,24 @@ public class ControllerCliente implements Initializable {
     }
     
     @FXML
-    private Button btnRegistrarCliente;
-    
-    
-    @FXML
-    public void entrarCadastrarCliente(ActionEvent event) throws IOException {
-        // Carregar a nova tela
+    public void cadastarCliente(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
-        Parent cadastrarClienteView = loader.load();
+        Parent pagamentoView = loader.load();
 
-        // Obter o controller da nova tela
-        ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
+        // Obter o controlador da nova tela
+        ControllerCadastrarCliente controller = loader.getController();
 
-        // Definir a cena atual como a anterior no controller da nova tela
-        controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
+        // Passar a cena atual para o controlador da nova tela
+        controller.setCenaAnterior(((Node) event.getSource()).getScene());
 
-        // Mudar para a nova cena
-        Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
+        Scene pagamentoScene = new Scene(pagamentoView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(cadastrarClienteScene);
+        window.setScene(pagamentoScene);
         window.show();
     }
-
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
 }

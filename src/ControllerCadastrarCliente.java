@@ -24,6 +24,23 @@ import javax.swing.JOptionPane;
 
 public class ControllerCadastrarCliente implements Initializable {
     
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
+
     @FXML
     private TextField txtfldNome;
     
@@ -53,14 +70,6 @@ public class ControllerCadastrarCliente implements Initializable {
     
     @FXML
     private TextField txtfldBairro;
-    
-    public void voltarParaClientes(ActionEvent event) throws IOException {
-        Parent clienteView = FXMLLoader.load(getClass().getResource("/View/Cliente.fxml"));
-        Scene clienteScene = new Scene(clienteView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(clienteScene);
-        window.show();
-    }
     
     public void cadastrarCliente(ActionEvent event) throws IOException {
         Cliente cliente = criarCliente();
@@ -120,7 +129,4 @@ public class ControllerCadastrarCliente implements Initializable {
         cmbboxCidade.setValue(cidades.get(347));
 */
     }    
-
-    
-    
 }
