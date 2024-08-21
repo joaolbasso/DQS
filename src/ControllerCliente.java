@@ -36,8 +36,8 @@ public class ControllerCliente implements Initializable {
     @FXML
     private Button btnRegistrarCliente;
     
-    //@FXML
-    //private TableColumn<Cliente, String> id_cliente = new TableColumn<>("Id");
+    @FXML
+    private TableColumn<Cliente, String> id_cliente = new TableColumn<>("Id");
     
     @FXML
     private TableColumn<Cliente, String> nome_cliente = new TableColumn<>("Nome");
@@ -79,32 +79,30 @@ public class ControllerCliente implements Initializable {
      */
     
     
-    private <T> void centralizarTextoNaColuna(TableColumn<T, String> coluna) {
-    coluna.setCellFactory(column -> {
-        return new TableCell<T, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    setStyle("-fx-alignment: CENTER;");
-                }
+    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    coluna.setCellFactory(column -> new TableCell<T, U>() {
+        @Override
+        protected void updateItem(U item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+                setText(null);
+                setStyle("");
+            } else {
+                setText(item.toString());
+                setStyle("-fx-alignment: CENTER;");
             }
-        };
+        }
     });
 }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-            //id_cliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
+            id_cliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
             nome_cliente.setCellValueFactory(new PropertyValueFactory<>("nome_cliente"));
             cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
             telefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
             
-            //centralizarTextoNaColuna(id_cliente);
+            centralizarTextoNaColuna(id_cliente);
             centralizarTextoNaColuna(nome_cliente);
             centralizarTextoNaColuna(cpf);
             centralizarTextoNaColuna(telefone);

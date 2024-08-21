@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -65,6 +66,24 @@ public class ControllerDespesa implements Initializable {
     DespesaDAO despesaDAO = new DespesaDAO();
     ObservableList<Despesa> despesas = FXCollections.observableArrayList(despesaDAO.todasAsDespesas());
     
+
+    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    coluna.setCellFactory(column -> new TableCell<T, U>() {
+        @Override
+        protected void updateItem(U item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+                setText(null);
+                setStyle("");
+            } else {
+                setText(item.toString());
+                setStyle("-fx-alignment: CENTER;");
+            }
+        }
+    });
+}
+
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -81,6 +100,13 @@ public class ControllerDespesa implements Initializable {
         {
             return new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario());
         });
+        
+        centralizarTextoNaColuna(nome_despesa);
+        centralizarTextoNaColuna(valor_despesa);
+        centralizarTextoNaColuna(data_pagamento_despesa);
+        centralizarTextoNaColuna(data_vencimento_despesa);
+        centralizarTextoNaColuna(beneficiario);
+        
         
         tbvwDespesas.setItems(despesas);
     }    
