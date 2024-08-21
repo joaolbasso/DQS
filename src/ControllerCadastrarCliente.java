@@ -1,11 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-
+import Config.MascarasFX;
+import DAO.CidadeDAO;
+import DAO.ClienteDAO;
+import Model.Cidade;
+import Model.Cliente;
+import Model.Estado;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +18,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerCadastrarCliente implements Initializable {
     
     @FXML
@@ -34,10 +36,10 @@ public class ControllerCadastrarCliente implements Initializable {
     private TextField txtfldTelefone;
     
     @FXML
-    private ComboBox<String> cmbboxCidade;
+    private ComboBox<Cidade> cmbboxCidade;
     
     @FXML
-    private ComboBox<String> cmbboxEstado;
+    private ComboBox<Estado> cmbboxEstado;
     
     @FXML
     private TextField txtfldCEP;
@@ -63,19 +65,77 @@ public class ControllerCadastrarCliente implements Initializable {
     }
     
     public void cadastrarCliente(ActionEvent event) throws IOException {
-        
+        Cliente cliente = criarCliente();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        clienteDAO.insert(cliente);
+        limpezaCampos();
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
-        
+        int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (resposta == JOptionPane.YES_OPTION) {
+            limpezaCampos();
+        }
     }
     
-    /**
-     * Initializes the controller class.
-     */
+    private void limpezaCampos() {
+        txtfldNome.setText("");
+        txtfldCPF.setText("");
+        txtfldTelefone.setText("");
+        txtfldCEP.setText("");
+        txtfldLogradouro.setText("");
+        txtfldNumero.setText("");
+        txtfldComplemento.setText("");
+        txtfldBairro.setText("");
+    }
+    
+    private Cliente criarCliente() {
+        String nome_cliente = txtfldNome.getText();
+        String telefone = txtfldTelefone.getText();
+        String cpf = txtfldCPF.getText();
+        
+        System.out.println(cpf);
+        
+        String cep = txtfldCEP.getText();
+        String logradouro = txtfldLogradouro.getText();
+        String bairro = txtfldBairro.getText();
+        String numero = txtfldNumero.getText();
+        String complemento = txtfldComplemento.getText();
+        Cidade cidade = cmbboxCidade.getSelectionModel().getSelectedItem();
+        Cliente cliente = new Cliente(nome_cliente, telefone, cpf, logradouro, bairro, cep, numero, complemento, cidade);
+        return cliente;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        MascarasFX.mascaraCPF(txtfldCPF);
+        //MascarasFX.mascaraCEP(txtfldCEP);
+        //MascarasFX.mascaraTelefone(txtfldTelefone);
+        
+        
+        CidadeDAO cidadeDAO = new CidadeDAO();
+        
+        ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
+        cmbboxCidade.setItems(cidades);
+        
+        cmbboxCidade.setCellFactory(cell -> new ListCell<Cidade>() {
+            @Override
+            protected void updateItem(Cidade cidade, boolean empty) {
+                super.updateItem(cidade, empty);
+                if (empty || cidade == null) {
+                    setText(null);
+                } else {
+                    setText(cidade.getNome_cidade());
+                }
+            }
+        });
+        
+        cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
+        cmbboxCidade.setValue(cidades.get(347));
+
     }    
+
+    
     
 }

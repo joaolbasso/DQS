@@ -1,18 +1,41 @@
 package Model;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-/**
- *
- * @author VIDEO
- */
-public class Parcela {
+@Entity
+public class Parcela implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_parcela;
+    
+    @Column(nullable = false)
     private Double valor_parcela;
-    private Date data_pagamento;
-    private Date data_vencimento;
-    private String metodo_pagamento;
+    
+    private LocalDate data_vencimento;
+    private char metodo_pagamento;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_venda")
+    private Venda venda;
 
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+    
     public int getId_parcela() {
         return id_parcela;
     }
@@ -29,27 +52,19 @@ public class Parcela {
         this.valor_parcela = valor_parcela;
     }
 
-    public Date getData_pagamento() {
-        return data_pagamento;
-    }
-
-    public void setData_pagamento(Date data_pagamento) {
-        this.data_pagamento = data_pagamento;
-    }
-
-    public Date getData_vencimento() {
+    public LocalDate getData_vencimento() {
         return data_vencimento;
     }
 
-    public void setData_vencimento(Date data_vencimento) {
+    public void setData_vencimento(LocalDate data_vencimento) {
         this.data_vencimento = data_vencimento;
     }
 
-    public String getMetodo_pagamento() {
+    public char getMetodo_pagamento() {
         return metodo_pagamento;
     }
 
-    public void setMetodo_pagamento(String metodo_pagamento) {
+    public void setMetodo_pagamento(char metodo_pagamento) {
         this.metodo_pagamento = metodo_pagamento;
     }
     

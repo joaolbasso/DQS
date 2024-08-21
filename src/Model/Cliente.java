@@ -1,20 +1,76 @@
 package Model;
 
+import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cliente;
+    
+    @Column(nullable = false, length = 50)
     private String nome_cliente;
+    
+    @Column(nullable = false, length = 11)
     private String telefone;
+    
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
+    
+    @Column(length = 60)
     private String logradouro;
+    @Column(length = 60)
     private String bairro;
+    @Column(length = 8)
     private String cep;
+    @Column(length = 20)
     private String numero;
+    @Column(length = 60)
     private String complemento;
-    private String cidade;
-    private String estado;
+    
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_cidade")
+    private Cidade cidade;
+
+    public Cliente() {
+    }
+
+    public Cliente(String nome_cliente, String telefone, String cpf) {
+        this.nome_cliente = nome_cliente;
+        this.telefone = telefone;
+        this.cpf = cpf;
+    }
+
+    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento, Cidade cidade) {
+        this.nome_cliente = nome_cliente;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cidade = cidade;
+    }
+    
+    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento) {
+        this.nome_cliente = nome_cliente;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.numero = numero;
+        this.complemento = complemento;
+    }
 
     public int getId_cliente() {
         return id_cliente;
@@ -88,21 +144,12 @@ public class Cliente {
         this.complemento = complemento;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-    
-    
 }

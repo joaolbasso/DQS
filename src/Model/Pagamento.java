@@ -1,18 +1,41 @@
 package Model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-/**
- *
- * @author VIDEO
- */
-public class Pagamento {
+@Entity
+public class Pagamento implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_pagamento;
     private char tipo_recebimento;
-    private String metodo_pagamento;
-    private Date data_pagamento;
+    private char metodo_pagamento;
+    
+    private LocalDate data_pagamento;
+    
+    @Column(nullable = false)
     private Double valor_pagamento;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_parcela")
+    private Parcela parcela;
 
+    public Parcela getParcela() {
+        return parcela;
+    }
+
+    public void setParcela(Parcela parcela) {
+        this.parcela = parcela;
+    }
+    
     public int getId_pagamento() {
         return id_pagamento;
     }
@@ -29,19 +52,19 @@ public class Pagamento {
         this.tipo_recebimento = tipo_recebimento;
     }
 
-    public String getMetodo_pagamento() {
+    public char getMetodo_pagamento() {
         return metodo_pagamento;
     }
 
-    public void setMetodo_pagamento(String metodo_pagamento) {
+    public void setMetodo_pagamento(char metodo_pagamento) {
         this.metodo_pagamento = metodo_pagamento;
     }
 
-    public Date getData_pagamento() {
+    public LocalDate getData_pagamento() {
         return data_pagamento;
     }
 
-    public void setData_pagamento(Date data_pagamento) {
+    public void setData_pagamento(LocalDate data_pagamento) {
         this.data_pagamento = data_pagamento;
     }
 

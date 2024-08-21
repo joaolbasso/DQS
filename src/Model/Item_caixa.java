@@ -1,18 +1,63 @@
 package Model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-/**
- *
- * @author VIDEO
- */
-public class Item_caixa {
+@Entity
+public class Item_caixa implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item_caixa;
+    
+    @Column(nullable = false)
     private Double valor;
-    private Date data_hota;
+    
+    private LocalDate data_hora;
+    //private String data_hora;
+    
+    @Column(length = 150)
     private String descricao;
     private char tipo_operacao;
-    private String metodo_pagamento;
+    private char metodo_pagamento;
+    
+    //private String caixa;
+    //private String pagamento;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_caixa")
+    private Caixa caixa;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pagamento")
+    private Pagamento pagamento;
+    
+    public Item_caixa() {
+    }
+    
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+    
+    public Caixa getCaixa() {
+        return caixa;
+    }
+
+    public void setCaixa(Caixa caixa) {
+        this.caixa = caixa;
+    }
+    
 
     public int getId_item_caixa() {
         return id_item_caixa;
@@ -29,15 +74,14 @@ public class Item_caixa {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-
-    public Date getData_hota() {
-        return data_hota;
+    public LocalDate getData_hora() {
+        return data_hora;
     }
 
-    public void setData_hota(Date data_hota) {
-        this.data_hota = data_hota;
+    public void setData_hora(LocalDate data_hora) {
+        this.data_hora = data_hora;
     }
-
+    
     public String getDescricao() {
         return descricao;
     }
@@ -54,11 +98,11 @@ public class Item_caixa {
         this.tipo_operacao = tipo_operacao;
     }
 
-    public String getMetodo_pagamento() {
+    public char getMetodo_pagamento() {
         return metodo_pagamento;
     }
 
-    public void setMetodo_pagamento(String metodo_pagamento) {
+    public void setMetodo_pagamento(char metodo_pagamento) {
         this.metodo_pagamento = metodo_pagamento;
     }
     

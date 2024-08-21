@@ -1,13 +1,30 @@
 package Model;
 
-/**
- *
- * @author VIDEO
- */
-public class Item_venda {
+import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Item_venda implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item_venda;
+    
     private int quantidade;
+    
+    @Column(nullable = false)
     private Double valor_unitario;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_item")
+    private Item item; //Serviço ou Produto
 
     public int getId_item_venda() {
         return id_item_venda;
@@ -17,6 +34,14 @@ public class Item_venda {
         this.id_item_venda = id_item_venda;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+    
     public int getQuantidade() {
         return quantidade;
     }
@@ -32,7 +57,5 @@ public class Item_venda {
     public void setValor_unitario(Double valor_unitario) {
         this.valor_unitario = valor_unitario;
     }
-    
-    
     
 }

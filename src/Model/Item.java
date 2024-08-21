@@ -1,20 +1,45 @@
 package Model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-/**
- *
- * @author VIDEO
- */
-public class Item {
+@Entity
+public class Item implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item;
+    
+    @Column(nullable = false, length = 60)
     private String nome_item;
+    @Column(length = 150)
     private String descricao_item;
+    
+    @Column(nullable = false)
     private Double valor_item;
-    private Date data_preco_item;
+    
+    private LocalDate data_preco_item;
+    
     private int quantidade;
     private Double preco_custo_item;
     private char tipo_item;
+
+    public Item() {
+    }
+
+    public Item(String nome_item, Double preco_custo_item, Double valor_item, LocalDate data_preco_item, int quantidade, char tipo_item, String descricao_item) {
+        this.nome_item = nome_item;
+        this.preco_custo_item = preco_custo_item;
+        this.valor_item = valor_item;
+        this.data_preco_item = data_preco_item;
+        this.quantidade = quantidade;
+        this.tipo_item = tipo_item;
+        this.descricao_item = descricao_item;
+    }
 
     public int getId_item() {
         return id_item;
@@ -48,11 +73,11 @@ public class Item {
         this.valor_item = valor_item;
     }
 
-    public Date getData_preco_item() {
+    public LocalDate getData_preco_item() {
         return data_preco_item;
     }
 
-    public void setData_preco_item(Date data_preco_item) {
+    public void setData_preco_item(LocalDate data_preco_item) {
         this.data_preco_item = data_preco_item;
     }
 

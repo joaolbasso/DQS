@@ -1,16 +1,58 @@
 package Model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-/**
- *
- * @author VIDEO
- */
-public class Venda {
+@Entity
+public class Venda implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_venda;
+    
+    @Column(nullable = false)
     private Double valor_venda;
-    private Date data_venda;
+    
+    private LocalDate data_venda;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "ITENS_VENDA", joinColumns = @JoinColumn(name = "id_venda"),
+            inverseJoinColumns = @JoinColumn(name = "id_item_venda"))
+    private Collection<Item_venda> itens_venda = new ArrayList<Item_venda>();
 
+    
+    public Collection<Item_venda> getItens_venda() {
+        return itens_venda;
+    }
+
+    public void setItens_venda(Collection<Item_venda> itens_venda) {
+        this.itens_venda = itens_venda;
+    }
+    
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
     public int getId_venda() {
         return id_venda;
     }
@@ -27,11 +69,11 @@ public class Venda {
         this.valor_venda = valor_venda;
     }
 
-    public Date getData_venda() {
+    public LocalDate getData_venda() {
         return data_venda;
     }
 
-    public void setData_venda(Date data_venda) {
+    public void setData_venda(LocalDate data_venda) {
         this.data_venda = data_venda;
     }
     

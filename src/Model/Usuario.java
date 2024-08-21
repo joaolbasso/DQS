@@ -1,8 +1,41 @@
 package Model;
-public class Usuario {
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Usuario implements Serializable {
+    
+    @Id
+    @GeneratedValue
+    private int id_usuario;
+    
+    @Column(nullable = false, unique = true, length = 50)
     private String usuario;
+    
+    @Column(nullable = false, length = 50)
     private String senha;
 
+    public Usuario() {
+    }
+
+    public Usuario(String usuario, String senha) {
+        this.usuario = usuario;
+        this.senha = senha;
+    }
+    
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    
     public String getUsuario() {
         return usuario;
     }

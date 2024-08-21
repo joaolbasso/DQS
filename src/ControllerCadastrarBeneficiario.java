@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 
+import DAO.BeneficiarioDAO;
+import Model.Beneficiario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,14 +30,18 @@ public class ControllerCadastrarBeneficiario implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
-    public void registrarDespesa(ActionEvent event) {
-        System.out.println(txtfldNomeBeneficiario.getText());
+    public void registrarBeneficiario(ActionEvent event) {
+        Beneficiario beneficiario = new Beneficiario(txtfldNomeBeneficiario.getText());
+        BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
+        beneficiarioDAO.insert(beneficiario);
     }
     
     public void limparCampos(ActionEvent event) {

@@ -1,12 +1,27 @@
 package Model;
 
-/**
- *
- * @author VIDEO
- */
-public class Beneficiario {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Beneficiario implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_beneficiario;
+    
+    @Column(length = 50, unique = true)
     private String nome_beneficiario;
+
+    public Beneficiario() {
+    }
+
+    public Beneficiario(String nome_beneficiario) {
+        this.nome_beneficiario = nome_beneficiario;
+    }
 
     public int getId_beneficiario() {
         return id_beneficiario;

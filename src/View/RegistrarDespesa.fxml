@@ -127,7 +127,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="txtfldDescricao" layoutX="39.0" layoutY="409.0" prefHeight="140.0" prefWidth="506.0">
+            <TextField fx:id="txtfldDescricao" alignment="TOP_LEFT" layoutX="39.0" layoutY="409.0" prefHeight="140.0" prefWidth="506.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
