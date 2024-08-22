@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamento">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamento">
     <stylesheets>
         <URL value="@/View/CSS/venda.css" />
     </stylesheets>
@@ -31,9 +31,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="79.0" layoutY="161.0" prefHeight="35.0" prefWidth="136.0" text="Valor Venda:">
+      <Label layoutX="79.0" layoutY="115.0" prefHeight="67.0" prefWidth="190.0" text="Valor Venda:">
          <font>
-            <Font size="24.0" />
+            <Font size="26.0" />
          </font>
       </Label>
       <TextField fx:id="txtfldValorRecebido" layoutX="79.0" layoutY="256.0" prefHeight="35.0" prefWidth="190.0">
@@ -57,9 +57,9 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Label layoutX="253.0" layoutY="104.0" prefHeight="35.0" prefWidth="95.0" text="Venda X">
+      <Label fx:id="lblValorVenda" layoutX="247.0" layoutY="122.0" text="R$">
          <font>
-            <Font size="24.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
       </Label>
    </children>

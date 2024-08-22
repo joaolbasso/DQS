@@ -60,7 +60,7 @@ public class Item_venda implements Serializable {
     }
 
     public Double getValor_unitario() {
-        return this.getQuantidade() * this.valor_unitario;
+        return this.getQuantidade() * this.item.getValor_item();
     }
 
     public void setValor_unitario(Double valor_unitario) {
