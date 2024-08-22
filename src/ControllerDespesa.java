@@ -32,6 +32,16 @@ import javafx.stage.Stage;
 
 public class ControllerDespesa implements Initializable {
 
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    private Button btnRegistrarDespesa;
+    
     @FXML
     private TableView<Despesa> tbvwDespesas;
 
@@ -297,6 +307,7 @@ public class ControllerDespesa implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cena);
         window.show();
+        
     }
     
     @FXML
