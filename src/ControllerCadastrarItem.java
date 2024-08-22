@@ -23,6 +23,23 @@ import javax.swing.JOptionPane;
 
 public class ControllerCadastrarItem implements Initializable {
     
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
+    
     @FXML
     private TextField txtfldNomeItem;
     
@@ -47,13 +64,6 @@ public class ControllerCadastrarItem implements Initializable {
     @FXML
     private ToggleGroup tipoItem;
     
-    public void voltarParaItens(ActionEvent event) throws IOException {
-        Parent itemView = FXMLLoader.load(getClass().getResource("/View/Item.fxml"));
-        Scene itemScene = new Scene(itemView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(itemScene);
-        window.show();
-    }
     
     public void cadastrarItem(ActionEvent event) throws IOException {
         //Ver sobre clicar no botão com campos vazios, fazer os campos não receberem caracteres inválidos

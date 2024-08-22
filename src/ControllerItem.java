@@ -27,6 +27,22 @@ import org.hibernate.PropertyValueException;
  */
 public class ControllerItem implements Initializable {
 
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
     
     @FXML
     private Button btnRegistrarItem;
@@ -62,29 +78,39 @@ public class ControllerItem implements Initializable {
     ItemDAO itemDAO = new ItemDAO();
     ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
     
+
     public void entrarCadastrarItem(ActionEvent event) throws IOException {
-        Parent cadastrarItemView = FXMLLoader.load(getClass().getResource("/View/CadastrarItem.fxml"));
+        // Carregar a nova tela
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarItem.fxml"));
+        Parent cadastrarItemView = loader.load();
+
+        // Obter o controlador da nova tela
+        ControllerCadastrarItem controllerCadastrarItem = loader.getController();
+
+        // Definir a cena atual como a anterior no controlador da nova tela
+        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+
+        // Mudar para a nova cena
         Scene cadastrarItemScene = new Scene(cadastrarItemView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarItemScene);
         window.show();
     }
+
     
-        private <T> void centralizarTextoNaColuna(TableColumn<T, String> coluna) {
-    coluna.setCellFactory(column -> {
-        return new TableCell<T, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    setStyle("-fx-alignment: CENTER;");
-                }
+    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    coluna.setCellFactory(column -> new TableCell<T, U>() {
+        @Override
+        protected void updateItem(U item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+                setText(null);
+                setStyle("");
+            } else {
+                setText(item.toString());
+                setStyle("-fx-alignment: CENTER;");
             }
-        };
+        }
     });
 }
     
@@ -99,7 +125,11 @@ public class ControllerItem implements Initializable {
         quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tipo_item.setCellValueFactory(new PropertyValueFactory<>("tipo_item"));
         
+        centralizarTextoNaColuna(id_item);
         centralizarTextoNaColuna(nome_item);
+        centralizarTextoNaColuna(valor_item);
+        centralizarTextoNaColuna(quantidade);
+        centralizarTextoNaColuna(tipo_item);
         
         tbvwItens.setItems(itens);
     }    

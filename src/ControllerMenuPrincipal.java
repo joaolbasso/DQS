@@ -1,9 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,36 +29,68 @@ public class ControllerMenuPrincipal implements Initializable {
     
     @FXML
     public void entrarCaixa(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/Caixa.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Caixa.fxml"));
+        Parent caixaView = loader.load();
+        
+        // Obter o controlador da nova tela
+        ControllerCaixa controller = loader.getController();
+        
+        // Passar a cena atual (Menu Principal) para o controlador da nova tela
+        controller.setCenaAnterior(((Node) event.getSource()).getScene());
+
         Scene caixaScene = new Scene(caixaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(caixaScene);
         window.show();
     }
     
     @FXML
     public void entrarDespesas(ActionEvent event) throws IOException {
-        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Despesa.fxml"));
+        Parent despesaView = loader.load();
+        
+        // Obter o controlador da nova tela
+        ControllerDespesa controller = loader.getController();
+        
+        // Passar a cena atual (Menu Principal) para o controlador da nova tela
+        controller.setCenaAnterior(((Node) event.getSource()).getScene());
+
         Scene despesaScene = new Scene(despesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(despesaScene);
         window.show();
     }
     
     @FXML
     public void entrarClientes(ActionEvent event) throws IOException {
-        Parent clienteView = FXMLLoader.load(getClass().getResource("/View/Cliente.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Cliente.fxml"));
+        Parent clienteView = loader.load();
+        
+        // Obter o controlador da nova tela
+        ControllerCliente controller = loader.getController();
+        
+        // Passar a cena atual (Menu Principal) para o controlador da nova tela
+        controller.setCenaAnterior(((Node) event.getSource()).getScene());
+
         Scene clienteScene = new Scene(clienteView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(clienteScene);
         window.show();
     }
     
     @FXML
     public void entrarItens(ActionEvent event) throws IOException {
-        Parent itemView = FXMLLoader.load(getClass().getResource("/View/Item.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Item.fxml"));
+        Parent itemView = loader.load();
+        
+        // Obter o controlador da nova tela
+        ControllerItem controller = loader.getController();
+        
+        // Passar a cena atual (Menu Principal) para o controlador da nova tela
+        controller.setCenaAnterior(((Node) event.getSource()).getScene());
+
         Scene itemScene = new Scene(itemView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(itemScene);
         window.show();
     }

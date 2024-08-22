@@ -29,12 +29,24 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerRegistrarDespesa implements Initializable {
+    
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
     
     @FXML
     private TextField txtfldNomeDespesa;
@@ -55,21 +67,25 @@ public class ControllerRegistrarDespesa implements Initializable {
     @FXML
     private TextField txtfldDescricao;
     
-    public void voltarParaDespesa(ActionEvent event) throws IOException {
-        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/Despesa.fxml"));
-        Scene despesaScene = new Scene(despesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(despesaScene);
-        window.show();
-    }
     
     public void entrarCadastrarBeneficiario(ActionEvent event) throws IOException {
-        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
-        Scene despesaScene = new Scene(despesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(despesaScene);
-        window.show();
-    }
+    // Carregar a nova tela
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
+    Parent cadastrarBeneficiarioView = loader.load();
+
+    // Obter o controlador da nova tela
+    ControllerCadastrarBeneficiario controllerCadastrarBeneficiario = loader.getController();
+
+    // Definir a cena atual como a anterior no controlador da nova tela
+    controllerCadastrarBeneficiario.setCenaAnterior(((Node) event.getSource()).getScene());
+
+    // Mudar para a nova cena
+    Scene cadastrarBeneficiarioScene = new Scene(cadastrarBeneficiarioView);
+    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    window.setScene(cadastrarBeneficiarioScene);
+    window.show();
+}
+
     
     @FXML
     public void registrarDespesa(ActionEvent event) {
@@ -139,14 +155,13 @@ public class ControllerRegistrarDespesa implements Initializable {
         LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
         LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
         String descricao_despesa = txtfldDescricao.getText();
-        //Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
+        Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
 
-        if (/*beneficiario == null ||*/ nome_despesa.isEmpty() || valor_despesa == null) {
-            // Retornar null ou lançar uma exceção personalizada caso algum campo obrigatório esteja vazio.
+        if (nome_despesa.isEmpty() || valor_despesa.isNaN()) {
             return null;
         }
 
-        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa); //beneficiario);
+        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
     } catch (NumberFormatException e) {
         // Tratar caso o valor da despesa não seja um número válido.
         e.printStackTrace();
