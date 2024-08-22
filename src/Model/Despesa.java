@@ -1,4 +1,3 @@
-
 package Model;
 
 import java.io.Serializable;
@@ -30,16 +29,47 @@ public class Despesa implements Serializable {
     
     private LocalDate data_pagamento_despesa;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_beneficiario")
     private Beneficiario beneficiario;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_item_caixa")
     private Item_caixa item_caixa;
 
     public Despesa() {
     }
+
+    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa) {
+        this.nome_despesa = nome_despesa;
+        this.valor_despesa = valor_despesa;
+        this.descricao_despesa = descricao_despesa;
+        this.recorrencia_despesa = recorrencia_despesa;
+        this.data_vencimento_despesa = data_vencimento_despesa;
+        this.data_pagamento_despesa = data_pagamento_despesa;
+    }
+
+    
+    
+    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa, Beneficiario beneficiario) {
+        this.nome_despesa = nome_despesa;
+        this.valor_despesa = valor_despesa;
+        this.descricao_despesa = descricao_despesa;
+        this.recorrencia_despesa = recorrencia_despesa;
+        this.data_vencimento_despesa = data_vencimento_despesa;
+        this.data_pagamento_despesa = data_pagamento_despesa;
+        this.beneficiario = beneficiario;
+    }
+
+    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, Beneficiario beneficiario) {
+        this.nome_despesa = nome_despesa;
+        this.valor_despesa = valor_despesa;
+        this.descricao_despesa = descricao_despesa;
+        this.recorrencia_despesa = recorrencia_despesa;
+        this.beneficiario = beneficiario;
+    }
+    
+    
 
     public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa, Beneficiario beneficiario, Item_caixa item_caixa) {
         this.nome_despesa = nome_despesa;
@@ -99,8 +129,6 @@ public class Despesa implements Serializable {
     public void setItem_caixa(Item_caixa item_caixa) {
         this.item_caixa = item_caixa;
     }
-    
-    
     
     public int getId_despesa() {
         return id_despesa;

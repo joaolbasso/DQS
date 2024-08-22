@@ -1,7 +1,9 @@
+import Config.MascarasFX;
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import Model.Cidade;
 import Model.Cliente;
+import Model.Estado;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -54,7 +56,7 @@ public class ControllerCadastrarCliente implements Initializable {
     private ComboBox<Cidade> cmbboxCidade;
     
     @FXML
-    private ComboBox<String> cmbboxEstado;
+    private ComboBox<Estado> cmbboxEstado;
     
     @FXML
     private TextField txtfldCEP;
@@ -75,26 +77,34 @@ public class ControllerCadastrarCliente implements Initializable {
         Cliente cliente = criarCliente();
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.insert(cliente);
+        limpezaCampos();
     }
     
     public void limparCampos(ActionEvent event) throws IOException {
         int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (resposta == JOptionPane.YES_OPTION) {
-            txtfldNome.setText("");
-            txtfldCPF.setText("");
-            txtfldTelefone.setText("");
-            txtfldCEP.setText("");
-            txtfldLogradouro.setText("");
-            txtfldNumero.setText("");
-            txtfldComplemento.setText("");
-            txtfldBairro.setText("");
+            limpezaCampos();
         }
+    }
+    
+    private void limpezaCampos() {
+        txtfldNome.setText("");
+        txtfldCPF.setText("");
+        txtfldTelefone.setText("");
+        txtfldCEP.setText("");
+        txtfldLogradouro.setText("");
+        txtfldNumero.setText("");
+        txtfldComplemento.setText("");
+        txtfldBairro.setText("");
     }
     
     private Cliente criarCliente() {
         String nome_cliente = txtfldNome.getText();
         String telefone = txtfldTelefone.getText();
         String cpf = txtfldCPF.getText();
+        
+        System.out.println(cpf);
+        
         String cep = txtfldCEP.getText();
         String logradouro = txtfldLogradouro.getText();
         String bairro = txtfldBairro.getText();
@@ -107,7 +117,12 @@ public class ControllerCadastrarCliente implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*
+        
+        MascarasFX.mascaraCPF(txtfldCPF);
+        //MascarasFX.mascaraCEP(txtfldCEP);
+        //MascarasFX.mascaraTelefone(txtfldTelefone);
+        
+        
         CidadeDAO cidadeDAO = new CidadeDAO();
         
         ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
@@ -127,6 +142,6 @@ public class ControllerCadastrarCliente implements Initializable {
         
         cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
         cmbboxCidade.setValue(cidades.get(347));
-*/
+
     }    
 }

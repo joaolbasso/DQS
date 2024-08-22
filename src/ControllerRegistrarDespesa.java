@@ -1,11 +1,16 @@
+import DAO.BeneficiarioDAO;
+import DAO.CidadeDAO;
 import DAO.DespesaDAO;
 import Model.Beneficiario;
+import Model.Cidade;
 import Model.Despesa;
 import Model.Item;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,17 +21,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerRegistrarDespesa implements Initializable {
     
     private Scene cenaAnterior;
@@ -55,8 +57,7 @@ public class ControllerRegistrarDespesa implements Initializable {
     @FXML
     private RadioButton rbtnPago, rbtnASerPago;
     @FXML
-    private ComboBox<String> cmbboxBeneficiario;
-    private String[] beneficiarios = {"LUZ", "AGUA", "INTERNET"}; //Essa collection virá do Banco de DADOS
+    private ComboBox<Beneficiario> cmbboxBeneficiario;
     @FXML
     private Button btnCadastrarBeneficiario;
     @FXML
@@ -86,11 +87,28 @@ public class ControllerRegistrarDespesa implements Initializable {
 }
 
     
-    public void registrarDespesa(ActionEvent event) throws IOException {
-        //Despesa despesaSalvar = criarDespesa();
-        DespesaDAO despesa = new DespesaDAO();
-        //despesa.insert(despesaSalvar);
+    @FXML
+    public void registrarDespesa(ActionEvent event) {
+        try {
+            Despesa despesaSalvar = criarDespesa();
+        if (despesaSalvar != null) {
+            
+            
+            System.out.println(despesaSalvar.getNome_despesa());
+            
+            DespesaDAO despesaDAO = new DespesaDAO();
+            System.out.println("ANTES DO INSERT");
+            despesaDAO.insert(despesaSalvar);
+            System.out.println("PASSOU DO INSERT");
+            limparCampos(event); // Limpa os campos após o registro
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir a DESPESA!", "Erro ao inserir", 1);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Exibir mensagem de erro ao usuário
     }
+}
     
     public void limparCampos(ActionEvent event) throws IOException {
         txtfldNomeDespesa.setText("");
@@ -103,27 +121,53 @@ public class ControllerRegistrarDespesa implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         SpinnerValueFactory<Integer> valueFactory = 
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30);
-        
         valueFactory.setValue(0);
         spnrRecorrente.setValueFactory(valueFactory);
         
+        BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
         
+        ObservableList<Beneficiario> beneficiarios = FXCollections.observableArrayList(beneficiarioDAO.todosOsBeneficiarios());
+        cmbboxBeneficiario.setItems(beneficiarios);
         
-        cmbboxBeneficiario.getItems().addAll(beneficiarios);
+        cmbboxBeneficiario.setCellFactory(cell -> new ListCell<Beneficiario>() {
+            @Override
+            protected void updateItem(Beneficiario beneficiario, boolean empty) {
+                super.updateItem(beneficiario, empty);
+                if (empty || beneficiario == null) {
+                    setText(null);
+                } else {
+                    setText(beneficiario.getNome_beneficiario());
+                }
+            }
+        });
+        
+        cmbboxBeneficiario.setButtonCell(cmbboxBeneficiario.getCellFactory().call(null));
+        
     }    
-/*
+
     private Despesa criarDespesa() {
+    try {
         String nome_despesa = txtfldNomeDespesa.getText();
         Double valor_despesa = Double.valueOf(txtfldValor.getText());
         int recorrencia_despesa = spnrRecorrente.getValue();
         LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
         LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
         String descricao_despesa = txtfldDescricao.getText();
-        
-        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
+        Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
+
+        if (nome_despesa.isEmpty() || valor_despesa.isNaN()) {
+            return null;
+        }
+
+        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
+    } catch (NumberFormatException e) {
+        // Tratar caso o valor da despesa não seja um número válido.
+        e.printStackTrace();
+        return null;
     }
-    */
+}
+    
+    
 }

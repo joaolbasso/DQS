@@ -22,7 +22,7 @@ public class Cidade implements Serializable {
     @Column(nullable = false, length = 50)
     private String nome_cidade;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_estado")
     private Estado estado;
 

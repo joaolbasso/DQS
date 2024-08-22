@@ -35,10 +35,13 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TableView layoutX="24.0" layoutY="312.0" prefHeight="476.0" prefWidth="1273.0">
+      <TableView fx:id="tbvwItens" layoutX="198.0" layoutY="307.0" prefHeight="479.0" prefWidth="925.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn fx:id="id_item" prefWidth="100.0" text="Id" />
+            <TableColumn fx:id="nome_item" prefWidth="457.0" text="Nome" />
+            <TableColumn fx:id="valor_item" minWidth="0.0" prefWidth="139.0" text="Valor" />
+            <TableColumn fx:id="quantidade" prefWidth="78.0" text="Quantidade" />
+            <TableColumn fx:id="tipo_item" prefWidth="149.0" text="Tipo" />
          </columns>
       </TableView>
       <SplitMenuButton layoutX="141.0" layoutY="250.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0" text="Nome">

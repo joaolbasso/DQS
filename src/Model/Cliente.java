@@ -36,7 +36,7 @@ public class Cliente implements Serializable {
     @Column(length = 60)
     private String complemento;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 

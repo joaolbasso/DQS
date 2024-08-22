@@ -1,16 +1,19 @@
+import DAO.BeneficiarioDAO;
 import DAO.CidadeDAO;
+import Model.Beneficiario;
 import Model.Caixa;
 import Model.Estado;
 import Model.Usuario;
 import Model.Cidade;
 import Model.Cliente;
+import Model.Despesa;
 import Model.Item;
 import Model.Item_caixa;
 import Model.Item_venda;
 import Model.Pagamento;
 import Model.Parcela;
 import Model.Venda;
-import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -48,12 +51,35 @@ public class TesteHib {
         
         
         
+        
+        /*
+            BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
+            List<Beneficiario> benefiL = beneficiarioDAO.todosOsBeneficiarios();
+            Beneficiario bene = benefiL.get(2);
+            Despesa despesa = new Despesa("Linguiça", 41.00, "Linguiça do pote", 0,bene);
+            gerente.persist(despesa);
+          */  
+        
         gerente.getTransaction().begin();
-            CidadeDAO cidadeDAO = new CidadeDAO();
-            Cidade cidade = gerente.find(Cidade.class, 348);
-            Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406834", "07886858998", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
-            gerente.persist(cliente);
+        /*
+        Despesa edit = gerente.find(Despesa.class, 6);
+        edit.setValor_despesa(100.00);
+        gerente.merge(edit);
+        */
+        
+        Despesa delete = gerente.find(Despesa.class, 7);
+        gerente.remove(delete);
+        
+        
+        
         gerente.getTransaction().commit();
+        /*
+            CidadeDAO cidadeDAO = new CidadeDAO();
+            Cidade cidade = cidadeDAO.buscaCidadePorId(348);
+            Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406830", "10086858990", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
+            gerente.persist(cliente);
+        */
+        
         
         /*
         Exemplo pegando do BANCO
@@ -68,7 +94,6 @@ public class TesteHib {
         
         gerente.close();
         fabrica.close();
-        
         
     }
 }
