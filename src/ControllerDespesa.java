@@ -24,7 +24,22 @@ import javafx.stage.Stage;
 
 public class ControllerDespesa implements Initializable {
 
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
     @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+
     private Button btnRegistrarDespesa;
     
     @FXML
@@ -45,23 +60,30 @@ public class ControllerDespesa implements Initializable {
     @FXML
     private TableColumn<Despesa, String> beneficiario = new TableColumn<>("Beneficiario");
     
-    
-    
-    public void voltarMenuPrincipal(ActionEvent event) throws IOException {
-        Parent menuPrincipalView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
-        Scene MenuPrincipalScene = new Scene(menuPrincipalView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(MenuPrincipalScene);
-        window.show();
     }
     
+    @FXML
+    private Button btnRegistrarDespesa;
+    
+    @FXML
     public void entrarRegistrarDespesa(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/RegistrarDespesa.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
+        // Carregar a nova tela
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/RegistrarDespesa.fxml"));
+        Parent registrarDespesaView = loader.load();
+
+        // Obter o controller da nova tela
+        ControllerRegistrarDespesa controllerRegistrarDespesa = loader.getController();
+
+        // Definir a cena atual como a anterior no controller da nova tela
+        controllerRegistrarDespesa.setCenaAnterior(((Node) event.getSource()).getScene());
+
+        // Mudar para a nova cena
+        Scene registrarDespesaScene = new Scene(registrarDespesaView);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(registrarDespesaScene);
         window.show();
     }
+
     
     public void editarDespesa(ActionEvent event) throws IOException {
         Parent despesaView = FXMLLoader.load(getClass().getResource("/View/EditarDespesa.fxml"));

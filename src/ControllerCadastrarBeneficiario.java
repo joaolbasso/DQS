@@ -25,6 +25,24 @@ import javafx.stage.Stage;
  */
 public class ControllerCadastrarBeneficiario implements Initializable {
 
+    
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
+    
     @FXML
     private TextField txtfldNomeBeneficiario;
     
@@ -46,13 +64,6 @@ public class ControllerCadastrarBeneficiario implements Initializable {
     
     public void limparCampos(ActionEvent event) {
         txtfldNomeBeneficiario.setText("");
-    }
-    public void voltarParaDespesa(ActionEvent event) throws IOException {
-        Parent registrarDespesaView = FXMLLoader.load(getClass().getResource("/View/RegistrarDespesa.fxml"));
-        Scene registrarDespesaScene = new Scene(registrarDespesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(registrarDespesaScene);
-        window.show();
     }
     
     

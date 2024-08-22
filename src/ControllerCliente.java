@@ -32,6 +32,22 @@ import javafx.stage.Stage;
  */
 public class ControllerCliente implements Initializable {
 
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
     
     @FXML
     private Button btnRegistrarCliente;
@@ -52,22 +68,24 @@ public class ControllerCliente implements Initializable {
     private TableView<Cliente> tbvwClientes;
     
     @FXML
-    public void voltarMenuPrincipal(ActionEvent event) throws IOException {
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
-        Scene caixaScene = new Scene(caixaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(caixaScene);
-        window.show();
-    }
-    
-    @FXML
     public void entrarCadastrarCliente(ActionEvent event) throws IOException {
-        Parent cadastrarClienteView = FXMLLoader.load(getClass().getResource("/View/CadastrarCliente.fxml"));
+        // Carregar a nova tela
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
+        Parent cadastrarClienteView = loader.load();
+
+        // Obter o controller da nova tela
+        ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
+
+        // Definir a cena atual como a anterior no controller da nova tela
+        controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
+
+        // Mudar para a nova cena
         Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarClienteScene);
         window.show();
     }
+
     
     ClienteDAO clienteDAO = new ClienteDAO();
     ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());

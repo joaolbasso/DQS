@@ -23,20 +23,61 @@ import javafx.stage.Stage;
  */
 public class ControllerCaixa implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
     
     @FXML
-    public void voltarMenuPrincipal(ActionEvent event) throws IOException {
-        
-        Parent caixaView = FXMLLoader.load(getClass().getResource("/View/MenuPrincipal.fxml"));
+    public void cadastrarItem(ActionEvent event) throws IOException {
+        // Carregar a nova tela
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarItem.fxml"));
+        Parent caixaView = loader.load();
+
+        // Obter o controller da nova tela
+        ControllerCadastrarItem controllerCadastrarItem = loader.getController();
+
+        // Definir a cena atual como a anterior no controller da nova tela
+        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+
+        // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);
-        
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(caixaScene);
         window.show();
     }
+    
+    @FXML
+    public void finalizarVenda(ActionEvent event) throws IOException {
+        // Carregar a nova tela
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Pagamento.fxml"));
+        Parent caixaView = loader.load();
+
+        // Obter o controller da nova tela
+        ControllerPagamento controllerPagamento = loader.getController();
+
+        // Definir a cena atual como a anterior no controller da nova tela
+        controllerPagamento.setCenaAnterior(((Node) event.getSource()).getScene());
+
+        // Mudar para a nova cena
+        Scene caixaScene = new Scene(caixaView);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(caixaScene);
+        window.show();
+    }
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
