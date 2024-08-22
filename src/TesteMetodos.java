@@ -53,11 +53,17 @@ public class TesteMetodos {
        // gerente.close();
         //fabrica.close();
         
-        Item_venda item_venda = new Item_venda();
-        item_venda.setQuantidade(5);
-        item_venda.setValor_unitario(10.00);
+        //Item_venda item_venda = new Item_venda();
+        //item_venda.setQuantidade(5);
+        //item_venda.setValor_unitario(10.00);
         
-        System.out.println(item_venda.getValor_unitario());
+        int n1 = 3;
+        Double n2 = 4.0;
+        
+        System.out.println(n2*n1);
+                
+        
+        //System.out.println(item_venda.getValor_unitario());
         
                
     }

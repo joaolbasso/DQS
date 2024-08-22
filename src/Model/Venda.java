@@ -36,6 +36,12 @@ public class Venda implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_item_venda"))
     private Collection<Item_venda> itens_venda = new ArrayList<Item_venda>();
 
+    public Venda(Double valor_venda, LocalDate data_venda, Cliente cliente, ArrayList<Item_venda> itensDaVenda) {
+        this.valor_venda = valor_venda;
+        this.data_venda = data_venda;
+        this.cliente = cliente;
+        this.itens_venda = itensDaVenda;
+    }
     
     public Collection<Item_venda> getItens_venda() {
         return itens_venda;
