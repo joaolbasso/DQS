@@ -5,6 +5,7 @@ import DAO.ClienteDAO;
 import Model.Beneficiario;
 import Model.Cidade;
 import Model.Cliente;
+import Model.Item_venda;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,8 +15,8 @@ import javax.persistence.Persistence;
 public class TesteMetodos {
     public static void main(String[] args) {
         
-        EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("DQSPU");
-        EntityManager gerente = fabrica.createEntityManager();
+        //EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("DQSPU");
+        //EntityManager gerente = fabrica.createEntityManager();
         /*
         CidadeDAO cidadaDAO = new CidadeDAO();
         Cidade cidade = cidadaDAO.buscaCidadePorId(348);
@@ -43,14 +44,21 @@ public class TesteMetodos {
         }
         */
         
-        ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> clientes = clienteDAO.todosOsClientes();
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente.getNome_cliente());
-        }
+       // ClienteDAO clienteDAO = new ClienteDAO();
+        //List<Cliente> clientes = clienteDAO.todosOsClientes();
+        //for (Cliente cliente : clientes) {
+        //    System.out.println(cliente.getNome_cliente());
+       // }
         
-        gerente.close();
-        fabrica.close();
+       // gerente.close();
+        //fabrica.close();
+        
+        Item_venda item_venda = new Item_venda();
+        item_venda.setQuantidade(5);
+        item_venda.setValor_unitario(10.00);
+        
+        System.out.println(item_venda.getValor_unitario());
+        
                
     }
 }

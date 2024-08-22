@@ -26,6 +26,15 @@ public class Item_venda implements Serializable {
     @JoinColumn(name = "id_item")
     private Item item; //Serviço ou Produto
 
+    public Item_venda() {
+    }
+
+    public Item_venda(int quantidade, Double valor_unitario, Item item) {
+        this.quantidade = quantidade;
+        this.valor_unitario = valor_unitario;
+        this.item = item;
+    }
+    
     public int getId_item_venda() {
         return id_item_venda;
     }
@@ -51,7 +60,7 @@ public class Item_venda implements Serializable {
     }
 
     public Double getValor_unitario() {
-        return valor_unitario;
+        return this.getQuantidade() * this.valor_unitario;
     }
 
     public void setValor_unitario(Double valor_unitario) {

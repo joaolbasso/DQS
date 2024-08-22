@@ -44,7 +44,6 @@ public class ControllerEditarDespesa implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        controllerDespesa.getId_Despesa_selecionada();
     }    
     
 }

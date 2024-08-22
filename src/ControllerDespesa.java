@@ -32,14 +32,6 @@ public class ControllerDespesa implements Initializable {
     }
 
     @FXML
-    public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
-
     private Button btnRegistrarDespesa;
     
     @FXML
@@ -60,10 +52,15 @@ public class ControllerDespesa implements Initializable {
     @FXML
     private TableColumn<Despesa, String> beneficiario = new TableColumn<>("Beneficiario");
     
-    }
-    
     @FXML
-    private Button btnRegistrarDespesa;
+    public void voltar(ActionEvent event) throws IOException {
+        // Retornar para a cena anterior se existir
+        if (cenaAnterior != null) {
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
     
     @FXML
     public void entrarRegistrarDespesa(ActionEvent event) throws IOException {
