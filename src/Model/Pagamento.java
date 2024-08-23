@@ -28,6 +28,17 @@ public class Pagamento implements Serializable {
     @JoinColumn(name = "id_parcela")
     private Parcela parcela;
 
+    public Pagamento() {
+    }
+
+    //Pagamento a vista
+    public Pagamento(char metodo_pagamento, LocalDate data_pagamento, Double valor_pagamento, Parcela parcela) {
+        this.metodo_pagamento = metodo_pagamento;
+        this.data_pagamento = data_pagamento;
+        this.valor_pagamento = valor_pagamento;
+        this.parcela = parcela;
+    }
+    
     public Parcela getParcela() {
         return parcela;
     }

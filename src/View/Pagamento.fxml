@@ -31,7 +31,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="79.0" layoutY="115.0" prefHeight="67.0" prefWidth="190.0" text="Valor Venda:">
+      <Label layoutX="79.0" layoutY="115.0" prefHeight="67.0" prefWidth="152.0" text="Valor Venda:">
          <font>
             <Font size="26.0" />
          </font>
@@ -62,5 +62,6 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
+      <Button layoutX="31.0" layoutY="261.0" mnemonicParsing="false" onAction="#insereValorMaximo" prefHeight="24.0" prefWidth="42.0" text="Máx." />
    </children>
 </AnchorPane>

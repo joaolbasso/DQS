@@ -29,6 +29,25 @@ import javafx.stage.Stage;
 
 public class ControllerItem implements Initializable {
 
+    private Scene cenaAnterior;
+
+    // Método para definir a cena anterior
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        if (cenaAnterior != null) {
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cenaAnterior);
+            window.show();
+        }
+    }
+    
+    @FXML
+    private Button btnRegistrarItem;
+    
     @FXML
     private TableView<Item> tbvwItens;
     
