@@ -143,17 +143,11 @@ public class ControllerCaixa implements Initializable {
         //Quando o usuário clicar em finalizar, pegar a lista local e adicionar a uma Venda associada.
         //ao finalizar adicionar ao ArrayList<> daquela Venda todos os itens_vendas criados
         Cliente cliente = cmbboxCliente.getSelectionModel().getSelectedItem();
-        if (cliente == null) {
-            JOptionPane.showMessageDialog(null, "Selecione um cliente!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        return;
-        }
-
         LocalDate data = dtpkrDataVenda.getValue();
-        if (data == null) {
-            JOptionPane.showMessageDialog(null, "Selecione uma data válida!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        if (data == null || data.isAfter(LocalDate.now())) {
+            JOptionPane.showMessageDialog(null, "Não é possível atribuir data futura!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         return;
 }
-        
         if (itensDaVenda.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Adicione itens à venda antes de finalizar!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         return;
@@ -312,13 +306,13 @@ public class ControllerCaixa implements Initializable {
         return item_venda;
     }
 
-    private void atualizaComboBoxItem() {
+    public void atualizaComboBoxItem() {
         ItemDAO itemDAO = new ItemDAO();
         ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
         cmbboxItem.setItems(itens);
     }
     
-    private void atualizaComboBoxCliente() {
+    public void atualizaComboBoxCliente() {
         ClienteDAO clienteDAO = new ClienteDAO();
         ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
         cmbboxCliente.setItems(clientes);

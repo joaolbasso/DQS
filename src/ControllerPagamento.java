@@ -1,8 +1,17 @@
+import DAO.PagamentoDAO;
+import DAO.ParcelaDAO;
+import DAO.VendaDAO;
+import Model.Pagamento;
+import Model.Parcela;
 import Model.Venda;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +30,6 @@ public class ControllerPagamento implements Initializable {
 
     private Scene cenaAnterior;
     private Venda venda;
-
     
     @FXML
     private Label lblValorVenda;
@@ -30,7 +38,7 @@ public class ControllerPagamento implements Initializable {
     private Button btnConcluir;
     
     @FXML
-    private ComboBox<String> cmbboxMetodoPagamento; //Ver as regras de adição no Dicionario de Dados;
+    private ComboBox<String> cmbboxMetodoPagamento;
     
     @FXML
     private TextField txtfldValorRecebido;
@@ -65,9 +73,36 @@ public class ControllerPagamento implements Initializable {
     }
 
     @FXML
+    public void insereValorMaximo(ActionEvent event) throws IOException {
+        txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
+    }
+    
+    @FXML
     public void concluirVenda(ActionEvent event) throws IOException {
+        
+        if (Double.valueOf(txtfldValorRecebido.getText()) > this.venda.getValor_venda()) {
+            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (cmbboxMetodoPagamento.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um método de pagamento!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
+            char metodo_pagamento = cmbboxMetodoPagamento.getSelectionModel().getSelectedItem().charAt(0);
+            
+            Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), metodo_pagamento, this.venda);
+            Pagamento pagamento = new Pagamento(metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
+            
+            /*
+            Ver persistência, acho que está faltando persistir alguém para associar antes, ta dando erro meio silencioso
+            */
+
+            
             JOptionPane.showMessageDialog(null, "Venda registrada com sucesso!", "Venda com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            //voltar(event);
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
             Parent pagamentoView = loader.load();
@@ -85,16 +120,17 @@ public class ControllerPagamento implements Initializable {
         }
     }
 
+    ObservableList<String> metodos_pagamento = FXCollections.observableArrayList("Espécie", "PIX", "Débito", "Crédito");
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        cmbboxMetodoPagamento.setItems(metodos_pagamento);
     }    
 
     private void atualizarValorVenda() {
         if (venda != null) {
             lblValorVenda.setText(String.format("R$ %.2f", venda.getValor_venda()));
-    }
-        
+        }
     }
     
 }

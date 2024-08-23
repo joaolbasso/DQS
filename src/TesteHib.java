@@ -13,6 +13,7 @@ import Model.Item_venda;
 import Model.Pagamento;
 import Model.Parcela;
 import Model.Venda;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +23,7 @@ public class TesteHib {
     public static void main(String[] args) {
         EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("DQSPU");
         EntityManager gerente = fabrica.createEntityManager();
-        /*
+        gerente.getTransaction().begin();
         Item_venda iv3 = new Item_venda();
         Item_venda iv4 = new Item_venda();
         
@@ -39,15 +40,11 @@ public class TesteHib {
         v2.getItens_venda().add(iv3);
         v2.getItens_venda().add(iv4);
         v2.setValor_venda(15.00);
-        /*
         
-        /*
-        gerente.persist(item3);
-        gerente.persist(item4);
-        gerente.persist(iv3);
-        gerente.persist(iv4);
-        gerente.persist(v2);
-        */
+        
+        
+        
+        
         
         
         
@@ -60,15 +57,13 @@ public class TesteHib {
             gerente.persist(despesa);
           */  
         
-        gerente.getTransaction().begin();
+        
         /*
         Despesa edit = gerente.find(Despesa.class, 6);
         edit.setValor_despesa(100.00);
         gerente.merge(edit);
         */
         
-        Despesa delete = gerente.find(Despesa.class, 7);
-        gerente.remove(delete);
         
         
         

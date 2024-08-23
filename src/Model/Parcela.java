@@ -28,6 +28,28 @@ public class Parcela implements Serializable {
     @JoinColumn(name = "id_venda")
     private Venda venda;
 
+    public Parcela() {
+    }
+
+    
+    //Parcela única de pagamento a vista
+    public Parcela(Double valor_parcela, char metodo_pagamento, Venda venda) {
+        this.valor_parcela = valor_parcela;
+        this.metodo_pagamento = metodo_pagamento;
+        this.venda = venda;
+    }
+    
+    //Parcelas a prazo
+    public Parcela(Double valor_parcela, LocalDate data_vencimento, char metodo_pagamento, Venda venda) {
+        this.valor_parcela = valor_parcela;
+        this.data_vencimento = data_vencimento;
+        this.metodo_pagamento = metodo_pagamento;
+        this.venda = venda;
+    }
+    
+
+    
+    
     public Venda getVenda() {
         return venda;
     }
