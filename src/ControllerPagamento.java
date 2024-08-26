@@ -25,7 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-
+ 
 public class ControllerPagamento implements Initializable {
 
     private Scene cenaAnterior;
@@ -95,6 +95,10 @@ public class ControllerPagamento implements Initializable {
             Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), metodo_pagamento, this.venda);
             Pagamento pagamento = new Pagamento(metodo_pagamento, 'C', this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
 
+            VendaDAO vendaDAO = new VendaDAO();
+            vendaDAO.insertVendaAVista(this.venda);
+            
+            
             ParcelaDAO parcelaDAO = new ParcelaDAO();
             parcelaDAO.insert(parcelaUnica);
             
@@ -113,7 +117,9 @@ public class ControllerPagamento implements Initializable {
         
             // Passar a cena atual para o controlador da nova tela
             controller.setCenaAnterior(((Node)event.getSource()).getScene());
-
+//            //Passando venda para o outro controller
+            controller.setVenda(this.venda);
+            
             Scene pagamentoScene = new Scene(pagamentoView);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(pagamentoScene);
