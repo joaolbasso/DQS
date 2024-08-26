@@ -59,16 +59,54 @@ public class ItemDAO extends AbstractDAO {
         return itensVazio;
     }
     
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Método para atualizar um item
+    public void update(Item item) {
+        try {
+            emf = EntityManagerFactorySingleton.getInstance();
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            
+            // Atualizar o item no banco de dados
+            em.merge(item);
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void select() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Método para deletar um item
+    public void delete(Item item) {
+        try {
+            emf = EntityManagerFactorySingleton.getInstance();
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            
+            // Buscar o item no banco de dados
+            Item itemToDelete = em.find(Item.class, item.getId_item());
+            if (itemToDelete != null) {
+                // Remover o item
+                em.remove(itemToDelete);
+            }
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
     
 }

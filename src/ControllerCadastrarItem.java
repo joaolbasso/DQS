@@ -3,7 +3,6 @@ import Model.Item;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,58 +21,72 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 public class ControllerCadastrarItem implements Initializable {
-    
-    private Scene cenaAnterior;
 
-    // Método para definir a cena anterior
-    public void setCenaAnterior(Scene cenaAnterior) {
-        this.cenaAnterior = cenaAnterior;
+    private Item itemEditavel;
+
+
+    // Método para definir o item que será editado
+    public void setItem(Item item) {
+        this.itemEditavel = item;
+        preencherCampos(itemEditavel); // Preencher os campos com os dados do item selecionado
     }
+    
 
     @FXML
-    public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
+        public void voltar(ActionEvent event) throws IOException {
+            // Substitua "NomeDaView" pelo nome da view que você deseja carregar
+            String nomeDaView = "MenuPrincipal.fxml";
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+            Parent view = loader.load();
+
+            Scene cena = new Scene(view);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cena);
             window.show();
         }
-    }
-    
+
     @FXML
     private TextField txtfldNomeItem;
-    
+
     @FXML
     private TextField txtfldPrecoCusto;
-    
+
     @FXML
     private TextField txtfldPrecoVenda;
-    
+
     @FXML
     private DatePicker dtpckrDataCompra;
-    
+
     @FXML
     private Spinner<Integer> spnrQuantidade;
-    
+
     @FXML
     private TextField txtfldDescricao;
-    
+
     @FXML
     private RadioButton rdbtnProduto, rdbtnServico;
-    
+
     @FXML
     private ToggleGroup tipoItem;
-    
-    
+
+    // Método para cadastrar ou atualizar o item
     public void cadastrarItem(ActionEvent event) throws IOException {
-        //Ver sobre clicar no botão com campos vazios, fazer os campos não receberem caracteres inválidos
-        Item itemSalvar = criarItem();
         ItemDAO itemDAO = new ItemDAO();
-        itemDAO.insert(itemSalvar);
+        Item itemSalvar = criarItem();
+
+        if (itemEditavel != null) {
+            itemSalvar.setId_item(itemEditavel.getId_item()); // Manter o ID do item ao editar
+            itemDAO.update(itemSalvar); // Atualizar item existente
+        } else {
+            itemDAO.insert(itemSalvar); // Inserir novo item
+        }
+
+        voltar(event); // Voltar para a tela anterior após salvar
     }
-    
+
+    // Método para limpar os campos
     public void limparCampos(ActionEvent event) throws IOException {
-        //Você tem certeza que deseja limpar os campos? CRIAR POPUP COM SIM NAO E ESSA PERGUNTA
         int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (resposta == JOptionPane.YES_OPTION) {
             txtfldNomeItem.setText("");
@@ -84,33 +97,44 @@ public class ControllerCadastrarItem implements Initializable {
             dtpckrDataCompra.setValue(LocalDate.now());
         }
     }
-    
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
+
+    // Preencher os campos com os dados do item ao editar
+    private void preencherCampos(Item item) {
+        txtfldNomeItem.setText(item.getNome_item());
+        txtfldPrecoCusto.setText(String.valueOf(item.getPreco_custo_item()));
+        txtfldPrecoVenda.setText(String.valueOf(item.getValor_item()));
+        dtpckrDataCompra.setValue(item.getData_preco_item());
+        spnrQuantidade.getValueFactory().setValue(item.getQuantidade());
+        txtfldDescricao.setText(item.getDescricao_item());
+
+        if (item.getTipo_item() == 'P') {
+            rdbtnProduto.setSelected(true);
+        } else if (item.getTipo_item() == 'S') {
+            rdbtnServico.setSelected(true);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         dtpckrDataCompra.setValue(LocalDate.now());
         criaSpinnerValueFactory();
-    } 
-    
+    }
+
+    // Método para configurar o Spinner para a quantidade
     public void criaSpinnerValueFactory() {
-        SpinnerValueFactory<Integer> valueFactory = 
+        SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999);
-        
         valueFactory.setValue(1);
         spnrQuantidade.setValueFactory(valueFactory);
     }
 
+    // Método para determinar o tipo do item com base no RadioButton selecionado
     private char checkSelectedRadioButton() {
         RadioButton selectedRadioButton = (RadioButton) tipoItem.getSelectedToggle();
-        char tipo_item = selectedRadioButton.getText().charAt(0);
-        return tipo_item;
-    } 
-    
+        return selectedRadioButton.getText().charAt(0);
+    }
+
+    // Método para criar um item a partir dos dados dos campos
     private Item criarItem() {
         String nome_item = txtfldNomeItem.getText();
         Double preco_custo = Double.valueOf(txtfldPrecoCusto.getText());
@@ -119,8 +143,7 @@ public class ControllerCadastrarItem implements Initializable {
         int quantidade = spnrQuantidade.getValue();
         char tipo_item = checkSelectedRadioButton();
         String descricao_item = txtfldDescricao.getText();
-        
+
         return new Item(nome_item, preco_custo, preco_venda, data_preco_item, quantidade, tipo_item, descricao_item);
     }
-    
 }

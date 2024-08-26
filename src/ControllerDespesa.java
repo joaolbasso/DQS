@@ -21,134 +21,123 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-
 public class ControllerDespesa implements Initializable {
-
-    private Scene cenaAnterior;
-
-    // Método para definir a cena anterior
-    public void setCenaAnterior(Scene cenaAnterior) {
-        this.cenaAnterior = cenaAnterior;
-    }
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
+        // Substitua "NomeDaView" pelo nome da view que você deseja carregar
+        String nomeDaView = "MenuPrincipal.fxml";
 
-    private Button btnRegistrarDespesa;
-    
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        Parent view = loader.load();
+
+        Scene cena = new Scene(view);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(cena);
+        window.show();
+    }
+
     @FXML
     private TableView<Despesa> tbvwDespesas;
-    
+
+    public void atualizarListaDespesas() {
+        DespesaDAO despesaDAO = new DespesaDAO();
+        ObservableList<Despesa> despesas = FXCollections.observableArrayList(despesaDAO.todasAsDespesas());
+        tbvwDespesas.setItems(despesas);
+    }
+
     @FXML
     private TableColumn<Despesa, String> nome_despesa = new TableColumn<>("Nome");
-    
+
     @FXML
     private TableColumn<Despesa, Double> valor_despesa = new TableColumn<>("Valor");
-    
+
     @FXML
     private TableColumn<Despesa, LocalDate> data_pagamento_despesa = new TableColumn<>("Data de Pagamento");
-    
+
     @FXML
     private TableColumn<Despesa, LocalDate> data_vencimento_despesa = new TableColumn<>("Data de Vencimento");
-    
+
     @FXML
     private TableColumn<Despesa, String> beneficiario = new TableColumn<>("Beneficiario");
-    
-    }
-    
+
     @FXML
     private Button btnRegistrarDespesa;
-    
+
     @FXML
     public void entrarRegistrarDespesa(ActionEvent event) throws IOException {
-        // Carregar a nova tela
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/RegistrarDespesa.fxml"));
         Parent registrarDespesaView = loader.load();
 
-        // Obter o controller da nova tela
         ControllerRegistrarDespesa controllerRegistrarDespesa = loader.getController();
-
-        // Definir a cena atual como a anterior no controller da nova tela
         controllerRegistrarDespesa.setCenaAnterior(((Node) event.getSource()).getScene());
 
-        // Mudar para a nova cena
         Scene registrarDespesaScene = new Scene(registrarDespesaView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(registrarDespesaScene);
         window.show();
     }
 
-    
+    @FXML
     public void editarDespesa(ActionEvent event) throws IOException {
-        Parent despesaView = FXMLLoader.load(getClass().getResource("/View/EditarDespesa.fxml"));
-        Scene despesaScene = new Scene(despesaView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(despesaScene);
-        window.show();
+        Despesa despesaSelecionada = tbvwDespesas.getSelectionModel().getSelectedItem();
+        if (despesaSelecionada != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/RegistrarDespesa.fxml"));
+            Parent registrarDespesaView = loader.load();
+
+            ControllerRegistrarDespesa controllerRegistrarDespesa = loader.getController();
+            controllerRegistrarDespesa.setDespesa(despesaSelecionada);
+
+            Scene registrarDespesaScene = new Scene(registrarDespesaView);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(registrarDespesaScene);
+            window.show();
+        }
     }
-    
-    public int getId_Despesa_selecionada() {
-        Despesa despesa_seleceionada = tbvwDespesas.getSelectionModel().getSelectedItem();
-        int id_despesa_selecionada = despesa_seleceionada.getId_despesa();
-        return id_despesa_selecionada;
-    }
-    
+
+    @FXML
     public void deletarDespesa(ActionEvent event) throws IOException {
-        System.out.println("BOTAO Deletar DESPESA CLICK");
+        Despesa despesaSelecionada = tbvwDespesas.getSelectionModel().getSelectedItem();
+        if (despesaSelecionada != null) {
+            DespesaDAO despesaDAO = new DespesaDAO();
+            despesaDAO.delete(despesaSelecionada);
+            atualizarListaDespesas();  // Atualiza a lista de despesas após a exclusão
+        }
     }
-    
-    DespesaDAO despesaDAO = new DespesaDAO();
-    ObservableList<Despesa> despesas = FXCollections.observableArrayList(despesaDAO.todasAsDespesas());
-    
 
     private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
-    coluna.setCellFactory(column -> new TableCell<T, U>() {
-        @Override
-        protected void updateItem(U item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item == null || empty) {
-                setText(null);
-                setStyle("");
-            } else {
-                setText(item.toString());
-                setStyle("-fx-alignment: CENTER;");
+        coluna.setCellFactory(column -> new TableCell<T, U>() {
+            @Override
+            protected void updateItem(U item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment: CENTER;");
+                }
             }
-        }
-    });
-}
+        });
+    }
 
-    
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nome_despesa.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
         valor_despesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
         data_pagamento_despesa.setCellValueFactory(new PropertyValueFactory<>("data_pagamento_despesa"));
         data_vencimento_despesa.setCellValueFactory(new PropertyValueFactory<>("data_vencimento_despesa"));
-        
-        beneficiario.setCellValueFactory(cellData -> 
-        {
+
+        beneficiario.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario());
         });
-        
+
         centralizarTextoNaColuna(nome_despesa);
         centralizarTextoNaColuna(valor_despesa);
         centralizarTextoNaColuna(data_pagamento_despesa);
         centralizarTextoNaColuna(data_vencimento_despesa);
         centralizarTextoNaColuna(beneficiario);
-        
-        
-        tbvwDespesas.setItems(despesas);
-    }    
-    
+
+        atualizarListaDespesas();
+    }
 }

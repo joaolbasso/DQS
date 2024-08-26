@@ -58,8 +58,8 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField layoutX="282.0" layoutY="249.0" prefHeight="43.0" prefWidth="806.0" promptText="Pesquise aqui..." />
-      <Button layoutX="1121.0" layoutY="249.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="163.0" text="Consultar">
+      <TextField layoutX="282.0" layoutY="249.0" prefHeight="43.0" prefWidth="697.0" promptText="Pesquise aqui..." />
+      <Button layoutX="1008.0" layoutY="253.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="133.0" text="Consultar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -72,5 +72,29 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Button fx:id="btnEditar" layoutX="1167.0" layoutY="251.0" mnemonicParsing="false" onAction="#editarItem" prefHeight="37.0" prefWidth="51.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fx:id="btnEditar" fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/editar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnDeletar" layoutX="1231.0" layoutY="251.0" mnemonicParsing="false" onAction="#deletarItem" prefHeight="37.0" prefWidth="51.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/deletar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

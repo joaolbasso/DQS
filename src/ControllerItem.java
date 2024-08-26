@@ -27,21 +27,18 @@ import org.hibernate.PropertyValueException;
  */
 public class ControllerItem implements Initializable {
 
-    private Scene cenaAnterior;
-
-    // Método para definir a cena anterior
-    public void setCenaAnterior(Scene cenaAnterior) {
-        this.cenaAnterior = cenaAnterior;
-    }
-
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
+        // Substitua "NomeDaView" pelo nome da view que você deseja carregar
+        String nomeDaView = "MenuPrincipal.fxml";
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        Parent view = loader.load();
+
+        Scene cena = new Scene(view);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(cena);
+        window.show();
     }
     
     @FXML
@@ -86,9 +83,6 @@ public class ControllerItem implements Initializable {
 
         // Obter o controlador da nova tela
         ControllerCadastrarItem controllerCadastrarItem = loader.getController();
-
-        // Definir a cena atual como a anterior no controlador da nova tela
-        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
 
         // Mudar para a nova cena
         Scene cadastrarItemScene = new Scene(cadastrarItemView);

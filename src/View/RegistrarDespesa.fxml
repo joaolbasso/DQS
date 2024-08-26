@@ -6,10 +6,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -78,25 +76,6 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </Spinner>
-            <RadioButton fx:id="rbtnPago" layoutX="409.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="Pago">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <toggleGroup>
-                  <ToggleGroup fx:id="situacao" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="rbtnASerPago" layoutX="409.0" layoutY="154.0" mnemonicParsing="false" text="A ser pago" toggleGroup="$situacao">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
             <Label layoutX="39.0" layoutY="188.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Beneficiário *">
                <font>
                   <Font size="24.0" />
