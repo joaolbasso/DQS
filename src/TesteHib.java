@@ -1,5 +1,6 @@
 import DAO.BeneficiarioDAO;
 import DAO.CidadeDAO;
+import DAO.VendaDAO;
 import Model.Beneficiario;
 import Model.Caixa;
 import Model.Estado;
@@ -21,74 +22,24 @@ import javax.persistence.Persistence;
 
 public class TesteHib {
     public static void main(String[] args) {
-        EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("DQSPU");
-        EntityManager gerente = fabrica.createEntityManager();
-        gerente.getTransaction().begin();
-        Item_venda iv3 = new Item_venda();
-        Item_venda iv4 = new Item_venda();
+     
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DQSPU");
+        EntityManager em = emf.createEntityManager();
         
-        Venda v2 = new Venda();
+        Venda venda = new Venda(50.0, LocalDate.now(), em.find(Cliente.class, 1));
         
-        Item item3 = new Item("Porta Retrato 10x15cm", 7.00, 12.00, LocalDate.now(), 5, 'S', "Porta Retrato 10x15");
-        Item item4 = new Item("Porta Retrato 15x21cm", 7.00, 12.00, LocalDate.now(), 5, 'S', "Porta Retrato 15x21");
+        Parcela parcela = new Parcela(50.0, 'P', venda);
+        Pagamento pagamento = new Pagamento('P', 'C', LocalDate.now(), 50.0, parcela);
         
-        iv3.setItem(item3);
-        iv3.setValor_unitario(15.00);
-        iv4.setItem(item4);
-        iv4.setValor_unitario(20.00);
+        em.getTransaction().begin();
         
-        v2.getItens_venda().add(iv3);
-        v2.getItens_venda().add(iv4);
-        v2.setValor_venda(15.00);
+        em.persist(venda);
+        em.persist(parcela);
+        em.persist(pagamento);
+        em.getTransaction().commit();
         
-        
-        
-        
-        
-        
-        
-        
-        
-        /*
-            BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
-            List<Beneficiario> benefiL = beneficiarioDAO.todosOsBeneficiarios();
-            Beneficiario bene = benefiL.get(2);
-            Despesa despesa = new Despesa("Linguiça", 41.00, "Linguiça do pote", 0,bene);
-            gerente.persist(despesa);
-          */  
-        
-        
-        /*
-        Despesa edit = gerente.find(Despesa.class, 6);
-        edit.setValor_despesa(100.00);
-        gerente.merge(edit);
-        */
-        
-        
-        
-        
-        gerente.getTransaction().commit();
-        /*
-            CidadeDAO cidadeDAO = new CidadeDAO();
-            Cidade cidade = cidadeDAO.buscaCidadePorId(348);
-            Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406830", "10086858990", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
-            gerente.persist(cliente);
-        */
-        
-        
-        /*
-        Exemplo pegando do BANCO
-        Usuario doBanco = null;
-        gerente.getTransaction().begin();
-        doBanco = (Usuario) gerente.find(Usuario.class, 1);
-        gerente.getTransaction().commit();
-        
-        System.out.println(doBanco.getUsuario());
-        System.out.println(doBanco.getSenha());
-        */
-        
-        gerente.close();
-        fabrica.close();
+        em.close();
+        emf.close();
         
     }
 }

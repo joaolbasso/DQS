@@ -1,5 +1,7 @@
 package DAO;
 
+import Model.Pagamento;
+import Model.Parcela;
 import Model.Venda;
 
 public class VendaDAO extends AbstractDAO {
@@ -14,6 +16,7 @@ public class VendaDAO extends AbstractDAO {
         } catch (Exception e) {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+                e.printStackTrace();
             }
         } finally {
             if (em != null) {

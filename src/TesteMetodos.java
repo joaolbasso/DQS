@@ -6,6 +6,8 @@ import Model.Beneficiario;
 import Model.Cidade;
 import Model.Cliente;
 import Model.Item_venda;
+import Model.Venda;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -57,10 +59,13 @@ public class TesteMetodos {
         //item_venda.setQuantidade(5);
         //item_venda.setValor_unitario(10.00);
         
-        int n1 = 3;
-        Double n2 = 4.0;
         
-        System.out.println(n2*n1);
+        ArrayList<Item_venda> itensDaVenda = new ArrayList<>();
+        Venda venda1 = new Venda(15.00, LocalDate.now(), null);
+        venda1.setItens_venda(itensDaVenda);
+        
+        System.out.println(venda1.getItens_venda());
+        
                 
         
         //System.out.println(item_venda.getValor_unitario());

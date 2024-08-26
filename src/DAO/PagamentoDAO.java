@@ -5,15 +5,15 @@ import Model.Pagamento;
 public class PagamentoDAO extends AbstractDAO {
 
     public void insert(Pagamento pagamento) {
-        try {
-            emf = EntityManagerFactorySingleton.getInstance();
-            em = emf.createEntityManager();
+            try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             em.persist(pagamento);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+                e.printStackTrace();
             }
         } finally {
             if (em != null) {

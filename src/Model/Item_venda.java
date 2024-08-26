@@ -22,7 +22,7 @@ public class Item_venda implements Serializable {
     @Column(nullable = false)
     private Double valor_unitario;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_item")
     private Item item; //Serviço ou Produto
 

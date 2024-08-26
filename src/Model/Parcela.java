@@ -24,7 +24,7 @@ public class Parcela implements Serializable {
     private LocalDate data_vencimento;
     private char metodo_pagamento;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_venda")
     private Venda venda;
 

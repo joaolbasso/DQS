@@ -78,7 +78,7 @@ public class ControllerPagamento implements Initializable {
     }
     
     @FXML
-    public void concluirVenda(ActionEvent event) throws IOException {
+    public void concluirVenda(ActionEvent event) throws IOException, InterruptedException {
         
         if (Double.valueOf(txtfldValorRecebido.getText()) > this.venda.getValor_venda()) {
             JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
@@ -92,17 +92,18 @@ public class ControllerPagamento implements Initializable {
         
         if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
             char metodo_pagamento = cmbboxMetodoPagamento.getSelectionModel().getSelectedItem().charAt(0);
-            
             Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), metodo_pagamento, this.venda);
-            Pagamento pagamento = new Pagamento(metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
-            
-            /*
-            Ver persistência, acho que está faltando persistir alguém para associar antes, ta dando erro meio silencioso
-            */
+            Pagamento pagamento = new Pagamento(metodo_pagamento, 'C', this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
 
+            ParcelaDAO parcelaDAO = new ParcelaDAO();
+            parcelaDAO.insert(parcelaUnica);
+            
+            PagamentoDAO pagamentoDAO = new PagamentoDAO();
+            pagamentoDAO.insert(pagamento);
+            
             
             JOptionPane.showMessageDialog(null, "Venda registrada com sucesso!", "Venda com sucesso!", JOptionPane.INFORMATION_MESSAGE);
-            //voltar(event);
+            voltar(event);
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
             Parent pagamentoView = loader.load();
@@ -132,6 +133,7 @@ public class ControllerPagamento implements Initializable {
             lblValorVenda.setText(String.format("R$ %.2f", venda.getValor_venda()));
         }
     }
+
     
 }
 
