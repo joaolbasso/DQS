@@ -22,11 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerPagamentoParcelado implements Initializable {
 
     private Scene cenaAnterior;
@@ -72,8 +67,6 @@ public class ControllerPagamentoParcelado implements Initializable {
         }
     }
     
-    
-
     @FXML
     public void voltar(ActionEvent event) throws IOException {
         // Retornar para a cena anterior se existir

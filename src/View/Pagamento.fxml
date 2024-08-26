@@ -5,18 +5,21 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamento">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamento">
     <stylesheets>
         <URL value="@/View/CSS/venda.css" />
     </stylesheets>
    <children>
-      <Label layoutX="205.0" layoutY="25.0" prefHeight="67.0" prefWidth="190.0" text="Pagamento">
+      <Label layoutX="312.0" layoutY="25.0" prefHeight="67.0" prefWidth="190.0" text="Pagamento">
          <font>
             <Font size="36.0" />
          </font>
@@ -31,37 +34,55 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="79.0" layoutY="115.0" prefHeight="67.0" prefWidth="152.0" text="Valor Venda:">
+      <Label layoutX="240.0" layoutY="99.0" prefHeight="67.0" prefWidth="152.0" text="Valor Venda:">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldValorRecebido" layoutX="79.0" layoutY="256.0" prefHeight="35.0" prefWidth="190.0">
+      <TextField fx:id="txtfldValorRecebido" layoutX="426.0" layoutY="234.0" prefHeight="35.0" prefWidth="143.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="79.0" layoutY="221.0" prefHeight="35.0" prefWidth="179.0" text="Valor Recebido:">
+      <Label fx:id="lblValorTexto" layoutX="224.0" layoutY="234.0" prefHeight="35.0" prefWidth="190.0" text="Valor recebido:">
          <font>
-            <Font size="24.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="315.0" layoutY="221.0" prefHeight="35.0" prefWidth="230.0" text="Método Pagamento:">
+      <Label layoutX="226.0" layoutY="282.0" prefHeight="35.0" prefWidth="190.0" text="Método Pagamento:">
          <font>
-            <Font size="24.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="315.0" layoutY="256.0" prefHeight="35.0" prefWidth="230.0" />
-      <Button fx:id="btnConcluir" layoutX="232.0" layoutY="319.0" mnemonicParsing="false" onAction="#concluirVenda" prefHeight="58.0" prefWidth="136.0" text="Concluir">
+      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="427.0" layoutY="282.0" prefHeight="35.0" prefWidth="143.0" />
+      <Button fx:id="btnConcluir" layoutX="340.0" layoutY="405.0" mnemonicParsing="false" onAction="#concluirVenda" prefHeight="24.0" prefWidth="136.0" text="Concluir">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Label fx:id="lblValorVenda" layoutX="247.0" layoutY="122.0" text="R$">
+      <Label fx:id="lblValorVenda" layoutX="408.0" layoutY="106.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="31.0" layoutY="261.0" mnemonicParsing="false" onAction="#insereValorMaximo" prefHeight="24.0" prefWidth="42.0" text="Máx." />
+      <RadioButton fx:id="rdbtnAVista" layoutX="311.0" layoutY="178.0" mnemonicParsing="false" selected="true" text="A Vista">
+         <toggleGroup>
+            <ToggleGroup fx:id="tipo_venda" />
+         </toggleGroup>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="rdbtnAPrazo" layoutX="411.0" layoutY="178.0" mnemonicParsing="false" text="A Prazo" toggleGroup="$tipo_venda">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <Spinner fx:id="spnrNumeroParcelas" layoutX="426.0" layoutY="330.0" prefHeight="35.0" prefWidth="62.0" />
+      <Label layoutX="225.0" layoutY="330.0" prefHeight="35.0" prefWidth="190.0" text="Número de parcelas:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

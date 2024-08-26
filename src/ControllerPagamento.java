@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +24,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
  
@@ -43,6 +50,21 @@ public class ControllerPagamento implements Initializable {
     @FXML
     private TextField txtfldValorRecebido;
     
+    @FXML
+    private RadioButton rdbtnAVista;
+    
+    @FXML
+    private RadioButton rdbtnAPrazo;
+    
+    @FXML
+    private ToggleGroup tipo_venda;
+    
+    @FXML
+    private Spinner<Integer> spnrNumeroParcelas;
+    
+    @FXML
+    private Label lblValorTexto;
+    
     // Método para definir a cena anterior
     public void setCenaAnterior(Scene cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
@@ -60,6 +82,7 @@ public class ControllerPagamento implements Initializable {
     public void setVenda(Venda venda) {
         this.venda = venda;
         atualizarValorVenda();
+        txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
     }
 
     @FXML
@@ -72,10 +95,7 @@ public class ControllerPagamento implements Initializable {
         }
     }
 
-    @FXML
-    public void insereValorMaximo(ActionEvent event) throws IOException {
-        txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
-    }
+    
     
     @FXML
     public void concluirVenda(ActionEvent event) throws IOException, InterruptedException {
@@ -132,6 +152,25 @@ public class ControllerPagamento implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cmbboxMetodoPagamento.setItems(metodos_pagamento);
+        
+        tipo_venda.selectedToggleProperty().addListener((ObservableValue<? extends javafx.scene.control.Toggle> observable, javafx.scene.control.Toggle oldValue, javafx.scene.control.Toggle newValue) -> {
+            RadioButton selectedRadioButton = (RadioButton) newValue;
+            if(selectedRadioButton == rdbtnAVista) {
+                txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
+                lblValorTexto.setText("Valor recebido:");
+                spnrNumeroParcelas.setOpacity(0.5);
+                spnrNumeroParcelas.setDisable(true);
+            } else {
+                spnrNumeroParcelas.setOpacity(1);
+                spnrNumeroParcelas.setDisable(false);
+                lblValorTexto.setText("Valor de entrada:");
+                
+                Double valorMetade = this.venda.getValor_venda() / 2;
+                
+                txtfldValorRecebido.setText(valorMetade.toString());
+            }                
+        });
+        criaSpinnerValueFactory();
     }    
 
     private void atualizarValorVenda() {
@@ -139,6 +178,15 @@ public class ControllerPagamento implements Initializable {
             lblValorVenda.setText(String.format("R$ %.2f", venda.getValor_venda()));
         }
     }
+    
+    public void criaSpinnerValueFactory() {
+        SpinnerValueFactory<Integer> valueFactory = 
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12);
+        
+        valueFactory.setValue(1);
+        spnrNumeroParcelas.setValueFactory(valueFactory);
+    }
+    
 
     
 }
