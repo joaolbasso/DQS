@@ -158,10 +158,8 @@ public class ControllerCaixa implements Initializable {
         Venda venda = new Venda(getValor_venda(), data, cliente);
         venda.setItens_venda(itensDaVenda);
         
-        VendaDAO vendaDAO = new VendaDAO();
-        vendaDAO.insertVendaAVista(venda);
         
-        System.out.println("VALOR DA VENDA EM CAIXA: " + getValor_venda());
+        
         
         
         // Carregar a nova tela
@@ -210,10 +208,9 @@ public class ControllerCaixa implements Initializable {
         
         ObservableList<Item_venda> itens_venda_observable = FXCollections.observableArrayList(itensDaVenda);
         tbvwItensVenda.setItems(itens_venda_observable);
-        lblValorTotal.setText(("R$ " + String.valueOf(valor_venda)));
+        lblValorTotal.setText(("R$ " + String.valueOf(valor_venda) + "0"));
         
     }
-    
 
     private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
@@ -275,14 +272,13 @@ public class ControllerCaixa implements Initializable {
             }
         });
         
+        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
         criaSpinnerValueFactory();
         spnrQuantidade.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
             Double preco_calculado = spnrQuantidade.getValue() * cmbboxItem.getSelectionModel().getSelectedItem().getValor_item();
             txtfldPreco.setText(preco_calculado.toString());
         });
-        
-        
         
         cmbboxItem.setCellFactory(cell -> new ListCell<Item>() {
             @Override
@@ -296,7 +292,6 @@ public class ControllerCaixa implements Initializable {
             }
         });
         
-        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         cmbboxItem.setButtonCell(cmbboxItem.getCellFactory().call(null));
         
     }    

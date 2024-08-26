@@ -6,7 +6,7 @@ import Model.Venda;
 
 public class VendaDAO extends AbstractDAO {
 
-    public void insertVendaAVista(Venda venda) {
+    public void insert(Venda venda) {
         try {
             System.out.println("ENTREI AQUI");
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
