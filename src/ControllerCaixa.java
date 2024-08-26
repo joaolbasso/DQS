@@ -1,5 +1,6 @@
 import DAO.ClienteDAO;
 import DAO.ItemDAO;
+import DAO.VendaDAO;
 import Model.Beneficiario;
 import Model.Cliente;
 import Model.Item;
@@ -153,7 +154,15 @@ public class ControllerCaixa implements Initializable {
         return;
         }
         
-        Venda venda = new Venda(getValor_venda(), data, cliente, getItensDaVenda());
+        
+        Venda venda = new Venda(getValor_venda(), data, cliente);
+        venda.setItens_venda(itensDaVenda);
+        
+        VendaDAO vendaDAO = new VendaDAO();
+        vendaDAO.insertVendaAVista(venda);
+        
+        System.out.println("VALOR DA VENDA EM CAIXA: " + getValor_venda());
+        
         
         // Carregar a nova tela
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Pagamento.fxml"));
@@ -190,6 +199,7 @@ public class ControllerCaixa implements Initializable {
         //Preciso pegar os dados dos campos da View de Nova Venda e criar um novo item_venda, adicionar a uma lista de item_venda (local) e mostrar na tabela
         
         if (cmbboxItem.getValue() != null) {
+            
             Item_venda novo_item_venda = criarItemVenda();
             valor_venda += novo_item_venda.getValor_unitario();
             itensDaVenda.add(novo_item_venda);
@@ -301,6 +311,9 @@ public class ControllerCaixa implements Initializable {
     private Item_venda criarItemVenda() {
         int quantidade = spnrQuantidade.getValue();
         Double valor_item_venda = Double.valueOf(txtfldPreco.getText());
+        
+        System.out.println("Valor ITEM VENDA EM CAIXA: " + valor_item_venda);
+        
         Item item = cmbboxItem.getSelectionModel().getSelectedItem();
         Item_venda item_venda = new Item_venda(quantidade, valor_item_venda, item);
         return item_venda;

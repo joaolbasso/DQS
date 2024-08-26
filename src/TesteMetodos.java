@@ -6,6 +6,8 @@ import Model.Beneficiario;
 import Model.Cidade;
 import Model.Cliente;
 import Model.Item_venda;
+import Model.Venda;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

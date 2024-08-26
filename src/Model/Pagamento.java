@@ -24,7 +24,7 @@ public class Pagamento implements Serializable {
     @Column(nullable = false)
     private Double valor_pagamento;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_parcela")
     private Parcela parcela;
 
@@ -32,13 +32,15 @@ public class Pagamento implements Serializable {
     }
 
     //Pagamento a vista
-    public Pagamento(char metodo_pagamento, LocalDate data_pagamento, Double valor_pagamento, Parcela parcela) {
+
+    public Pagamento(char tipo_recebimento, char metodo_pagamento, LocalDate data_pagamento, Double valor_pagamento, Parcela parcela) {
+        this.tipo_recebimento = tipo_recebimento;
         this.metodo_pagamento = metodo_pagamento;
         this.data_pagamento = data_pagamento;
         this.valor_pagamento = valor_pagamento;
         this.parcela = parcela;
     }
-    
+
     public Parcela getParcela() {
         return parcela;
     }

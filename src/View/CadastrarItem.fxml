@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCadastrarItem">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCadastrarItem">
     <stylesheets>
         <URL value="@/View/CSS/cadastraritem.css" />
     </stylesheets>
@@ -85,7 +85,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Spinner fx:id="spnrQuantidade" layoutX="288.0" layoutY="289.0" prefHeight="54.0" prefWidth="88.0" />
+            <Spinner fx:id="spnrQuantidade" editable="true" layoutX="288.0" layoutY="289.0" prefHeight="54.0" prefWidth="88.0" />
             <RadioButton fx:id="rdbtnProduto" layoutX="419.0" layoutY="289.0" mnemonicParsing="false" selected="true" text="Produto">
                <font>
                   <Font size="16.0" />
