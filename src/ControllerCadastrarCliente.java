@@ -126,7 +126,13 @@ public class ControllerCadastrarCliente implements Initializable {
         CidadeDAO cidadeDAO = new CidadeDAO();
         
         ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
-        cmbboxCidade.setItems(cidades);
+        
+        if(cidades.isEmpty()) {
+            cidades = null;
+        } else {
+            cmbboxCidade.setItems(cidades);
+        }
+        
         
         cmbboxCidade.setCellFactory(cell -> new ListCell<Cidade>() {
             @Override

@@ -22,29 +22,38 @@ public class Parcela implements Serializable {
     private Double valor_parcela;
     
     private LocalDate data_vencimento;
-    private char metodo_pagamento;
     
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_venda")
     private Venda venda;
-
+    
+    private int numero_parcela;
+    
     public Parcela() {
     }
 
     
     //Parcela única de pagamento a vista
-    public Parcela(Double valor_parcela, char metodo_pagamento, Venda venda) {
+    public Parcela(Double valor_parcela, Venda venda) {
         this.valor_parcela = valor_parcela;
-        this.metodo_pagamento = metodo_pagamento;
         this.venda = venda;
     }
     
     //Parcelas a prazo
-    public Parcela(Double valor_parcela, LocalDate data_vencimento, char metodo_pagamento, Venda venda) {
+    
+    public Parcela(Double valor_parcela, LocalDate data_vencimento, Venda venda, int numero_parcela) {
         this.valor_parcela = valor_parcela;
         this.data_vencimento = data_vencimento;
-        this.metodo_pagamento = metodo_pagamento;
         this.venda = venda;
+        this.numero_parcela = numero_parcela;
+    }
+
+    public int getNumero_parcela() {
+        return numero_parcela;
+    }
+
+    public void setNumero_parcela(int numero_parcela) {
+        this.numero_parcela = numero_parcela;
     }
     
 
@@ -81,15 +90,5 @@ public class Parcela implements Serializable {
     public void setData_vencimento(LocalDate data_vencimento) {
         this.data_vencimento = data_vencimento;
     }
-
-    public char getMetodo_pagamento() {
-        return metodo_pagamento;
-    }
-
-    public void setMetodo_pagamento(char metodo_pagamento) {
-        this.metodo_pagamento = metodo_pagamento;
-    }
-    
-    
     
 }

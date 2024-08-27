@@ -14,6 +14,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+        import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class TesteMetodos {
     public static void main(String[] args) {
         
@@ -60,11 +63,25 @@ public class TesteMetodos {
         //item_venda.setValor_unitario(10.00);
         
         
-        ArrayList<Item_venda> itensDaVenda = new ArrayList<>();
-        Venda venda1 = new Venda(15.00, LocalDate.now(), null);
-        venda1.setItens_venda(itensDaVenda);
+        //ArrayList<Item_venda> itensDaVenda = new ArrayList<>();
+        //Venda venda1 = new Venda(15.00, LocalDate.now(), null);
+        //venda1.setItens_venda(itensDaVenda);
         
-        System.out.println(venda1.getItens_venda());
+        //System.out.println(venda1.getItens_venda());
+        
+
+
+        
+        
+        Integer numero_parcelas = 3;
+        Double valor_restante = 100.0;
+        Double valor_cada_parcela = valor_restante / numero_parcelas;
+        
+        BigDecimal bd = new BigDecimal(valor_cada_parcela).setScale(2, RoundingMode.HALF_UP);
+        double resultado = bd.doubleValue();
+        System.out.println(resultado);  // Saída: 123.46
+        
+        System.out.println(valor_cada_parcela);
         
                 
         

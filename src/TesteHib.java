@@ -26,20 +26,20 @@ public class TesteHib {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DQSPU");
         EntityManager em = emf.createEntityManager();
         
-        Venda venda = new Venda(50.0, LocalDate.now(), em.find(Cliente.class, 1));
+        //Venda venda = new Venda(50.0, LocalDate.now(), em.find(Cliente.class, 1));
         
-        Parcela parcela = new Parcela(50.0, 'P', venda);
-        Pagamento pagamento = new Pagamento('P', 'C', LocalDate.now(), 50.0, parcela);
+        //Parcela parcela = new Parcela(50.0, 'P', venda);
+        //Pagamento pagamento = new Pagamento('P', 'C', LocalDate.now(), 50.0, parcela);
         
-        em.getTransaction().begin();
+        //em.getTransaction().begin();
         
-        em.persist(venda);
-        em.persist(parcela);
-        em.persist(pagamento);
-        em.getTransaction().commit();
+        //em.persist(venda);
+        //em.persist(parcela);
+        //em.persist(pagamento);
+        //em.getTransaction().commit();
         
-        em.close();
-        emf.close();
+        //em.close();
+        //emf.close();
         
     }
 }

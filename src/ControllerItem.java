@@ -18,13 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.hibernate.PropertyValueException;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerItem implements Initializable {
 
     private Scene cenaAnterior;
@@ -48,9 +42,6 @@ public class ControllerItem implements Initializable {
     
     @FXML
     private TableView<Item> tbvwItens;
-    
-    @FXML
-    private TableColumn<Item, Integer> id_item = new TableColumn<>("Id");
     
     @FXML
     private TableColumn<Item, String> nome_item = new TableColumn<>("Nome");
@@ -113,18 +104,14 @@ public class ControllerItem implements Initializable {
     });
 }
     
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        id_item.setCellValueFactory(new PropertyValueFactory<>("id_item"));
         nome_item.setCellValueFactory(new PropertyValueFactory<>("nome_item"));
         valor_item.setCellValueFactory(new PropertyValueFactory<>("valor_item"));
         quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tipo_item.setCellValueFactory(new PropertyValueFactory<>("tipo_item"));
         
-        centralizarTextoNaColuna(id_item);
         centralizarTextoNaColuna(nome_item);
         centralizarTextoNaColuna(valor_item);
         centralizarTextoNaColuna(quantidade);

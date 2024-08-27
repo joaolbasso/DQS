@@ -68,8 +68,6 @@ public class ControllerCaixa implements Initializable {
     @FXML
     private Spinner<Integer> spnrQuantidade;
     @FXML
-    private ComboBox<Cliente> cmbboxCliente;
-    @FXML
     private TextField txtfldValorUnitario;
     @FXML
     private TextField txtfldPreco;
@@ -143,24 +141,18 @@ public class ControllerCaixa implements Initializable {
     public void finalizarVenda(ActionEvent event) throws IOException {
         //Quando o usuário clicar em finalizar, pegar a lista local e adicionar a uma Venda associada.
         //ao finalizar adicionar ao ArrayList<> daquela Venda todos os itens_vendas criados
-        Cliente cliente = cmbboxCliente.getSelectionModel().getSelectedItem();
         LocalDate data = dtpkrDataVenda.getValue();
         if (data == null || data.isAfter(LocalDate.now())) {
             JOptionPane.showMessageDialog(null, "Não é possível atribuir data futura!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         return;
-}
+        }
         if (itensDaVenda.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Adicione itens à venda antes de finalizar!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         return;
         }
         
-        
-        Venda venda = new Venda(getValor_venda(), data, cliente);
+        Venda venda = new Venda(getValor_venda(), data);
         venda.setItens_venda(itensDaVenda);
-        
-        
-        
-        
         
         // Carregar a nova tela
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Pagamento.fxml"));
@@ -259,20 +251,7 @@ public class ControllerCaixa implements Initializable {
             txtfldPreco.setText(preco_calculado.toString());            
         });
         
-        atualizaComboBoxCliente();
-        cmbboxCliente.setCellFactory(cell -> new ListCell<Cliente>() {
-            @Override
-            protected void updateItem(Cliente cliente, boolean empty) {
-                super.updateItem(cliente, empty);
-                if (empty || cliente == null) {
-                    setText(null);
-                } else {
-                    setText(cliente.getNome_cliente());
-                }
-            }
-        });
         
-        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
         criaSpinnerValueFactory();
         spnrQuantidade.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
@@ -320,9 +299,5 @@ public class ControllerCaixa implements Initializable {
         cmbboxItem.setItems(itens);
     }
     
-    public void atualizaComboBoxCliente() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
-        cmbboxCliente.setItems(clientes);
-    }
+    
 }

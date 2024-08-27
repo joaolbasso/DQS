@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerItem">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerItem">
     <stylesheets>
         <URL value="@/View/CSS/item.css" />
     </stylesheets>
@@ -37,11 +37,10 @@
          </cursor></Button>
       <TableView fx:id="tbvwItens" layoutX="198.0" layoutY="307.0" prefHeight="479.0" prefWidth="925.0">
          <columns>
-            <TableColumn fx:id="id_item" prefWidth="100.0" text="Id" />
-            <TableColumn fx:id="nome_item" prefWidth="457.0" text="Nome" />
-            <TableColumn fx:id="valor_item" minWidth="0.0" prefWidth="139.0" text="Valor" />
-            <TableColumn fx:id="quantidade" prefWidth="78.0" text="Quantidade" />
-            <TableColumn fx:id="tipo_item" prefWidth="149.0" text="Tipo" />
+            <TableColumn fx:id="nome_item" prefWidth="392.0" text="Nome" />
+            <TableColumn fx:id="valor_item" minWidth="0.0" prefWidth="186.0" text="Valor" />
+            <TableColumn fx:id="quantidade" prefWidth="96.0" text="Quantidade" />
+            <TableColumn fx:id="tipo_item" prefWidth="250.0" text="Tipo" />
          </columns>
       </TableView>
       <SplitMenuButton layoutX="141.0" layoutY="250.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0" text="Nome">
