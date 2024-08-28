@@ -40,6 +40,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class ControllerPagamento implements Initializable {
@@ -102,14 +103,20 @@ public class ControllerPagamento implements Initializable {
     private AnchorPane paneAPrazo;
     
     @FXML
-    private ArrayList<Parcela> lista_parcelas;
+    private Label lblValorRestanteTexto;
+    
+    @FXML
+    private Label lblValorRestante;
+    
+    
+    private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
 
-    public ArrayList<Parcela> getLista_parcelas() {
-        return lista_parcelas;
+    public ObservableList<Parcela> getLista_parcelas_observable() {
+        return lista_parcelas_observable;
     }
 
-    public void setLista_parcelas(ArrayList<Parcela> lista_parcelas) {
-        this.lista_parcelas = lista_parcelas;
+    public void setLista_parcelas_observable(ObservableList<Parcela> lista_parcelas_observable) {
+        this.lista_parcelas_observable = lista_parcelas_observable;
     }
     
     // Método para definir a cena anterior
@@ -130,6 +137,9 @@ public class ControllerPagamento implements Initializable {
         this.venda = venda;
         atualizarValorVenda();
         txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
+        Parcela parcela = new Parcela(this.venda.getValor_venda() / 2, LocalDate.now().plusDays(28 * 1), this.venda, 1);
+        lista_parcelas_observable.add(parcela);
+        tbvwParcelas.setItems(lista_parcelas_observable);
     }
 
     @FXML
@@ -165,65 +175,77 @@ public class ControllerPagamento implements Initializable {
     
     @FXML
     public void concluirVenda(ActionEvent event) throws IOException, InterruptedException {
-        if (tipo_venda.getSelectedToggle() == rdbtnAVista) {
-            //A vista
-        if (Double.valueOf(txtfldValorRecebido.getText()) > this.venda.getValor_venda()) {
-            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        VendaDAO vendaDAO = new VendaDAO();
+        ParcelaDAO parcelaDAO = new ParcelaDAO();
+        PagamentoDAO pagamentoDAO = new PagamentoDAO();
+        
+        char metodo_pagamento = cmbboxMetodoPagamento.getSelectionModel().getSelectedItem().charAt(0);
         
         if (cmbboxMetodoPagamento.getValue() == null) {
             JOptionPane.showMessageDialog(null, "Selecione um método de pagamento!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
-            char metodo_pagamento = cmbboxMetodoPagamento.getSelectionModel().getSelectedItem().charAt(0);
-            Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda);
-            Pagamento pagamento = new Pagamento('C',metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
-
-            VendaDAO vendaDAO = new VendaDAO();
-            vendaDAO.insertVendaAVista(this.venda);
-            
-            
-            ParcelaDAO parcelaDAO = new ParcelaDAO();
-            parcelaDAO.insert(parcelaUnica);
-            
-            PagamentoDAO pagamentoDAO = new PagamentoDAO();
-            pagamentoDAO.insert(pagamento);
-            
-            
-            JOptionPane.showMessageDialog(null, "Venda registrada com sucesso!", "Venda com sucesso!", JOptionPane.INFORMATION_MESSAGE);
-            voltar(event);
-        } 
-        /*
-        else {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
-            Parent pagamentoView = loader.load();
-        
-            // Obter o controlador da nova tela
-            ControllerPagamentoParcelado controller = loader.getController();
-        
-            // Passar a cena atual para o controlador da nova tela
-            controller.setCenaAnterior(((Node)event.getSource()).getScene());
-//            //Passando venda para o outro controller
-            controller.setVenda(this.venda);
-            
-            Scene pagamentoScene = new Scene(pagamentoView);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(pagamentoScene);
-            window.show();
+        if (Double.valueOf(txtfldValorRecebido.getText()) > this.venda.getValor_venda()) {
+            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        */
+        
+        
+        
+        if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista
+            if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
+                
+                Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda);
+                Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
+
+                vendaDAO.insert(this.venda);
+                parcelaDAO.insert(parcelaUnica);
+                pagamentoDAO.insert(pagamento);
+            
+                JOptionPane.showMessageDialog(null, "Venda a vista registrada com sucesso!", "Venda a vista com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                voltar(event);
+            } 
         } else {
-            //A prazo
+                if (cmbboxCliente.getValue() == null) {
+                    JOptionPane.showMessageDialog(null, "Selecione um cliente para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                return;
+                }
+                
+                this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
+                vendaDAO.insert(this.venda);
+                Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda);
+                Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaEntrada);
+                parcelaDAO.insert(parcelaEntrada);
+                pagamentoDAO.insert(pagamento);
+                
+                for (Parcela parcela : lista_parcelas_observable) {
+                    parcelaDAO.insert(parcela);
+                    System.out.println("Insert parcela: " + parcela.getNumero_parcela());
+                }
+                
+                JOptionPane.showMessageDialog(null, "Venda a prazo registrada com sucesso!", "Venda a prazo com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                voltar(event);
         }
     }
 
     ObservableList<String> metodos_pagamento = FXCollections.observableArrayList("Espécie", "PIX", "Débito", "Crédito");
     
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        criaSpinnerValueFactory();
+        tbclnParcelaN.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
+        tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_parcela"));
+        tbclnVencimento.setCellValueFactory(new PropertyValueFactory<>("data_vencimento"));
+        
+        spnrNumeroParcelas.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
+                atualizaParcelas();
+        });
+        
+        txtfldValorRecebido.textProperty().addListener((observable, oldValue, newValue) -> {
+            atualizaParcelas();
+    });
         
         paneAPrazo.setVisible(false);
         
@@ -266,25 +288,8 @@ public class ControllerPagamento implements Initializable {
                 txtfldValorRecebido.setText(valorMetade.toString());
             }                
         });
-        criaSpinnerValueFactory();
-        spnrNumeroParcelas.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
-            Integer numero_parcelas = spnrNumeroParcelas.getValue();
-            Double valor_restante = this.venda.getValor_venda() - Double.valueOf(txtfldValorRecebido.getText());
-            Double valor_cada_parcela_todo = valor_restante / numero_parcelas;
-            
-            BigDecimal bd = new BigDecimal(valor_cada_parcela_todo).setScale(2, RoundingMode.HALF_UP);
-            double valor_cada_parcela = bd.doubleValue();
-            
-            for(int i = 1; i <= numero_parcelas; i++) {
-                Parcela parcela = new Parcela(valor_cada_parcela, LocalDate.now().plusDays(28 * i), this.venda, i);
-                lista_parcelas.add(parcela);
-                
-            }
-            
-            ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList(lista_parcelas);
-            tbvwParcelas.setItems(lista_parcelas_observable);
-            
-        });
+        
+        
     }    
 
     private void atualizarValorVenda() {
@@ -306,6 +311,25 @@ public class ControllerPagamento implements Initializable {
         ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
         cmbboxCliente.setItems(clientes);
     }
+
+    private void atualizaParcelas() {
+        Integer numero_parcelas = spnrNumeroParcelas.getValue();
+                Double valor_restante = this.venda.getValor_venda() - Double.valueOf(txtfldValorRecebido.getText());
+                lblValorRestante.setText(valor_restante.toString());
+                Double valor_cada_parcela_todo = valor_restante / numero_parcelas;
+                BigDecimal bd = new BigDecimal(valor_cada_parcela_todo).setScale(2, RoundingMode.HALF_UP);
+                double valor_cada_parcela = bd.doubleValue();
+                lista_parcelas_observable.clear();
+                for(int i = 1; i <= numero_parcelas; i++) {
+                    Parcela parcela = new Parcela(valor_cada_parcela, LocalDate.now().plusDays(28 * i), this.venda, i);
+                    lista_parcelas_observable.add(parcela);
+                }
+            tbvwParcelas.setItems(lista_parcelas_observable);
+    }
+    
+    
+    
+        
     
 
     
