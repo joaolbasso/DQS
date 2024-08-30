@@ -17,7 +17,7 @@
         <URL value="@/View/CSS/cadastrarcliente.css" />
     </stylesheets>
    <children>
-      <Label layoutX="163.0" layoutY="34.0" prefHeight="67.0" prefWidth="274.0" text="Cadastrar Cliente">
+      <Label fx:id="txtTitulo" layoutX="188.0" layoutY="34.0" prefHeight="67.0" prefWidth="274.0" text="Novo Cliente">
          <font>
             <Font size="36.0" />
          </font>
@@ -134,7 +134,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="127.0" layoutY="586.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="54.0" prefWidth="164.0" text="Cadastrar Cliente" />
+            <Button layoutX="127.0" layoutY="586.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="54.0" prefWidth="164.0" text="Concluir" />
             <Button layoutX="311.0" layoutY="586.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="54.0" prefWidth="164.0" text="Limpar Campos" />
          </children>
       </AnchorPane>

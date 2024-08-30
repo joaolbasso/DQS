@@ -19,17 +19,17 @@ public class Cliente implements Serializable {
     @Column(nullable = false, length = 50)
     private String nome_cliente;
     
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 14)
     private String telefone;
     
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true, length = 14)
     private String cpf;
     
     @Column(length = 60)
     private String logradouro;
     @Column(length = 60)
     private String bairro;
-    @Column(length = 8)
+    @Column(length = 9)
     private String cep;
     @Column(length = 20)
     private String numero;
@@ -39,17 +39,16 @@ public class Cliente implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
+    
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_estado")
+    private Estado estado;
 
     public Cliente() {
     }
 
-    public Cliente(String nome_cliente, String telefone, String cpf) {
-        this.nome_cliente = nome_cliente;
-        this.telefone = telefone;
-        this.cpf = cpf;
-    }
 
-    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento, Cidade cidade) {
+    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento, Cidade cidade, Estado estado) {
         this.nome_cliente = nome_cliente;
         this.telefone = telefone;
         this.cpf = cpf;
@@ -59,17 +58,7 @@ public class Cliente implements Serializable {
         this.numero = numero;
         this.complemento = complemento;
         this.cidade = cidade;
-    }
-    
-    public Cliente(String nome_cliente, String telefone, String cpf, String logradouro, String bairro, String cep, String numero, String complemento) {
-        this.nome_cliente = nome_cliente;
-        this.telefone = telefone;
-        this.cpf = cpf;
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.numero = numero;
-        this.complemento = complemento;
+        this.estado = estado;
     }
 
     public int getId_cliente() {
@@ -150,6 +139,14 @@ public class Cliente implements Serializable {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
 }

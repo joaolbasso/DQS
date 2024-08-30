@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -22,29 +23,10 @@ import javax.swing.JOptionPane;
 
 public class ControllerCadastrarItem implements Initializable {
 
-    private Item itemEditavel;
-
-
-    // Método para definir o item que será editado
-    public void setItem(Item item) {
-        this.itemEditavel = item;
-        preencherCampos(itemEditavel); // Preencher os campos com os dados do item selecionado
-    }
+    private Item itemEdicao;
     
-
     @FXML
-        public void voltar(ActionEvent event) throws IOException {
-            // Substitua "NomeDaView" pelo nome da view que você deseja carregar
-            String nomeDaView = "MenuPrincipal.fxml";
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
-            Parent view = loader.load();
-
-            Scene cena = new Scene(view);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(cena);
-            window.show();
-        }
+    private Label txtTitulo;
 
     @FXML
     private TextField txtfldNomeItem;
@@ -70,71 +52,91 @@ public class ControllerCadastrarItem implements Initializable {
     @FXML
     private ToggleGroup tipoItem;
 
-    // Método para cadastrar ou atualizar o item
-    public void cadastrarItem(ActionEvent event) throws IOException {
-        ItemDAO itemDAO = new ItemDAO();
-        Item itemSalvar = criarItem();
-
-        if (itemEditavel != null) {
-            itemSalvar.setId_item(itemEditavel.getId_item()); // Manter o ID do item ao editar
-            itemDAO.update(itemSalvar); // Atualizar item existente
-        } else {
-            itemDAO.insert(itemSalvar); // Inserir novo item
-        }
-
-        voltar(event); // Voltar para a tela anterior após salvar
-    }
-
-    // Método para limpar os campos
-    public void limparCampos(ActionEvent event) throws IOException {
-        int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (resposta == JOptionPane.YES_OPTION) {
-            txtfldNomeItem.setText("");
-            txtfldPrecoCusto.setText("");
-            txtfldPrecoVenda.setText("");
-            txtfldDescricao.setText("");
-            criaSpinnerValueFactory();
-            dtpckrDataCompra.setValue(LocalDate.now());
-        }
-    }
-
-    // Preencher os campos com os dados do item ao editar
-    private void preencherCampos(Item item) {
-        txtfldNomeItem.setText(item.getNome_item());
-        txtfldPrecoCusto.setText(String.valueOf(item.getPreco_custo_item()));
-        txtfldPrecoVenda.setText(String.valueOf(item.getValor_item()));
-        dtpckrDataCompra.setValue(item.getData_preco_item());
-        spnrQuantidade.getValueFactory().setValue(item.getQuantidade());
-        txtfldDescricao.setText(item.getDescricao_item());
-
-        if (item.getTipo_item() == 'P') {
-            rdbtnProduto.setSelected(true);
-        } else if (item.getTipo_item() == 'S') {
-            rdbtnServico.setSelected(true);
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dtpckrDataCompra.setValue(LocalDate.now());
-        criaSpinnerValueFactory();
-    }
-
-    // Método para configurar o Spinner para a quantidade
-    public void criaSpinnerValueFactory() {
         SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999);
-        valueFactory.setValue(1);
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000);
+        valueFactory.setValue(0);
         spnrQuantidade.setValueFactory(valueFactory);
+        
+        if (itemEdicao != null) {
+            txtTitulo.setText("Editar Item");
+        }
+    }
+    
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        String nomeDaView = "Item.fxml";
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        Parent view = loader.load();
+
+        Scene cena = new Scene(view);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(cena);
+        window.show();
+    }
+    
+    public void limparCampos(ActionEvent event) throws IOException {
+        
+       txtfldNomeItem.setText("");
+        txtfldPrecoCusto.setText("");
+        txtfldPrecoVenda.setText("");
+        txtfldDescricao.setText("");
+        spnrQuantidade.getValueFactory().setValue(0);
+        dtpckrDataCompra.setValue(LocalDate.now());
+        tipoItem.selectToggle(null); // Deselect radio buttons
     }
 
-    // Método para determinar o tipo do item com base no RadioButton selecionado
+    public void setItem(Item item) {
+        this.itemEdicao = item;
+        if (item != null) {
+            txtfldNomeItem.setText(item.getNome_item());
+            txtfldPrecoCusto.setText(String.valueOf(item.getPreco_custo_item()));
+            txtfldPrecoVenda.setText(String.valueOf(item.getValor_item()));
+            dtpckrDataCompra.setValue(item.getData_preco_item());
+            spnrQuantidade.getValueFactory().setValue(item.getQuantidade());
+            txtfldDescricao.setText(item.getDescricao_item());
+
+            if (item.getTipo_item() == 'P') {
+                rdbtnProduto.setSelected(true);
+            } else if (item.getTipo_item() == 'S') {
+                rdbtnServico.setSelected(true);
+            }
+        }
+    }
+
+    public void cadastrarItem(ActionEvent event) throws IOException {
+        try {
+            Item itemSalvar = criarItem();
+            if (itemSalvar != null) {
+                ItemDAO itemDAO = new ItemDAO();
+                if (itemEdicao == null) {
+                    // Novo item
+                    itemDAO.insert(itemSalvar);
+                    JOptionPane.showMessageDialog(null, "Item cadastrado com sucesso!");
+                } else {
+                    // Editar item existente
+                    itemSalvar.setId_item(itemEdicao.getId_item());
+                    itemDAO.update(itemSalvar);
+                    JOptionPane.showMessageDialog(null, "Item editado com sucesso!");
+                    voltar(event);
+                }
+                limparCampos(event);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o Item!", "Erro ao inserir", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao registrar o Item.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private char checkSelectedRadioButton() {
         RadioButton selectedRadioButton = (RadioButton) tipoItem.getSelectedToggle();
         return selectedRadioButton.getText().charAt(0);
     }
 
-    // Método para criar um item a partir dos dados dos campos
     private Item criarItem() {
         String nome_item = txtfldNomeItem.getText();
         Double preco_custo = Double.valueOf(txtfldPrecoCusto.getText());

@@ -19,7 +19,7 @@
         <URL value="@/View/CSS/cadastraritem.css" />
     </stylesheets>
    <children>
-      <Label layoutX="163.0" layoutY="41.0" prefHeight="53.0" prefWidth="274.0" text="Cadastro de Item">
+      <Label fx:id="txtTitulo" layoutX="163.0" layoutY="41.0" prefHeight="53.0" prefWidth="274.0" text="Cadastro de Item">
          <font>
             <Font size="36.0" />
          </font>

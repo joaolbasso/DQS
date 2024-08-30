@@ -1,6 +1,5 @@
 package DAO;
 
-import Model.Cliente;
 import Model.Item;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +10,9 @@ public class ItemDAO extends AbstractDAO {
     
     
     public void insert(Item item) {
+        EntityManager em = null;
         try {
-            emf = EntityManagerFactorySingleton.getInstance();
-            em = emf.createEntityManager();
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             em.persist(item);
             em.getTransaction().commit();
@@ -21,6 +20,7 @@ public class ItemDAO extends AbstractDAO {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+            e.printStackTrace();
         } finally {
             if (em != null) {
                 em.close();
@@ -30,43 +30,36 @@ public class ItemDAO extends AbstractDAO {
 
     public List<Item> todosOsItens() {
         List<Item> todosOsItens = new ArrayList<>();
-        
+        EntityManager em = null;
         try {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-            
             em.getTransaction().begin();
             
-                String jpql = "SELECT i FROM Item i";
-                TypedQuery<Item> query = em.createQuery(jpql, Item.class);
-                todosOsItens = query.getResultList();
-                
+            String jpql = "SELECT i FROM Item i";
+            TypedQuery<Item> query = em.createQuery(jpql, Item.class);
+            todosOsItens = query.getResultList();
+            
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em != null) {
-            em.getTransaction().rollback();
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
-             e.printStackTrace();
+            e.printStackTrace();
         } finally {
             if (em != null && em.isOpen()) {
                 em.close();
             }
         }
-        
-        if (todosOsItens != null) {
-            return todosOsItens;
-        }
-        List<Item> itensVazio = new ArrayList<>();
-        return itensVazio;
+        return todosOsItens != null ? todosOsItens : new ArrayList<>();
     }
     
-    // Método para atualizar um item
     public void update(Item item) {
+        EntityManager em = null;
         try {
-            emf = EntityManagerFactorySingleton.getInstance();
-            em = emf.createEntityManager();
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            // Atualizar o item no banco de dados
+            // Atualizar a item existente
             em.merge(item);
             
             em.getTransaction().commit();
@@ -82,18 +75,16 @@ public class ItemDAO extends AbstractDAO {
         }
     }
 
-    // Método para deletar um item
     public void delete(Item item) {
+        EntityManager em = null;
         try {
-            emf = EntityManagerFactorySingleton.getInstance();
-            em = emf.createEntityManager();
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            // Buscar o item no banco de dados
-            Item itemToDelete = em.find(Item.class, item.getId_item());
-            if (itemToDelete != null) {
-                // Remover o item
-                em.remove(itemToDelete);
+            // Remover a item
+            item = em.find(Item.class, item.getId_item());
+            if (item != null) {
+                em.remove(item);
             }
             
             em.getTransaction().commit();

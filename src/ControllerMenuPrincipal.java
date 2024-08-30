@@ -65,12 +65,7 @@ public class ControllerMenuPrincipal implements Initializable {
     public void entrarClientes(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Cliente.fxml"));
         Parent clienteView = loader.load();
-        
-        // Obter o controlador da nova tela
-        ControllerCliente controller = loader.getController();
-        
-        // Passar a cena atual (Menu Principal) para o controlador da nova tela
-        controller.setCenaAnterior(((Node) event.getSource()).getScene());
+       
 
         Scene clienteScene = new Scene(clienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
