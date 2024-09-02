@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 public class ControllerCadastrarItem implements Initializable {
 
     private Item itemEdicao;
+    private Scene cenaAnterior;
     
     @FXML
     private Label txtTitulo;
@@ -63,11 +64,24 @@ public class ControllerCadastrarItem implements Initializable {
             txtTitulo.setText("Editar Item");
         }
     }
+
+    public Scene getCenaAnterior() {
+        return cenaAnterior;
+    }
+
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
     
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        String nomeDaView = "Item.fxml";
-
+        String nomeDaView;
+        if (this.cenaAnterior == null) {
+             nomeDaView = "Item.fxml";
+        } else {
+            nomeDaView = "Caixa.fxml";
+        }
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
         Parent view = loader.load();
 

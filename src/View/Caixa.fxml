@@ -29,44 +29,38 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <DatePicker fx:id="dtpkrDataVenda" layoutX="222.0" layoutY="130.0" prefHeight="43.0" prefWidth="270.0">
+      <DatePicker fx:id="dtpkrDataVenda" layoutX="222.0" layoutY="165.0" prefHeight="43.0" prefWidth="270.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </DatePicker>
-      <Label layoutX="221.0" layoutY="95.0" prefHeight="35.0" prefWidth="233.0" text="Data*">
+      <Label layoutX="221.0" layoutY="130.0" prefHeight="35.0" prefWidth="233.0" text="Data*">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="221.0" layoutY="178.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Item*">
+      <Label layoutX="224.0" layoutY="221.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Item*">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbboxItem" layoutX="221.0" layoutY="213.0" prefHeight="43.0" prefWidth="354.0" />
-      <Label layoutX="338.0" layoutY="264.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Cliente">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="cmbboxCliente" layoutX="338.0" layoutY="299.0" prefHeight="43.0" prefWidth="398.0" />
-      <Button fx:id="btnCadastrarItem" layoutX="590.0" layoutY="213.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="146.0" text="Cadastrar Item">
+      <ComboBox fx:id="cmbboxItem" layoutX="224.0" layoutY="256.0" prefHeight="43.0" prefWidth="270.0" />
+      <Button fx:id="btnCadastrarItem" layoutX="515.0" layoutY="256.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="117.0" text="Cadastrar Item">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="223.0" layoutY="264.0" prefHeight="35.0" prefWidth="90.0" text="Quantidade:" wrapText="true">
+      <Label layoutX="655.0" layoutY="221.0" prefHeight="35.0" prefWidth="90.0" text="Quantidade:" wrapText="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="222.0" layoutY="299.0" prefHeight="43.0" prefWidth="90.0">
+      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="654.0" layoutY="256.0" prefHeight="43.0" prefWidth="90.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </Spinner>
-      <Button fx:id="btnAdicionar" layoutX="518.0" layoutY="385.0" mnemonicParsing="false" onAction="#adicionarItemAVenda" prefHeight="43.0" prefWidth="226.0" text="Adicionar Item à Venda">
+      <Button fx:id="btnAdicionar" layoutX="520.0" layoutY="338.0" mnemonicParsing="false" onAction="#adicionarItemAVenda" prefHeight="43.0" prefWidth="226.0" text="Adicionar Item à Venda">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -74,7 +68,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="txtfldValorUnitario" editable="false" layoutX="221.0" layoutY="385.0" opacity="0.5" prefHeight="43.0" prefWidth="136.0">
+      <TextField fx:id="txtfldValorUnitario" editable="false" layoutX="223.0" layoutY="338.0" opacity="0.5" prefHeight="43.0" prefWidth="136.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -82,12 +76,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="221.0" layoutY="350.0" prefHeight="35.0" prefWidth="136.0" text="Valor Unitário*">
+      <Label layoutX="223.0" layoutY="303.0" prefHeight="35.0" prefWidth="136.0" text="Valor Unitário*">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldPreco" layoutX="379.0" layoutY="385.0" prefHeight="43.0" prefWidth="127.0">
+      <TextField fx:id="txtfldPreco" layoutX="381.0" layoutY="338.0" prefHeight="43.0" prefWidth="127.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -95,35 +89,42 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="379.0" layoutY="350.0" prefHeight="35.0" prefWidth="164.0" text="Preço*">
+      <Label layoutX="381.0" layoutY="303.0" prefHeight="35.0" prefWidth="164.0" text="Preço*">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnFinalizar" layoutX="221.0" layoutY="713.0" mnemonicParsing="false" onAction="#finalizarVenda" prefHeight="43.0" prefWidth="164.0" text="Finalizar">
+      <Button fx:id="btnFinalizar" layoutX="223.0" layoutY="713.0" mnemonicParsing="false" onAction="#finalizarVenda" prefHeight="44.0" prefWidth="226.0" text="Pagamento">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/Moeda.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
-      <Label layoutX="484.0" layoutY="718.0" prefHeight="35.0" prefWidth="127.0" text="Valor Total:" wrapText="true">
+      <Label layoutX="501.0" layoutY="718.0" prefHeight="35.0" prefWidth="127.0" text="Valor Total:" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="388.0" layoutY="34.0" prefHeight="67.0" prefWidth="204.0" text="Nova Venda">
+      <Label layoutX="398.0" layoutY="34.0" prefHeight="67.0" prefWidth="204.0" text="Nova Venda">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblValorTotal" layoutX="610.0" layoutY="708.0" text="R$0,00">
+      <Label fx:id="lblValorTotal" layoutX="627.0" layoutY="708.0" text="R$0,00">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvwItensVenda" layoutX="223.0" layoutY="466.0" prefHeight="226.0" prefWidth="522.0">
+      <TableView fx:id="tbvwItensVenda" layoutX="223.0" layoutY="405.0" prefHeight="287.0" prefWidth="522.0">
         <columns>
           <TableColumn fx:id="tbclnProdutoServico" prefWidth="316.0" text="Produto/Serviço" />
           <TableColumn fx:id="tbclnQuantidade" minWidth="0.0" prefWidth="79.0" text="Quantidade" />
@@ -133,7 +134,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="btnAbrirCaixa" layoutX="691.0" layoutY="41.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="53.0" prefWidth="127.0" text="Abrir Caixa" />
-      <Button fx:id="btnFecharCaixa" layoutX="833.0" layoutY="41.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="53.0" prefWidth="127.0" text="Fechar Caixa" />
+      <Button fx:id="btnAbrirCaixa" layoutX="699.0" layoutY="41.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="53.0" prefWidth="127.0" text="Abrir Caixa" />
+      <Button fx:id="btnFecharCaixa" layoutX="841.0" layoutY="41.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="53.0" prefWidth="127.0" text="Fechar Caixa" />
    </children>
 </AnchorPane>

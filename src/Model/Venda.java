@@ -39,6 +39,11 @@ public class Venda implements Serializable {
     public Venda() {
     }
 
+    public Venda(Double valor_venda, LocalDate data_venda) {
+        this.valor_venda = valor_venda;
+        this.data_venda = data_venda;
+    }
+
     public Venda(Double valor_venda, LocalDate data_venda, Cliente cliente) {
         this.valor_venda = valor_venda;
         this.data_venda = data_venda;
@@ -84,6 +89,5 @@ public class Venda implements Serializable {
     public void setData_venda(LocalDate data_venda) {
         this.data_venda = data_venda;
     }
-    
     
 }

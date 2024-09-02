@@ -29,30 +29,8 @@ import javafx.stage.Stage;
 
 public class ControllerItem implements Initializable {
 
-    private Scene cenaAnterior;
-
-    // Método para definir a cena anterior
-    public void setCenaAnterior(Scene cenaAnterior) {
-        this.cenaAnterior = cenaAnterior;
-    }
-
-    @FXML
-    public void voltar(ActionEvent event) throws IOException {
-        if (cenaAnterior != null) {
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
-    }
-    
-    @FXML
-    private Button btnRegistrarItem;
-    
     @FXML
     private TableView<Item> tbvwItens;
-    
-    @FXML
-    private TableColumn<Item, Integer> id_item = new TableColumn<>("Id");
     
     @FXML
     private TableColumn<Item, String> nome_item = new TableColumn<>("Nome");
@@ -95,20 +73,17 @@ public class ControllerItem implements Initializable {
         // Ação do botão Consultar
         btnConsultar.setOnAction(event -> aplicarFiltro());
         
-        id_item.setCellValueFactory(new PropertyValueFactory<>("id_item"));
         nome_item.setCellValueFactory(new PropertyValueFactory<>("nome_item"));
         valor_item.setCellValueFactory(new PropertyValueFactory<>("valor_item"));
         quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tipo_item.setCellValueFactory(new PropertyValueFactory<>("tipo_item"));
         
         // Define o tamanho das colunas
-        id_item.setPrefWidth(100);
         nome_item.setPrefWidth(325);
         valor_item.setPrefWidth(200);
         quantidade.setPrefWidth(100);
         tipo_item.setPrefWidth(100);
         
-        centralizarTextoNaColuna(id_item);
         centralizarTextoNaColuna(nome_item);
         centralizarTextoNaColuna(valor_item);
         centralizarTextoNaColuna(quantidade);

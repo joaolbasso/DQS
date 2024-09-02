@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 
 public class ControllerCadastrarCliente implements Initializable {
 
+    private Scene cenaAnterior;
     private Cliente clienteEdicao;
     
     @FXML
@@ -67,9 +68,9 @@ public class ControllerCadastrarCliente implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        aplicarMascaraCPF(txtfldCPF);
-        aplicarMascaraTelefone(txtfldTelefone);
-        aplicarMascaraCEP(txtfldCEP);
+        //aplicarMascaraCPF(txtfldCPF);
+        //aplicarMascaraTelefone(txtfldTelefone);
+        //aplicarMascaraCEP(txtfldCEP);
 
         CidadeDAO cidadeDAO = new CidadeDAO();
         ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
@@ -140,7 +141,12 @@ public class ControllerCadastrarCliente implements Initializable {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        String nomeDaView = "Cliente.fxml";
+        String nomeDaView;
+        if (this.cenaAnterior == null) {
+             nomeDaView = "Cliente.fxml";
+        } else {
+            nomeDaView = "Pagamento.fxml";
+        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
         Parent view = loader.load();
@@ -150,7 +156,6 @@ public class ControllerCadastrarCliente implements Initializable {
         window.setScene(cena);
         window.show();
     }
-
 
     public void setCliente(Cliente cliente) {
         this.clienteEdicao = cliente;
@@ -204,7 +209,7 @@ public class ControllerCadastrarCliente implements Initializable {
             return null;
         }  
     }
-
+/*
     private void aplicarMascaraCPF(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             String value = newValue.replaceAll("[^\\d]", "");
@@ -237,4 +242,13 @@ public class ControllerCadastrarCliente implements Initializable {
             textField.positionCaret(value.length());
         });
     }
+*/
+    public Scene getCenaAnterior() {
+        return cenaAnterior;
+    }
+
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+
 }

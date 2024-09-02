@@ -68,8 +68,6 @@ public class ControllerCaixa implements Initializable {
     @FXML
     private Spinner<Integer> spnrQuantidade;
     @FXML
-    private ComboBox<Cliente> cmbboxCliente;
-    @FXML
     private TextField txtfldValorUnitario;
     @FXML
     private TextField txtfldPreco;
@@ -108,16 +106,17 @@ public class ControllerCaixa implements Initializable {
         this.valor_venda = valor_venda;
     }
     
-    
-    
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
+        String nomeDaView = "MenuPrincipal.fxml";
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        Parent view = loader.load();
+
+        Scene cena = new Scene(view);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(cena);
+        window.show();
     }
     
     @FXML
@@ -130,7 +129,7 @@ public class ControllerCaixa implements Initializable {
         ControllerCadastrarItem controllerCadastrarItem = loader.getController();
 
         // Definir a cena atual como a anterior no controller da nova tela
-        //controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
 
         // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);
@@ -143,24 +142,18 @@ public class ControllerCaixa implements Initializable {
     public void finalizarVenda(ActionEvent event) throws IOException {
         //Quando o usuário clicar em finalizar, pegar a lista local e adicionar a uma Venda associada.
         //ao finalizar adicionar ao ArrayList<> daquela Venda todos os itens_vendas criados
-        Cliente cliente = cmbboxCliente.getSelectionModel().getSelectedItem();
         LocalDate data = dtpkrDataVenda.getValue();
         if (data == null || data.isAfter(LocalDate.now())) {
             JOptionPane.showMessageDialog(null, "Não é possível atribuir data futura!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         return;
-}
+        }
         if (itensDaVenda.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Adicione itens à venda antes de finalizar!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         return;
         }
         
-        
-        Venda venda = new Venda(getValor_venda(), data, cliente);
+        Venda venda = new Venda(getValor_venda(), data);
         venda.setItens_venda(itensDaVenda);
-        
-        
-        
-        
         
         // Carregar a nova tela
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Pagamento.fxml"));
@@ -259,20 +252,7 @@ public class ControllerCaixa implements Initializable {
             txtfldPreco.setText(preco_calculado.toString());            
         });
         
-        atualizaComboBoxCliente();
-        cmbboxCliente.setCellFactory(cell -> new ListCell<Cliente>() {
-            @Override
-            protected void updateItem(Cliente cliente, boolean empty) {
-                super.updateItem(cliente, empty);
-                if (empty || cliente == null) {
-                    setText(null);
-                } else {
-                    setText(cliente.getNome_cliente());
-                }
-            }
-        });
         
-        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
         criaSpinnerValueFactory();
         spnrQuantidade.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
@@ -306,9 +286,6 @@ public class ControllerCaixa implements Initializable {
     private Item_venda criarItemVenda() {
         int quantidade = spnrQuantidade.getValue();
         Double valor_item_venda = Double.valueOf(txtfldPreco.getText());
-        
-        System.out.println("Valor ITEM VENDA EM CAIXA: " + valor_item_venda);
-        
         Item item = cmbboxItem.getSelectionModel().getSelectedItem();
         Item_venda item_venda = new Item_venda(quantidade, valor_item_venda, item);
         return item_venda;
@@ -320,9 +297,5 @@ public class ControllerCaixa implements Initializable {
         cmbboxItem.setItems(itens);
     }
     
-    public void atualizaComboBoxCliente() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
-        cmbboxCliente.setItems(clientes);
-    }
+    
 }
