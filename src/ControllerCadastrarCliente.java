@@ -1,6 +1,6 @@
-import Config.MascarasFX;
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
+import DAO.EstadoDAO;
 import Model.Cidade;
 import Model.Cliente;
 import Model.Estado;
@@ -17,117 +17,68 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class ControllerCadastrarCliente implements Initializable {
+
+    private Cliente clienteEdicao;
     
-    private Scene cenaAnterior;
-
-    // Método para definir a cena anterior
-    public void setCenaAnterior(Scene cenaAnterior) {
-        this.cenaAnterior = cenaAnterior;
-    }
-
     @FXML
-    public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
-    }
+    private Label txtTitulo;
 
     @FXML
     private TextField txtfldNome;
-    
+
     @FXML
     private TextField txtfldCPF;
-    
+
     @FXML
     private TextField txtfldTelefone;
-    
+
     @FXML
     private ComboBox<Cidade> cmbboxCidade;
-    
+
     @FXML
     private ComboBox<Estado> cmbboxEstado;
-    
+
     @FXML
     private TextField txtfldCEP;
-    
+
     @FXML
     private TextField txtfldLogradouro;
-    
+
     @FXML
     private TextField txtfldNumero;
-    
+
     @FXML
     private TextField txtfldComplemento;
-    
+
     @FXML
     private TextField txtfldBairro;
-    
-    public void cadastrarCliente(ActionEvent event) throws IOException {
-        Cliente cliente = criarCliente();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        clienteDAO.insert(cliente);
-        limpezaCampos();
-    }
-    
-    public void limparCampos(ActionEvent event) throws IOException {
-        int resposta = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja limpar os campos?", "Limpar Campos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (resposta == JOptionPane.YES_OPTION) {
-            limpezaCampos();
-        }
-    }
-    
-    private void limpezaCampos() {
-        txtfldNome.setText("");
-        txtfldCPF.setText("");
-        txtfldTelefone.setText("");
-        txtfldCEP.setText("");
-        txtfldLogradouro.setText("");
-        txtfldNumero.setText("");
-        txtfldComplemento.setText("");
-        txtfldBairro.setText("");
-    }
-    
-    private Cliente criarCliente() {
-        String nome_cliente = txtfldNome.getText();
-        String telefone = txtfldTelefone.getText();
-        String cpf = txtfldCPF.getText();
-        
-        System.out.println(cpf);
-        
-        String cep = txtfldCEP.getText();
-        String logradouro = txtfldLogradouro.getText();
-        String bairro = txtfldBairro.getText();
-        String numero = txtfldNumero.getText();
-        String complemento = txtfldComplemento.getText();
-        Cidade cidade = cmbboxCidade.getSelectionModel().getSelectedItem();
-        Cliente cliente = new Cliente(nome_cliente, telefone, cpf, logradouro, bairro, cep, numero, complemento, cidade);
-        return cliente;
-    }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        MascarasFX.mascaraCPF(txtfldCPF);
-        //MascarasFX.mascaraCEP(txtfldCEP);
-        //MascarasFX.mascaraTelefone(txtfldTelefone);
-        
-        
+        aplicarMascaraCPF(txtfldCPF);
+        aplicarMascaraTelefone(txtfldTelefone);
+        aplicarMascaraCEP(txtfldCEP);
+
         CidadeDAO cidadeDAO = new CidadeDAO();
-        
         ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
         cmbboxCidade.setItems(cidades);
         
+        EstadoDAO estadoDAO = new EstadoDAO();
+        ObservableList<Estado> estados = FXCollections.observableArrayList(estadoDAO.todosOsEstados());
+        cmbboxEstado.setItems(estados);
+
         cmbboxCidade.setCellFactory(cell -> new ListCell<Cidade>() {
             @Override
             protected void updateItem(Cidade cidade, boolean empty) {
@@ -140,8 +91,150 @@ public class ControllerCadastrarCliente implements Initializable {
             }
         });
         
-        cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
-        cmbboxCidade.setValue(cidades.get(347));
+        cmbboxEstado.setCellFactory(cell -> new ListCell<Estado>() {
+            @Override
+            protected void updateItem(Estado estado, boolean empty) {
+                super.updateItem(estado, empty);
+                if (empty || estado == null) {
+                    setText(null);
+                } else {
+                    setText(estado.getSigla_uf());
+                }
+            }
+        });
 
-    }    
+        cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
+        cmbboxEstado.setButtonCell(cmbboxEstado.getCellFactory().call(null));
+        
+        if (clienteEdicao != null) {
+            txtTitulo.setText("Editar Cliente");
+        }
+    }
+
+    @FXML
+    public void cadastrarCliente(ActionEvent event) {
+        try {
+            Cliente clienteSalvar = criarCliente();
+            if (clienteSalvar != null) {
+                ClienteDAO clienteDAO = new ClienteDAO();
+                if (clienteEdicao == null) {
+                    // Nova cliente
+                    clienteDAO.insert(clienteSalvar);
+                    JOptionPane.showMessageDialog(null, "Cliente registrada com sucesso!");
+                } else {
+                    // Editar cliente existente
+                    clienteSalvar.setId_cliente(clienteEdicao.getId_cliente());
+                    clienteDAO.update(clienteSalvar);
+                    JOptionPane.showMessageDialog(null, "Cliente editada com sucesso!");
+                    voltar(event);
+                }
+                limparCampos(event);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir a Cliente!", "Erro ao inserir", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao registrar a Cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    public void voltar(ActionEvent event) throws IOException {
+        String nomeDaView = "Cliente.fxml";
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        Parent view = loader.load();
+
+        Scene cena = new Scene(view);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(cena);
+        window.show();
+    }
+
+
+    public void setCliente(Cliente cliente) {
+        this.clienteEdicao = cliente;
+        if (cliente != null) {
+            txtfldNome.setText(cliente.getNome_cliente());
+            txtfldCPF.setText(cliente.getCpf());
+            txtfldTelefone.setText(cliente.getTelefone());
+            txtfldCEP.setText(cliente.getCep());
+            txtfldLogradouro.setText(cliente.getLogradouro());
+            txtfldBairro.setText(cliente.getBairro());
+            txtfldNumero.setText(cliente.getNumero());
+            txtfldComplemento.setText(cliente.getComplemento());
+            cmbboxCidade.getSelectionModel().select(cliente.getCidade());
+            cmbboxEstado.getSelectionModel().select(cliente.getEstado());
+        }
+    }
+
+    public void limparCampos(ActionEvent event) {
+        txtfldNome.setText("");
+        txtfldCPF.setText("");
+        txtfldTelefone.setText("");
+        txtfldCEP.setText("");
+        txtfldLogradouro.setText("");
+        txtfldNumero.setText("");
+        txtfldComplemento.setText("");
+        txtfldBairro.setText("");
+        cmbboxCidade.getSelectionModel().clearSelection();
+        cmbboxEstado.getSelectionModel().clearSelection();
+    }
+
+    private Cliente criarCliente() {
+        try{
+            String nome_cliente = txtfldNome.getText();
+            String telefone = txtfldTelefone.getText();
+            String cpf = txtfldCPF.getText();
+            String cep = txtfldCEP.getText();
+            String logradouro = txtfldLogradouro.getText();
+            String bairro = txtfldBairro.getText();
+            String numero = txtfldNumero.getText();
+            String complemento = txtfldComplemento.getText();
+            Cidade cidade = cmbboxCidade.getSelectionModel().getSelectedItem();
+            Estado estado = cmbboxEstado.getSelectionModel().getSelectedItem();
+
+            if (nome_cliente.isEmpty() || cpf.isEmpty() || cidade == null) {
+                return null;
+            }
+
+            return new Cliente(nome_cliente, telefone, cpf, logradouro, bairro, cep, numero, complemento, cidade, estado);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }  
+    }
+
+    private void aplicarMascaraCPF(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String value = newValue.replaceAll("[^\\d]", "");
+            if (value.length() > 11) value = value.substring(0, 11);
+            value = value.replaceFirst("(\\d{3})(\\d)", "$1.$2");
+            value = value.replaceFirst("(\\d{3})\\.(\\d{3})(\\d)", "$1.$2.$3");
+            value = value.replaceFirst("(\\d{3})\\.(\\d{3})\\.(\\d{3})(\\d)", "$1.$2.$3-$4");
+            textField.setText(value);
+            textField.positionCaret(value.length());
+        });
+    }
+
+    private void aplicarMascaraTelefone(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String value = newValue.replaceAll("[^\\d]", "");
+            if (value.length() > 11) value = value.substring(0, 11);
+            value = value.replaceFirst("(\\d{2})(\\d)", "($1) $2");
+            value = value.replaceFirst("\\((\\d{2})\\) (\\d{5})(\\d)", "($1) $2-$3");
+            textField.setText(value);
+            textField.positionCaret(value.length());
+        });
+    }
+
+    private void aplicarMascaraCEP(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String value = newValue.replaceAll("[^\\d]", "");
+            if (value.length() > 8) value = value.substring(0, 8);
+            value = value.replaceFirst("(\\d{5})(\\d)", "$1-$2");
+            textField.setText(value);
+            textField.positionCaret(value.length());
+        });
+    }
 }

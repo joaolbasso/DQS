@@ -50,7 +50,7 @@ public class ControllerCaixa implements Initializable {
         ControllerCadastrarItem controllerCadastrarItem = loader.getController();
 
         // Definir a cena atual como a anterior no controller da nova tela
-        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+        //controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
 
         // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);

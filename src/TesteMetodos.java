@@ -43,11 +43,11 @@ public class TesteMetodos {
         }
         */
         
-        ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> clientes = clienteDAO.todosOsClientes();
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente.getNome_cliente());
-        }
+//        ClienteDAO clienteDAO = new ClienteDAO();
+//        List<Cliente> clientes = clienteDAO.todosOsClientes();
+//        for (Cliente cliente : clientes) {
+//            System.out.println(cliente.getNome_cliente());
+//        }
         
         gerente.close();
         fabrica.close();

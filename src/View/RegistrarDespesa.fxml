@@ -6,10 +6,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,7 +18,7 @@
         <URL value="@/View/CSS/registrardespesa.css" />
     </stylesheets>
    <children>
-      <Label layoutX="138.0" layoutY="41.0" prefHeight="53.0" prefWidth="325.0" text="Registro de Despesa">
+      <Label fx:id="txtTitulo" layoutX="185.0" layoutY="41.0" prefHeight="53.0" prefWidth="302.0" text="Nova Despesa">
          <font>
             <Font size="36.0" />
          </font>
@@ -36,7 +34,7 @@
          </cursor></Button>
       <AnchorPane layoutX="9.0" layoutY="116.0" prefHeight="674.0" prefWidth="584.0">
          <children>
-            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Registrar ">
+            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Concluir">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -78,25 +76,6 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </Spinner>
-            <RadioButton fx:id="rbtnPago" layoutX="409.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="Pago">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <toggleGroup>
-                  <ToggleGroup fx:id="situacao" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="rbtnASerPago" layoutX="409.0" layoutY="154.0" mnemonicParsing="false" text="A ser pago" toggleGroup="$situacao">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
             <Label layoutX="39.0" layoutY="188.0" prefHeight="35.0" prefWidth="258.0" text="Selecionar Beneficiário *">
                <font>
                   <Font size="24.0" />

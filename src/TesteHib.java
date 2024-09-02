@@ -13,6 +13,7 @@ import Model.Item_venda;
 import Model.Pagamento;
 import Model.Parcela;
 import Model.Venda;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -39,33 +40,33 @@ public class TesteHib {
         v2.getItens_venda().add(iv3);
         v2.getItens_venda().add(iv4);
         v2.setValor_venda(15.00);
-        /*
         
-        /*
+        
+        
         gerente.persist(item3);
         gerente.persist(item4);
         gerente.persist(iv3);
         gerente.persist(iv4);
         gerente.persist(v2);
-        */
         
         
         
         
-        /*
+        
+        
             BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
             List<Beneficiario> benefiL = beneficiarioDAO.todosOsBeneficiarios();
             Beneficiario bene = benefiL.get(2);
             Despesa despesa = new Despesa("Linguiça", 41.00, "Linguiça do pote", 0,bene);
             gerente.persist(despesa);
-          */  
+         
         
         gerente.getTransaction().begin();
-        /*
+        
         Despesa edit = gerente.find(Despesa.class, 6);
         edit.setValor_despesa(100.00);
         gerente.merge(edit);
-        */
+        
         
         Despesa delete = gerente.find(Despesa.class, 7);
         gerente.remove(delete);
@@ -73,16 +74,16 @@ public class TesteHib {
         
         
         gerente.getTransaction().commit();
-        /*
+        
             CidadeDAO cidadeDAO = new CidadeDAO();
             Cidade cidade = cidadeDAO.buscaCidadePorId(348);
             Cliente cliente = new Cliente("Joao Leonardo Basso", "42999406830", "10086858990", "Rua Indios do Brasil", "Vila Nova", "84530000", "284", "Casa", cidade);
             gerente.persist(cliente);
-        */
         
         
-        /*
-        Exemplo pegando do BANCO
+        
+        
+        //Exemplo pegando do BANCO
         Usuario doBanco = null;
         gerente.getTransaction().begin();
         doBanco = (Usuario) gerente.find(Usuario.class, 1);
@@ -90,10 +91,10 @@ public class TesteHib {
         
         System.out.println(doBanco.getUsuario());
         System.out.println(doBanco.getSenha());
-        */
+        
         
         gerente.close();
         fabrica.close();
-        
+        */
     }
 }

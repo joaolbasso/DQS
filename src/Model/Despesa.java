@@ -17,6 +17,7 @@ public class Despesa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_despesa;
 
+    @Column(nullable = false)
     private String nome_despesa;
     
     @Column(nullable = false)
@@ -49,37 +50,22 @@ public class Despesa implements Serializable {
         this.data_pagamento_despesa = data_pagamento_despesa;
     }
 
-    
-    
     public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa, Beneficiario beneficiario) {
-        this.nome_despesa = nome_despesa;
-        this.valor_despesa = valor_despesa;
-        this.descricao_despesa = descricao_despesa;
-        this.recorrencia_despesa = recorrencia_despesa;
-        this.data_vencimento_despesa = data_vencimento_despesa;
-        this.data_pagamento_despesa = data_pagamento_despesa;
+        this(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa);
         this.beneficiario = beneficiario;
     }
-
-    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, Beneficiario beneficiario) {
-        this.nome_despesa = nome_despesa;
-        this.valor_despesa = valor_despesa;
-        this.descricao_despesa = descricao_despesa;
-        this.recorrencia_despesa = recorrencia_despesa;
-        this.beneficiario = beneficiario;
-    }
-    
-    
 
     public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa, Beneficiario beneficiario, Item_caixa item_caixa) {
-        this.nome_despesa = nome_despesa;
-        this.valor_despesa = valor_despesa;
-        this.descricao_despesa = descricao_despesa;
-        this.recorrencia_despesa = recorrencia_despesa;
-        this.data_vencimento_despesa = data_vencimento_despesa;
-        this.data_pagamento_despesa = data_pagamento_despesa;
-        this.beneficiario = beneficiario;
+        this(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
         this.item_caixa = item_caixa;
+    }
+
+    public int getId_despesa() {
+        return id_despesa;
+    }
+
+    public void setId_despesa(int id_despesa) {
+        this.id_despesa = id_despesa;
     }
 
     public String getNome_despesa() {
@@ -89,7 +75,23 @@ public class Despesa implements Serializable {
     public void setNome_despesa(String nome_despesa) {
         this.nome_despesa = nome_despesa;
     }
-    
+
+    public Double getValor_despesa() {
+        return valor_despesa;
+    }
+
+    public void setValor_despesa(Double valor_despesa) {
+        this.valor_despesa = valor_despesa;
+    }
+
+    public String getDescricao_despesa() {
+        return descricao_despesa;
+    }
+
+    public void setDescricao_despesa(String descricao_despesa) {
+        this.descricao_despesa = descricao_despesa;
+    }
+
     public int getRecorrencia_despesa() {
         return recorrencia_despesa;
     }
@@ -130,54 +132,7 @@ public class Despesa implements Serializable {
         this.item_caixa = item_caixa;
     }
     
-    public int getId_despesa() {
-        return id_despesa;
+    public boolean isPago() {
+        return data_pagamento_despesa != null;
     }
-
-    public void setId_despesa(int id_despesa) {
-        this.id_despesa = id_despesa;
-    }
-
-    public Double getValor_despesa() {
-        return valor_despesa;
-    }
-
-    public void setValor_despesa(Double valor_despesa) {
-        this.valor_despesa = valor_despesa;
-    }
-
-    public String getDescricao_despesa() {
-        return descricao_despesa;
-    }
-
-    public void setDescricao_despesa(String descricao_despesa) {
-        this.descricao_despesa = descricao_despesa;
-    }
-
-    public int getRecorrencia() {
-        return recorrencia_despesa;
-    }
-
-    public void setRecorrencia(int recorrencia) {
-        this.recorrencia_despesa = recorrencia;
-    }
-
-    public LocalDate getData_vencimento() {
-        return data_vencimento_despesa;
-    }
-
-    public void setData_vencimento(LocalDate data_vencimento) {
-        this.data_vencimento_despesa = data_vencimento;
-    }
-
-    public LocalDate getData_pagamento() {
-        return data_pagamento_despesa;
-    }
-
-    public void setData_pagamento(LocalDate data_pagamento) {
-        this.data_pagamento_despesa = data_pagamento;
-    }
-    
-    
 }
-

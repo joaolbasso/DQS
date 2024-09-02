@@ -39,11 +39,7 @@ public class ControllerPagamentoParcelado implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
         Parent pagamentoView = loader.load();
 
-        // Obter o controlador da nova tela
-        ControllerCadastrarCliente controller = loader.getController();
 
-        // Passar a cena atual para o controlador da nova tela
-        controller.setCenaAnterior(((Node) event.getSource()).getScene());
 
         Scene pagamentoScene = new Scene(pagamentoView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
