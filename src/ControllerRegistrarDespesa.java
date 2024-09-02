@@ -7,6 +7,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,9 +21,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -43,6 +46,10 @@ public class ControllerRegistrarDespesa implements Initializable {
     @FXML
     private DatePicker dtpkrDataPagamento;
     @FXML
+    private RadioButton rbtnPago, rbtnASerPago;
+    @FXML
+    private ToggleGroup situacao;
+    @FXML
     private DatePicker dtpkrDataVencimento;
     @FXML
     private TextField txtfldDescricao;
@@ -51,6 +58,20 @@ public class ControllerRegistrarDespesa implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        situacao.selectedToggleProperty().addListener((ObservableValue<? extends javafx.scene.control.Toggle> observable, javafx.scene.control.Toggle oldValue, javafx.scene.control.Toggle newValue) -> {
+            RadioButton selectedRadioButton = (RadioButton) newValue;
+            if(selectedRadioButton == rbtnASerPago) {
+                dtpkrDataPagamento.setDisable(true);
+                dtpkrDataPagamento.setValue(null);
+                dtpkrDataVencimento.setValue(LocalDate.now().plusDays(10));
+            } else {
+                dtpkrDataPagamento.setDisable(false);
+                dtpkrDataPagamento.setValue(LocalDate.now());
+                dtpkrDataVencimento.setValue(null);
+            } 
+        });
+        
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30);
         valueFactory.setValue(0);
@@ -162,7 +183,7 @@ public class ControllerRegistrarDespesa implements Initializable {
             return null;
         }
     }
-
+    
     public void entrarCadastrarBeneficiario(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
         Parent cadastrarBeneficiarioView = loader.load();
