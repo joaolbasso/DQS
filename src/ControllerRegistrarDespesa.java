@@ -2,6 +2,7 @@ import DAO.BeneficiarioDAO;
 import DAO.DespesaDAO;
 import Model.Beneficiario;
 import Model.Despesa;
+import Model.Item;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -59,6 +60,8 @@ public class ControllerRegistrarDespesa implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        dtpkrDataPagamento.setValue(LocalDate.now());
+        
         situacao.selectedToggleProperty().addListener((ObservableValue<? extends javafx.scene.control.Toggle> observable, javafx.scene.control.Toggle oldValue, javafx.scene.control.Toggle newValue) -> {
             RadioButton selectedRadioButton = (RadioButton) newValue;
             if(selectedRadioButton == rbtnASerPago) {
@@ -91,6 +94,8 @@ public class ControllerRegistrarDespesa implements Initializable {
                 }
             }
         });
+        
+        cmbboxBeneficiario.setButtonCell(cmbboxBeneficiario.getCellFactory().call(null));
 
         cmbboxBeneficiario.setButtonCell(cmbboxBeneficiario.getCellFactory().call(null));
 

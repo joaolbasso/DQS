@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
     <stylesheets>
         <URL value="@/View/CSS/registrardespesa.css" />
     </stylesheets>
    <children>
-      <Label layoutX="138.0" layoutY="41.0" prefHeight="53.0" prefWidth="325.0" text="Registro de Despesa">
+      <Label fx:id="txtTitulo" layoutX="138.0" layoutY="41.0" prefHeight="53.0" prefWidth="325.0" text="Registro de Despesa">
          <font>
             <Font size="36.0" />
          </font>

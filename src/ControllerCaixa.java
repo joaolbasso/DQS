@@ -221,9 +221,6 @@ public class ControllerCaixa implements Initializable {
     });
 }
     
-    
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -251,8 +248,6 @@ public class ControllerCaixa implements Initializable {
             Double preco_calculado = spnrQuantidade.getValue() * newValue.getValor_item();
             txtfldPreco.setText(preco_calculado.toString());            
         });
-        
-        
         
         criaSpinnerValueFactory();
         spnrQuantidade.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
