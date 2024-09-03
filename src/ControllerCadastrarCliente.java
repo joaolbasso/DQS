@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 
 public class ControllerCadastrarCliente implements Initializable {
 
-    private Scene cenaAnterior;
+    private String cenaAnterior;
     private Cliente clienteEdicao;
     
     @FXML
@@ -141,14 +141,7 @@ public class ControllerCadastrarCliente implements Initializable {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        String nomeDaView;
-        if (this.cenaAnterior == null) {
-             nomeDaView = "Cliente.fxml";
-        } else {
-            nomeDaView = "Pagamento.fxml";
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + getCenaAnterior()));
         Parent view = loader.load();
 
         Scene cena = new Scene(view);
@@ -243,11 +236,11 @@ public class ControllerCadastrarCliente implements Initializable {
         });
     }
 */
-    public Scene getCenaAnterior() {
+    public String getCenaAnterior() {
         return cenaAnterior;
     }
 
-    public void setCenaAnterior(Scene cenaAnterior) {
+    public void setCenaAnterior(String cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
     }
 

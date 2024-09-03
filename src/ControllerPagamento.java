@@ -144,12 +144,15 @@ public class ControllerPagamento implements Initializable {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
-        }
+        String nomeDaView = "Caixa.fxml";
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+        Parent view = loader.load();
+
+        Scene cena = new Scene(view);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(cena);
+        window.show();
     }
     
     @FXML
@@ -162,7 +165,7 @@ public class ControllerPagamento implements Initializable {
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
 
         // Definir a cena atual como a anterior no controller da nova tela
-        controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
+        controllerCadastrarCliente.setCenaAnterior("Pagamento.fxml");
 
         // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);

@@ -270,8 +270,11 @@ private void adicionarBotoesTabela() {
     @FXML
     public void entrarCadastrarCliente(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
-        Parent cadastrarClienteView = loader.load();      
-
+        Parent cadastrarClienteView = loader.load(); 
+        
+        ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
+        controllerCadastrarCliente.setCenaAnterior("Cliente.fxml");
+        
         Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarClienteScene);

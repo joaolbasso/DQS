@@ -66,6 +66,9 @@ public class ControllerCaixa implements Initializable {
     private ToggleGroup tipo_item;
     */
     @FXML
+    private ComboBox<Cliente> cmbboxCliente;
+    
+    @FXML
     private Spinner<Integer> spnrQuantidade;
     @FXML
     private TextField txtfldValorUnitario;
@@ -204,6 +207,24 @@ public class ControllerCaixa implements Initializable {
         lblValorTotal.setText(("R$ " + String.valueOf(valor_venda) + "0"));
         
     }
+    
+    @FXML
+    public void cadastrarCliente(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
+        Parent caixaView = loader.load();
+
+        // Obter o controller da nova tela
+        ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
+
+        // Definir a cena atual como a anterior no controller da nova tela
+        controllerCadastrarCliente.setCenaAnterior("Caixa.fxml");
+
+        // Mudar para a nova cena
+        Scene caixaScene = new Scene(caixaView);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(caixaScene);
+        window.show();
+    }
 
     private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
@@ -255,6 +276,7 @@ public class ControllerCaixa implements Initializable {
             txtfldPreco.setText(preco_calculado.toString());
         });
         
+        atualizaComboBoxCliente();
         cmbboxItem.setCellFactory(cell -> new ListCell<Item>() {
             @Override
             protected void updateItem(Item item, boolean empty) {
@@ -268,6 +290,20 @@ public class ControllerCaixa implements Initializable {
         });
         
         cmbboxItem.setButtonCell(cmbboxItem.getCellFactory().call(null));
+        
+        cmbboxCliente.setCellFactory(cell -> new ListCell<Cliente>() {
+            @Override
+            protected void updateItem(Cliente cliente, boolean empty) {
+                super.updateItem(cliente, empty);
+                if (empty || cliente == null) {
+                    setText(null);
+                } else {
+                    setText(cliente.getNome_cliente());
+                }
+            }
+        });
+        
+        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
     }    
     
@@ -290,6 +326,12 @@ public class ControllerCaixa implements Initializable {
         ItemDAO itemDAO = new ItemDAO();
         ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
         cmbboxItem.setItems(itens);
+    }
+    
+    public void atualizaComboBoxCliente() {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
+        cmbboxCliente.setItems(clientes);
     }
     
     
