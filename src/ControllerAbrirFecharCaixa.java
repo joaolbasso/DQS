@@ -50,7 +50,7 @@ public class ControllerAbrirFecharCaixa implements Initializable {
     
     @FXML
     public void abrirCaixa(ActionEvent event) throws IOException {
-        Usuario usuario = usuarioDAO.selectUnico();
+        Usuario usuario = usuarioDAO.selectUnico(); //Por enquanto busca um unico usuario na base, com id 5
         
         Caixa caixaNovo = new Caixa(usuario); // Usuario Logado
         caixaDAO.insert(caixaNovo);
@@ -103,7 +103,6 @@ public class ControllerAbrirFecharCaixa implements Initializable {
             
         }
     }
-
 
      public Caixa getCaixa() {
         return caixa;
