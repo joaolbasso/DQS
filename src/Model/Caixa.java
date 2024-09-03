@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -9,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,11 +30,12 @@ public class Caixa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_caixa;
     
-    private LocalDate data_hora_abertura;
+    @Column(name = "data_hora_abertura", nullable = false)
+    private LocalDateTime data_hora_abertura;
     
-    private LocalDate data_hora_fechamento;
+    private LocalDateTime data_hora_fechamento;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario_que_abriu;
     
@@ -40,6 +44,19 @@ public class Caixa implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_item_caixa"))
     private Collection<Item_caixa> itens_caixa = new ArrayList<Item_caixa>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusCaixa estado_caixa;
+
+    public Caixa() {
+    }
+
+    public Caixa(Usuario usuario_que_abriu) {
+        this.data_hora_abertura = LocalDateTime.now();
+        this.usuario_que_abriu = usuario_que_abriu;
+        this.estado_caixa = StatusCaixa.ABERTO;
+    }
+    
     public Collection<Item_caixa> getItens_caixa() {
         return itens_caixa;
     }
@@ -64,20 +81,33 @@ public class Caixa implements Serializable {
         this.id_caixa = id_caixa;
     }
 
-    public LocalDate getData_hora_abertura() {
+    public LocalDateTime getData_hora_abertura() {
         return data_hora_abertura;
     }
 
-    public void setData_hora_abertura(LocalDate data_hora_abertura) {
+    public void setData_hora_abertura(LocalDateTime data_hora_abertura) {
         this.data_hora_abertura = data_hora_abertura;
     }
 
-    public LocalDate getData_hora_fechamento() {
+    public LocalDateTime getData_hora_fechamento() {
         return data_hora_fechamento;
     }
 
-    public void setData_hora_fechamento(LocalDate data_hora_fechamento) {
+    public void setData_hora_fechamento(LocalDateTime data_hora_fechamento) {
         this.data_hora_fechamento = data_hora_fechamento;
     }
 
+    public StatusCaixa getEstado_caixa() {
+        return estado_caixa;
+    }
+
+    public void setEstado_caixa(StatusCaixa estado_caixa) {
+        this.estado_caixa = estado_caixa;
+    }
+    
+    public enum StatusCaixa {
+    ABERTO,
+    FECHADO
+    }
+    
 }

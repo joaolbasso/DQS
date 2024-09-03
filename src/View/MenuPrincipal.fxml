@@ -20,7 +20,7 @@
          <graphic>
             <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagens/Icons/caixaIcon.png" />
+                  <Image url="@Imagens/Icons/vendaIcon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -61,7 +61,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fitHeight="270.0" fitWidth="304.0" layoutX="821.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="229.0" fitWidth="228.0" layoutX="1036.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Logo%20Farofoto.png" />
          </image>
@@ -72,5 +72,17 @@
          </font>
       </Label>
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
+      <Button fx:id="btnCaixaAbrir" layoutX="268.0" layoutY="50.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="170.0" prefWidth="170.0" textAlignment="JUSTIFY" textOverrun="CLIP">
+         <graphic>
+            <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagens/Icons/caixaIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

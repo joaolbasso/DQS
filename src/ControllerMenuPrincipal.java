@@ -1,3 +1,7 @@
+import DAO.CaixaDAO;
+import DAO.UsuarioDAO;
+import Model.Caixa;
+import Model.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +30,8 @@ public class ControllerMenuPrincipal implements Initializable {
     private Button btnClientes;
     @FXML
     private Button btnItens;
+    @FXML
+    private Button btnCaixaAbrir;
     
     @FXML
     public void entrarCaixa(ActionEvent event) throws IOException {
@@ -84,6 +90,16 @@ public class ControllerMenuPrincipal implements Initializable {
         // Passar a cena atual (Menu Principal) para o controlador da nova tela
         //controller.setCenaAnterior(((Node) event.getSource()).getScene());
 
+        Scene itemScene = new Scene(itemView);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(itemScene);
+        window.show();
+    }
+    
+    @FXML
+    public void abrirCaixa(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AbrirFecharCaixa.fxml"));
+        Parent itemView = loader.load();
         Scene itemScene = new Scene(itemView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(itemScene);

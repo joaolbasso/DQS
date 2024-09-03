@@ -1,6 +1,8 @@
 
 
+import DAO.CaixaDAO;
 import DAO.EntityManagerFactorySingleton;
+import Model.Caixa;
 import javafx.scene.image.Image;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +36,14 @@ public class DQSApp extends Application {
         */
         
         stage.show();
+        
+        CaixaDAO caixaDAO = new CaixaDAO();
+        Caixa caixaAberto = caixaDAO.buscarCaixaAberto();
+        if (caixaAberto != null) {
+            System.out.println("CAIXA ENCONTRADO" + caixaAberto.getData_hora_abertura());
+        } else {
+            System.out.println("PARECE QUE NÃO TEMOS UM CAIXA ABERTO");
+        }
     }
     
     @Override
