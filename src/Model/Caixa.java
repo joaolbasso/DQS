@@ -49,6 +49,8 @@ public class Caixa implements Serializable {
     private Collection<Item_caixa> itens_caixa = new ArrayList<Item_caixa>();
 
     public Caixa() {
+        this.estado_caixa = StatusCaixa.ABERTO;
+        this.data_hora_abertura = LocalDateTime.now();
     }
 
     public Caixa(Usuario usuario_que_abriu) {

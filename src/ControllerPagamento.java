@@ -1,5 +1,6 @@
 import DAO.CaixaDAO;
 import DAO.ClienteDAO;
+import DAO.ItemDAO;
 import DAO.Item_caixaDAO;
 import DAO.PagamentoDAO;
 import DAO.ParcelaDAO;
@@ -7,7 +8,9 @@ import DAO.UsuarioDAO;
 import DAO.VendaDAO;
 import Model.Caixa;
 import Model.Cliente;
+import Model.Item;
 import Model.Item_caixa;
+import Model.Item_venda;
 import Model.Pagamento;
 import Model.Parcela;
 import Model.Venda;
@@ -18,6 +21,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -188,6 +192,7 @@ public class ControllerPagamento implements Initializable {
         PagamentoDAO pagamentoDAO = new PagamentoDAO();
         CaixaDAO caixaDAO = new CaixaDAO();
         Item_caixaDAO item_caixaDAO = new Item_caixaDAO();
+        ItemDAO itemDAO = new ItemDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         char metodo_pagamento = cmbboxMetodoPagamento.getSelectionModel().getSelectedItem().charAt(0);
@@ -214,7 +219,25 @@ public class ControllerPagamento implements Initializable {
                 
                 Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda);
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
-                Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), "Venda " + this.venda.getId_venda(), Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
+                
+                StringBuilder lista_nome_itens_builder = new StringBuilder();
+                
+                for (Item_venda item : this.venda.getItens_venda()) {
+                    Item itemEntity = item.getItem();
+                    Item managedItem = itemDAO.update(itemEntity);
+                    int id_ultimo = 0;
+                        if (lista_nome_itens_builder.length() > 0) {
+                            lista_nome_itens_builder.append(", ");
+                        }
+                        // Evite criar uma nova instância se já existe no contexto
+                    // Utilize merge se necessário
+                    if (id_ultimo != item.getItem().getId_item())
+                        lista_nome_itens_builder.append(managedItem.getNome_item());
+                    }
+
+                String lista_nome_itens = lista_nome_itens_builder.toString();
+                
+                Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), lista_nome_itens, Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
 
                 
                 vendaDAO.insert(this.venda);
@@ -238,8 +261,25 @@ public class ControllerPagamento implements Initializable {
                 vendaDAO.insert(this.venda);
                 Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda);
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaEntrada);
-                Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), "Venda " + this.venda.getId_venda(), Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
+                
+                StringBuilder lista_nome_itens_builder = new StringBuilder();
+                
+                for (Item_venda item : this.venda.getItens_venda()) {
+                    Item itemEntity = item.getItem();
+                    Item managedItem = itemDAO.update(itemEntity);
+                    int id_ultimo = 0;
+                        if (lista_nome_itens_builder.length() > 0) {
+                            lista_nome_itens_builder.append(", ");
+                        }
+                        // Evite criar uma nova instância se já existe no contexto
+                    // Utilize merge se necessário
+                    if (id_ultimo != item.getItem().getId_item())
+                        lista_nome_itens_builder.append(managedItem.getNome_item());
+                    }
 
+                String lista_nome_itens = lista_nome_itens_builder.toString();
+                
+                Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), lista_nome_itens, Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
 
                 parcelaDAO.insert(parcelaEntrada);
                 pagamentoDAO.insert(pagamento);

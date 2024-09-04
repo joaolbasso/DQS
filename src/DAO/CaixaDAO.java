@@ -96,30 +96,7 @@ public class CaixaDAO extends AbstractDAO {
         }
     }
     
-    public List<Caixa> todosOsItens_Caixa(Caixa caixa) {
-        List<Caixa> todosOsItens_caixa = new ArrayList<>();
-        try {
-            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-            em.getTransaction().begin();
-            
-            String jpql = "SELECT c FROM Item_caixa c WHERE c.id_caixa = :id_caixa";
-            TypedQuery<Caixa> query = em.createQuery(jpql, Caixa.class);
-            query.setParameter("id_caixa", caixa.getId_caixa());
-            todosOsItens_caixa = query.getResultList();
-            
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
-        }
-        return todosOsItens_caixa != null ? todosOsItens_caixa : new ArrayList<>();
-    }
+    
     
     public Caixa buscaCaixaPorId(int id_caixa) {
         Caixa caixa = null;
