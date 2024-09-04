@@ -38,15 +38,15 @@ public class Caixa implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario_que_abriu;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusCaixa estado_caixa;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ITENS_CAIXA", joinColumns = @JoinColumn(name = "id_caixa"), 
             inverseJoinColumns = @JoinColumn(name = "id_item_caixa"))
     private Collection<Item_caixa> itens_caixa = new ArrayList<Item_caixa>();
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusCaixa estado_caixa;
 
     public Caixa() {
     }

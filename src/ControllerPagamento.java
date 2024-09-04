@@ -3,6 +3,7 @@ import DAO.ClienteDAO;
 import DAO.Item_caixaDAO;
 import DAO.PagamentoDAO;
 import DAO.ParcelaDAO;
+import DAO.UsuarioDAO;
 import DAO.VendaDAO;
 import Model.Caixa;
 import Model.Cliente;
@@ -187,15 +188,17 @@ public class ControllerPagamento implements Initializable {
         PagamentoDAO pagamentoDAO = new PagamentoDAO();
         CaixaDAO caixaDAO = new CaixaDAO();
         Item_caixaDAO item_caixaDAO = new Item_caixaDAO();
-        
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         char metodo_pagamento = cmbboxMetodoPagamento.getSelectionModel().getSelectedItem().charAt(0);
+        
         Caixa caixaAtual = caixaDAO.buscarCaixaAberto();
         
-        if(caixaAtual == null) {
-            JOptionPane.showMessageDialog(null, "Não há um caixa aberto, então um novo caixa foi criado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        } 
-        
+        if (caixaAtual == null) {
+            caixaAtual = new Caixa();
+            caixaDAO.insert(caixaAtual); // Persistir o novo caixa no banco de dados
+        }
+
         if (cmbboxMetodoPagamento.getValue() == null) {
             JOptionPane.showMessageDialog(null, "Selecione um método de pagamento!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
@@ -212,12 +215,16 @@ public class ControllerPagamento implements Initializable {
                 Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda);
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
                 Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), "Venda " + this.venda.getId_venda(), Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
+
                 
                 vendaDAO.insert(this.venda);
                 parcelaDAO.insert(parcelaUnica);
                 pagamentoDAO.insert(pagamento);
+                
+                caixaAtual.getItens_caixa().add(item_caixa);
                 item_caixaDAO.insert(item_caixa);
-            
+                caixaDAO.update(caixaAtual);
+                
                 JOptionPane.showMessageDialog(null, "Venda a vista registrada com sucesso!", "Venda a vista com sucesso!", JOptionPane.INFORMATION_MESSAGE);
                 voltar(event);
             } 
@@ -232,9 +239,14 @@ public class ControllerPagamento implements Initializable {
                 Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda);
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaEntrada);
                 Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), "Venda " + this.venda.getId_venda(), Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
+
+
                 parcelaDAO.insert(parcelaEntrada);
                 pagamentoDAO.insert(pagamento);
+                
+                caixaAtual.getItens_caixa().add(item_caixa);
                 item_caixaDAO.insert(item_caixa);
+                caixaDAO.update(caixaAtual);
                 
                 for (Parcela parcela : lista_parcelas_observable) {
                     parcelaDAO.insert(parcela);
@@ -247,7 +259,6 @@ public class ControllerPagamento implements Initializable {
     }
 
     ObservableList<String> metodos_pagamento = FXCollections.observableArrayList("Espécie", "PIX", "Débito", "Crédito");
-    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

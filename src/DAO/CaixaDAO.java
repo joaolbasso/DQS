@@ -2,6 +2,8 @@ package DAO;
 
 import Model.Caixa;
 import Model.Caixa.StatusCaixa;
+import Model.Cidade;
+import Model.Cliente;
 import Model.Item;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -57,7 +59,24 @@ public class CaixaDAO extends AbstractDAO {
             }
         }
     }
-
+    
+    public void update(Caixa caixa) {
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            em.merge(caixa);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
     
     public void fecharCaixa(Caixa caixa) {
         try {
@@ -77,10 +96,47 @@ public class CaixaDAO extends AbstractDAO {
         }
     }
     
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Caixa> todosOsItens_Caixa(Caixa caixa) {
+        List<Caixa> todosOsItens_caixa = new ArrayList<>();
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            String jpql = "SELECT c FROM Item_caixa c WHERE c.id_caixa = :id_caixa";
+            TypedQuery<Caixa> query = em.createQuery(jpql, Caixa.class);
+            query.setParameter("id_caixa", caixa.getId_caixa());
+            todosOsItens_caixa = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return todosOsItens_caixa != null ? todosOsItens_caixa : new ArrayList<>();
     }
-
+    
+    public Caixa buscaCaixaPorId(int id_caixa) {
+        Caixa caixa = null;
+        Caixa caixaNovo = null;
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            caixa = em.find(Caixa.class, id_caixa);
+            caixaNovo = (Caixa) em.merge(caixa);
+        }   
+        finally {
+            if (em != null) {
+            em.close();
+            }
+        }
+    return caixaNovo;
+}
+    
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
