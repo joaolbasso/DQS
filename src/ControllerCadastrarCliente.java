@@ -110,6 +110,28 @@ public class ControllerCadastrarCliente implements Initializable {
         if (clienteEdicao != null) {
             txtTitulo.setText("Editar Cliente");
         }
+        
+        // Validação de entrada
+        txtfldCPF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtfldCPF.setText(oldValue);
+            }
+        });
+        txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtfldTelefone.setText(oldValue);
+            }
+        });
+        txtfldCEP.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtfldCEP.setText(oldValue);
+            }
+        });
+        txtfldNumero.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtfldNumero.setText(oldValue);
+            }
+        });
     }
 
     @FXML
@@ -153,6 +175,8 @@ public class ControllerCadastrarCliente implements Initializable {
     public void setCliente(Cliente cliente) {
         this.clienteEdicao = cliente;
         if (cliente != null) {
+            txtTitulo.setText("Editar Cliente");
+            
             txtfldNome.setText(cliente.getNome_cliente());
             txtfldCPF.setText(cliente.getCpf());
             txtfldTelefone.setText(cliente.getTelefone());

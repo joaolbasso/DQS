@@ -59,12 +59,11 @@ public class ControllerRegistrarDespesa implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         dtpkrDataPagamento.setValue(LocalDate.now());
-        
+
         situacao.selectedToggleProperty().addListener((ObservableValue<? extends javafx.scene.control.Toggle> observable, javafx.scene.control.Toggle oldValue, javafx.scene.control.Toggle newValue) -> {
             RadioButton selectedRadioButton = (RadioButton) newValue;
-            if(selectedRadioButton == rbtnASerPago) {
+            if (selectedRadioButton == rbtnASerPago) {
                 dtpkrDataPagamento.setDisable(true);
                 dtpkrDataPagamento.setValue(null);
                 dtpkrDataVencimento.setValue(LocalDate.now().plusDays(10));
@@ -74,7 +73,7 @@ public class ControllerRegistrarDespesa implements Initializable {
                 dtpkrDataVencimento.setValue(null);
             } 
         });
-        
+
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30);
         valueFactory.setValue(0);
@@ -94,16 +93,25 @@ public class ControllerRegistrarDespesa implements Initializable {
                 }
             }
         });
-        
-        cmbboxBeneficiario.setButtonCell(cmbboxBeneficiario.getCellFactory().call(null));
 
         cmbboxBeneficiario.setButtonCell(cmbboxBeneficiario.getCellFactory().call(null));
 
         if (despesaEdicao != null) {
             txtTitulo.setText("Editar Despesa");
         }
+
+        // Validação de entrada para o campo de valor
+        txtfldValor.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Permitir apenas números e uma vírgula ou ponto para decimais
+            if (!newValue.matches("\\d*([\\.,]\\d{0,2})?")) {
+                txtfldValor.setText(oldValue);
+            } else {
+                // Substituir vírgula por ponto para manter o formato decimal correto
+                txtfldValor.setText(newValue.replace(",", "."));
+            }
+        });
     }
-    
+
     @FXML
     public void voltar(ActionEvent event) throws IOException {
         String nomeDaView = "Despesa.fxml";
@@ -128,18 +136,20 @@ public class ControllerRegistrarDespesa implements Initializable {
     }
 
     public void setDespesa(Despesa despesa) {
-        this.despesaEdicao = despesa;
-        if (despesa != null) {
-            txtTitulo.setText("Editar Despesa");
-            txtfldNomeDespesa.setText(despesa.getNome_despesa());
-            txtfldValor.setText(despesa.getValor_despesa().toString());
-            spnrRecorrente.getValueFactory().setValue(despesa.getRecorrencia_despesa());
-            dtpkrDataPagamento.setValue(despesa.getData_pagamento_despesa());
-            dtpkrDataVencimento.setValue(despesa.getData_vencimento_despesa());
-            txtfldDescricao.setText(despesa.getDescricao_despesa());
-            cmbboxBeneficiario.getSelectionModel().select(despesa.getBeneficiario());
-        }
+    this.despesaEdicao = despesa;
+    if (despesa != null) {
+        txtTitulo.setText("Editar Despesa");
+        txtfldNomeDespesa.setText(despesa.getNome_despesa());
+
+        txtfldValor.setText(despesa.getValor_despesa().toString());
+
+        spnrRecorrente.getValueFactory().setValue(despesa.getRecorrencia_despesa());
+        dtpkrDataPagamento.setValue(despesa.getData_pagamento_despesa());
+        dtpkrDataVencimento.setValue(despesa.getData_vencimento_despesa());
+        txtfldDescricao.setText(despesa.getDescricao_despesa());
+        cmbboxBeneficiario.getSelectionModel().select(despesa.getBeneficiario());
     }
+}
 
     @FXML
     public void registrarDespesa(ActionEvent event) {
@@ -169,32 +179,34 @@ public class ControllerRegistrarDespesa implements Initializable {
     }
 
     private Despesa criarDespesa() {
-        try {
-            String nome_despesa = txtfldNomeDespesa.getText();
-            Double valor_despesa = Double.valueOf(txtfldValor.getText());
-            int recorrencia_despesa = spnrRecorrente.getValue();
-            LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
-            LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
-            String descricao_despesa = txtfldDescricao.getText();
-            Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
+    try {
+        String nome_despesa = txtfldNomeDespesa.getText();
 
-            if (nome_despesa.isEmpty() || valor_despesa.isNaN()) {
-                return null;
-            }
+        // Converter a string para Double
+        Double valor_despesa = Double.valueOf(txtfldValor.getText().replace(",", "."));
 
-            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        int recorrencia_despesa = spnrRecorrente.getValue();
+        LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
+        LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
+        String descricao_despesa = txtfldDescricao.getText();
+        Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
+
+        if (nome_despesa.isEmpty() || valor_despesa.isNaN()) {
             return null;
         }
+
+        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+        return null;
     }
+}
     
     public void entrarCadastrarBeneficiario(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarBeneficiario.fxml"));
         Parent cadastrarBeneficiarioView = loader.load();
 
         ControllerCadastrarBeneficiario controllerCadastrarBeneficiario = loader.getController();
-        controllerCadastrarBeneficiario.setCenaAnterior(((Node) event.getSource()).getScene());
 
         Scene cadastrarBeneficiarioScene = new Scene(cadastrarBeneficiarioView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
