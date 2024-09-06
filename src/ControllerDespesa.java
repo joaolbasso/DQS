@@ -73,6 +73,9 @@ public class ControllerDespesa implements Initializable {
         // Configura as opções do SplitMenuButton
         configurarOpcoesFiltro();
 
+        // Define "Nome" como filtro padrão
+        spmbFiltro.setText("Nome");
+
         // Configura a ação do botão Limpar Filtro
         btnLimparFiltro.setOnAction(event -> limparFiltro());
 
@@ -81,8 +84,16 @@ public class ControllerDespesa implements Initializable {
 
         nome_despesa.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
         valor_despesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
-        
+
         beneficiario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario()));
+
+        nome_despesa.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
+        valor_despesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
+        beneficiario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario()));
+
+        // Configurar colunas de data
+        data_pagamento_despesa.setCellValueFactory(new PropertyValueFactory<>("data_pagamento_despesa"));
+        data_vencimento_despesa.setCellValueFactory(new PropertyValueFactory<>("data_vencimento_despesa"));
 
         centralizarTextoNaColuna(nome_despesa);
         centralizarTextoNaColuna(valor_despesa);
@@ -147,13 +158,44 @@ public class ControllerDespesa implements Initializable {
     @FXML
     private void limparFiltro() {
         txtFiltro.clear(); 
-        spmbFiltro.setText(""); 
+        spmbFiltro.setText("Nome"); 
 
         atualizarListaDespesas();
     }
     
     // Método atualizado para adicionar botões à tabela
     private void adicionarBotoesTabela() {
+        
+        // Configurar a coluna de Data de Pagamento
+        data_pagamento_despesa.setCellFactory(column -> new TableCell<Despesa, LocalDate>() {
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(""); // Exibe um texto vazio quando a data for nula
+                } else {
+                    setText(item.format(formatter)); // Formata e exibe a data
+                }
+            }
+        });
+
+        // Configurar a coluna de Data de Vencimento
+        data_vencimento_despesa.setCellFactory(column -> new TableCell<Despesa, LocalDate>() {
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(""); // Exibe um texto vazio quando a data for nula
+                } else {
+                    setText(item.format(formatter)); // Formata e exibe a data
+                }
+            }
+        });
+
         // Coluna Editar
         editarColuna.setCellFactory(coluna -> {
             return new TableCell<Despesa, Void>() {
@@ -253,6 +295,9 @@ public class ControllerDespesa implements Initializable {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(registrarDespesaScene);
             window.show();
+        }
+        else{
+            System.out.println("Passou");
         }
     }
 

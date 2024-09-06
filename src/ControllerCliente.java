@@ -2,9 +2,7 @@ import DAO.ClienteDAO;
 import Model.Cliente;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,6 +67,9 @@ public class ControllerCliente implements Initializable {
         // Configura as opções do SplitMenuButton
         configurarOpcoesFiltro();
         
+        // Define "Nome" como filtro padrão
+        spmbFiltro.setText("Nome");
+        
         // Configura a ação do botão Limpar Filtro
         btnLimparFiltro.setOnAction(event -> limparFiltro());
 
@@ -93,6 +94,7 @@ public class ControllerCliente implements Initializable {
     // Método para configurar as opções do SplitMenuButton
     private void configurarOpcoesFiltro() {
         MenuItem filtrarPorNome = new MenuItem("Nome");
+        //MenuItem filtrarPorCidade = new MenuItem("Cidade");
 
         // Adiciona as opções ao SplitMenuButton
         spmbFiltro.getItems().addAll(filtrarPorNome);
@@ -129,7 +131,7 @@ public class ControllerCliente implements Initializable {
     @FXML
     private void limparFiltro() {
         txtFiltro.clear(); 
-        spmbFiltro.setText(""); 
+        spmbFiltro.setText("Nome"); 
 
         atualizarListaClientes();
     }

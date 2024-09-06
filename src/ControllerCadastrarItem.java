@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 public class ControllerCadastrarItem implements Initializable {
 
     private Item itemEdicao;
+    
     private Scene cenaAnterior;
     
     @FXML
@@ -60,9 +61,33 @@ public class ControllerCadastrarItem implements Initializable {
         valueFactory.setValue(0);
         spnrQuantidade.setValueFactory(valueFactory);
         
+        dtpckrDataCompra.setValue(LocalDate.now());
+        
+        
         if (itemEdicao != null) {
             txtTitulo.setText("Editar Item");
         }
+        
+        txtfldPrecoCusto.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Permitir apenas números e uma vírgula ou ponto para decimais
+            if (!newValue.matches("\\d*([\\.,]\\d{0,2})?")) {
+                txtfldPrecoCusto.setText(oldValue);
+            } else {
+                // Substituir vírgula por ponto para manter o formato decimal correto
+                txtfldPrecoCusto.setText(newValue.replace(",", "."));
+            }
+        });
+        
+        txtfldPrecoVenda.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Permitir apenas números e uma vírgula ou ponto para decimais
+            if (!newValue.matches("\\d*([\\.,]\\d{0,2})?")) {
+                txtfldPrecoVenda.setText(oldValue);
+            } else {
+                // Substituir vírgula por ponto para manter o formato decimal correto
+                txtfldPrecoVenda.setText(newValue.replace(",", "."));
+            }
+        });
+        
     }
 
     public Scene getCenaAnterior() {
@@ -91,23 +116,24 @@ public class ControllerCadastrarItem implements Initializable {
         window.show();
     }
     
-    public void limparCampos(ActionEvent event) throws IOException {
-        
+    public void limparCampos(ActionEvent event) throws IOException {    
        txtfldNomeItem.setText("");
         txtfldPrecoCusto.setText("");
         txtfldPrecoVenda.setText("");
         txtfldDescricao.setText("");
         spnrQuantidade.getValueFactory().setValue(0);
         dtpckrDataCompra.setValue(LocalDate.now());
-        tipoItem.selectToggle(null); // Deselect radio buttons
+        tipoItem.selectToggle(rdbtnProduto);
     }
 
     public void setItem(Item item) {
         this.itemEdicao = item;
         if (item != null) {
+            txtTitulo.setText("Editar Item");
             txtfldNomeItem.setText(item.getNome_item());
-            txtfldPrecoCusto.setText(String.valueOf(item.getPreco_custo_item()));
-            txtfldPrecoVenda.setText(String.valueOf(item.getValor_item()));
+            
+            txtfldPrecoCusto.setText(item.getPreco_custo_item().toString());
+            txtfldPrecoVenda.setText(item.getValor_item().toString());
             dtpckrDataCompra.setValue(item.getData_preco_item());
             spnrQuantidade.getValueFactory().setValue(item.getQuantidade());
             txtfldDescricao.setText(item.getDescricao_item());
@@ -152,14 +178,20 @@ public class ControllerCadastrarItem implements Initializable {
     }
 
     private Item criarItem() {
+        try {
         String nome_item = txtfldNomeItem.getText();
-        Double preco_custo = Double.valueOf(txtfldPrecoCusto.getText());
-        Double preco_venda = Double.valueOf(txtfldPrecoVenda.getText());
-        LocalDate data_preco_item = dtpckrDataCompra.getValue();
-        int quantidade = spnrQuantidade.getValue();
-        char tipo_item = checkSelectedRadioButton();
-        String descricao_item = txtfldDescricao.getText();
+        
+            Double preco_custo = Double.valueOf(txtfldPrecoCusto.getText().replace(",", "."));
+            Double preco_venda = Double.valueOf(txtfldPrecoVenda.getText().replace(",", "."));
+            LocalDate data_preco_item = dtpckrDataCompra.getValue();
+            int quantidade = spnrQuantidade.getValue();
+            char tipo_item = checkSelectedRadioButton();
+            String descricao_item = txtfldDescricao.getText();
 
-        return new Item(nome_item, preco_custo, preco_venda, data_preco_item, quantidade, tipo_item, descricao_item);
+            return new Item(nome_item, preco_custo, preco_venda, data_preco_item, quantidade, tipo_item, descricao_item);
+        }catch (NumberFormatException e) {
+        e.printStackTrace();
+        return null;
+        }
     }
 }

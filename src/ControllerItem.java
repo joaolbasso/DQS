@@ -31,25 +31,25 @@ public class ControllerItem implements Initializable {
 
     @FXML
     private TableView<Item> tbvwItens;
-    
+
     @FXML
     private TableColumn<Item, String> nome_item = new TableColumn<>("Nome");
-    
+
     @FXML
     private TableColumn<Item, Double> valor_item = new TableColumn<>("Valor");
-    
+
     @FXML
     private TableColumn<Item, Integer> quantidade = new TableColumn<>("Quantidade");
-    
+
     @FXML
     private TableColumn<Item, Character> tipo_item = new TableColumn<>("Tipo");
-    
+
     @FXML
     private TableColumn<Item, Void> editarColuna = new TableColumn<>("");
 
     @FXML
     private TableColumn<Item, Void> deletarColuna = new TableColumn<>("");
-    
+
     @FXML
     private SplitMenuButton spmbFiltro;
 
@@ -58,10 +58,10 @@ public class ControllerItem implements Initializable {
 
     @FXML
     private Button btnConsultar;
-    
+
     @FXML
     private Button btnLimparFiltro;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Configura as opções do SplitMenuButton
@@ -72,27 +72,28 @@ public class ControllerItem implements Initializable {
 
         // Ação do botão Consultar
         btnConsultar.setOnAction(event -> aplicarFiltro());
-        
+
         nome_item.setCellValueFactory(new PropertyValueFactory<>("nome_item"));
         valor_item.setCellValueFactory(new PropertyValueFactory<>("valor_item"));
         quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tipo_item.setCellValueFactory(new PropertyValueFactory<>("tipo_item"));
-        
+
         // Define o tamanho das colunas
         nome_item.setPrefWidth(325);
         valor_item.setPrefWidth(200);
         quantidade.setPrefWidth(100);
         tipo_item.setPrefWidth(100);
-        
+
         centralizarTextoNaColuna(nome_item);
         centralizarTextoNaColuna(valor_item);
         centralizarTextoNaColuna(quantidade);
         centralizarTextoNaColuna(tipo_item);
-        
+
         adicionarBotoesTabela();
+        ajustarLarguraTabela();
         atualizarListaItens();
-    }  
-    
+    }
+
     private void configurarOpcoesFiltro() {
         MenuItem filtrarPorNome = new MenuItem("Nome");
         MenuItem filtrarPorTipo = new MenuItem("Tipo");
@@ -100,12 +101,15 @@ public class ControllerItem implements Initializable {
         // Adiciona as opções ao SplitMenuButton
         spmbFiltro.getItems().addAll(filtrarPorNome, filtrarPorTipo);
 
-        // Define a opção selecionada no SplitMenuButton
+        // Define a opção "Nome" como padrão
+        spmbFiltro.setText("Nome");
+
+        // Define a ação para as opções do SplitMenuButton
         for (MenuItem item : spmbFiltro.getItems()) {
             item.setOnAction(event -> spmbFiltro.setText(item.getText()));
         }
     }
-    
+
     private void aplicarFiltro() {
         String filtro = txtFiltro.getText().toUpperCase(); // Converter para maiúsculo para consistência
         String criterio = spmbFiltro.getText();
@@ -138,16 +142,13 @@ public class ControllerItem implements Initializable {
         tbvwItens.setItems(itensFiltrados);
     }
 
-
-    
     @FXML
     private void limparFiltro() {
-        txtFiltro.clear(); 
-        spmbFiltro.setText(""); 
-
+        txtFiltro.clear();
+        spmbFiltro.setText("Nome"); // Retorna para "Nome" como padrão
         atualizarListaItens();
     }
-    
+
     private void adicionarBotoesTabela() {
         // Coluna Editar
         editarColuna.setCellFactory(coluna -> {
@@ -258,27 +259,33 @@ public class ControllerItem implements Initializable {
             atualizarListaItens();  // Atualiza a lista de items após a exclusão
         }
     }
-    
+
     private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
-        coluna.setCellFactory(column -> new TableCell<T, U>() {
-            @Override
-            protected void updateItem(U item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item.toString());
-                    setStyle("-fx-alignment: CENTER;");
+        coluna.setCellFactory(tc -> {
+            TableCell<T, U> cell = new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(item.toString());
+                        setStyle("-fx-alignment: CENTER;");
+                    }
                 }
-            }
+            };
+            return cell;
         });
     }
-    
-    public void atualizarListaItens() {
+
+    private void atualizarListaItens() {
         ItemDAO itemDAO = new ItemDAO();
         ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
         tbvwItens.setItems(itens);
+    }
+
+    private void ajustarLarguraTabela() {
+        tbvwItens.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
     @FXML
@@ -304,4 +311,5 @@ public class ControllerItem implements Initializable {
         window.setScene(cadastrarItemScene);
         window.show();
     }
+
 }
