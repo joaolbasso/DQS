@@ -107,6 +107,10 @@ public class ControllerCadastrarCliente implements Initializable {
         cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
         cmbboxEstado.setButtonCell(cmbboxEstado.getCellFactory().call(null));
         
+        cmbboxCidade.getSelectionModel().select(347);
+        cmbboxEstado.getSelectionModel().select(0);
+        txtfldCEP.setText("84530-000");
+        
         if (clienteEdicao != null) {
             txtTitulo.setText("Editar Cliente");
         }
@@ -132,6 +136,8 @@ public class ControllerCadastrarCliente implements Initializable {
                 txtfldNumero.setText(oldValue);
             }
         });
+        
+        
     }
 
     @FXML
@@ -180,13 +186,13 @@ public class ControllerCadastrarCliente implements Initializable {
             txtfldNome.setText(cliente.getNome_cliente());
             txtfldCPF.setText(cliente.getCpf());
             txtfldTelefone.setText(cliente.getTelefone());
-            txtfldCEP.setText(cliente.getCep());
             txtfldLogradouro.setText(cliente.getLogradouro());
             txtfldBairro.setText(cliente.getBairro());
             txtfldNumero.setText(cliente.getNumero());
             txtfldComplemento.setText(cliente.getComplemento());
-            cmbboxCidade.getSelectionModel().select(cliente.getCidade());
-            cmbboxEstado.getSelectionModel().select(cliente.getEstado());
+            cmbboxCidade.getSelectionModel().select(347);
+            cmbboxEstado.getSelectionModel().select(0);
+            txtfldCEP.setText("84530-000");
         }
     }
 

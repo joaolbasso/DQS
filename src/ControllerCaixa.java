@@ -334,5 +334,4 @@ public class ControllerCaixa implements Initializable {
         cmbboxCliente.setItems(clientes);
     }
     
-    
 }
