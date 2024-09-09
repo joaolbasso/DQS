@@ -4,6 +4,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -61,7 +63,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fitHeight="229.0" fitWidth="228.0" layoutX="1036.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="170.0" fitWidth="149.0" layoutX="1116.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Logo%20Farofoto.png" />
          </image>
@@ -72,17 +74,22 @@
          </font>
       </Label>
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
-      <Button fx:id="btnCaixaAbrir" layoutX="268.0" layoutY="50.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="170.0" prefWidth="170.0" textAlignment="JUSTIFY" textOverrun="CLIP">
-         <graphic>
-            <ImageView fitHeight="149.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Imagens/Icons/caixaIcon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+      <Button fx:id="btnAbrirCaixa" layoutX="527.0" layoutY="44.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="29.0" prefWidth="79.0" text="Abrir Caixa" />
+      <Button fx:id="btnFecharCaixa" layoutX="827.0" layoutY="43.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="29.0" prefWidth="88.0" text="Fechar Caixa" />
+      <TableView fx:id="tbvwItensCaixa" layoutX="527.0" layoutY="117.0" prefHeight="222.0" prefWidth="388.0">
+         <columns>
+            <TableColumn fx:id="tbclnDescricao" prefWidth="136.0" text="Descrição do Item" />
+            <TableColumn fx:id="tbclnValor" prefWidth="190.0" text="Valor do Item" />
+            <TableColumn fx:id="tbclnData" prefWidth="190.0" text="Data do Item" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label fx:id="lblTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="517.0" layoutY="80.0" prefHeight="25.0" prefWidth="408.0" text="Já existe um caixa aberto ou não existe um caixa aberto!">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
