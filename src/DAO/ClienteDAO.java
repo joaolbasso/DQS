@@ -29,7 +29,6 @@ public class ClienteDAO extends AbstractDAO {
 
     public List<Cliente> todosOsClientes() {
         List<Cliente> todosOsClientes = new ArrayList<>();
-        EntityManager em = null;
         try {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
@@ -97,6 +96,31 @@ public class ClienteDAO extends AbstractDAO {
                 em.close();
             }
         }
+    }
+    
+    public boolean cpfExiste(String cpf) {
+        List<Cliente> cliente = new ArrayList<>();
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            String jpql = "SELECT c FROM Cliente c WHERE c.cpf = :cpf";
+            TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
+            query.setParameter("cpf", cpf);
+            cliente = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return !cliente.isEmpty();
     }
     
 }

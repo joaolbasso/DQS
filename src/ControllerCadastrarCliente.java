@@ -1,3 +1,4 @@
+import Config.MascarasFX;
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import DAO.EstadoDAO;
@@ -117,15 +118,21 @@ public class ControllerCadastrarCliente implements Initializable {
         
         // Validação de entrada
         txtfldCPF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtfldCPF.setText(oldValue);
-            }
-        });
-        txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtfldTelefone.setText(oldValue);
-            }
-        });
+    if (!newValue.matches("\\d*")) {
+        txtfldCPF.setText(oldValue);
+    } else if (newValue.length() > 11) {
+        txtfldCPF.setText(oldValue);
+    }
+});
+
+txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
+    if (!newValue.matches("\\d*")) {
+        txtfldTelefone.setText(oldValue);
+    } else if (newValue.length() > 11) {
+        txtfldTelefone.setText(oldValue);
+    }
+});
+
         txtfldCEP.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 txtfldCEP.setText(oldValue);
@@ -142,10 +149,19 @@ public class ControllerCadastrarCliente implements Initializable {
 
     @FXML
     public void cadastrarCliente(ActionEvent event) {
+         ClienteDAO clienteDAO = new ClienteDAO();
+        if (!Config.ValidaCPF.isCPF(txtfldCPF.getText() )) {
+            JOptionPane.showMessageDialog(null, "CPF não é válido!", "CPF Inválido", 0);
+            return;
+            } 
+        if (clienteDAO.cpfExiste(txtfldCPF.getText())) {
+            JOptionPane.showMessageDialog(null, "CPF já inserido no sistema!", "CPF Repetido", 0);
+        }
+        else { 
         try {
             Cliente clienteSalvar = criarCliente();
             if (clienteSalvar != null) {
-                ClienteDAO clienteDAO = new ClienteDAO();
+               
                 if (clienteEdicao == null) {
                     // Nova cliente
                     clienteDAO.insert(clienteSalvar);
@@ -164,6 +180,7 @@ public class ControllerCadastrarCliente implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao registrar a Cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
         }
     }
 
@@ -210,7 +227,7 @@ public class ControllerCadastrarCliente implements Initializable {
     }
 
     private Cliente criarCliente() {
-        try{
+        try {
             String nome_cliente = txtfldNome.getText();
             String telefone = txtfldTelefone.getText();
             String cpf = txtfldCPF.getText();

@@ -22,15 +22,12 @@ import javax.persistence.Persistence;
 
 public class TesteMetodos {
     public static void main(String[] args) {
-        CaixaDAO caixaDAO = new CaixaDAO();
-        Caixa caixa = caixaDAO.buscarCaixaAberto();
+
+       String cpfValido = "01234565748";
+       String cpfFalso = "11111111111";
+       
+       System.out.println(Config.ValidaCPF.isCPF(cpfValido));
+        System.out.println(Config.ValidaCPF.isCPF(cpfFalso));
         
-        Item_caixaDAO item_caixaDAO = new Item_caixaDAO();
-        ObservableList<Item_caixa> itens_caixa = FXCollections.observableArrayList(item_caixaDAO.todosOsItens_Caixa(caixa));
-        
-        for (Item_caixa item_caixa : itens_caixa) {
-            System.out.println(item_caixa.getValor_item_caixa());
-        }
-               
     }
 }

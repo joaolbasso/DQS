@@ -72,13 +72,13 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="251.0" layoutY="109.0" prefHeight="17.0" prefWidth="116.0" text="Recorrente (em dias)" wrapText="true" />
+            <Label layoutX="257.0" layoutY="109.0" prefHeight="17.0" prefWidth="106.0" text="Em que dia é pago?" wrapText="true" />
             <Spinner fx:id="spnrRecorrente" editable="true" layoutX="269.0" layoutY="130.0" prefHeight="43.0" prefWidth="72.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </Spinner>
-            <RadioButton fx:id="rbtnPago" layoutX="409.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="Pago">
+            <RadioButton fx:id="rbtnPago" layoutX="409.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="Paga">
                <font>
                   <Font size="16.0" />
                </font>
@@ -89,7 +89,7 @@
                   <ToggleGroup fx:id="situacao" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbtnASerPago" layoutX="409.0" layoutY="154.0" mnemonicParsing="false" text="A ser pago" toggleGroup="$situacao">
+            <RadioButton fx:id="rbtnASerPago" layoutX="409.0" layoutY="154.0" mnemonicParsing="false" text="A ser paga" toggleGroup="$situacao">
                <font>
                   <Font size="16.0" />
                </font>

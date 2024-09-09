@@ -180,8 +180,13 @@ public class ControllerCadastrarItem implements Initializable {
     private Item criarItem() {
         try {
         String nome_item = txtfldNomeItem.getText();
-        
-            Double preco_custo = Double.valueOf(txtfldPrecoCusto.getText().replace(",", "."));
+            Double preco_custo;
+            if (txtfldPrecoCusto.getText().isEmpty()) {
+                preco_custo = 0.0;
+            } else {
+                preco_custo = Double.valueOf(txtfldPrecoCusto.getText().replace(",", "."));
+            }
+                
             Double preco_venda = Double.valueOf(txtfldPrecoVenda.getText().replace(",", "."));
             LocalDate data_preco_item = dtpckrDataCompra.getValue();
             int quantidade = spnrQuantidade.getValue();

@@ -75,7 +75,7 @@ public class ControllerRegistrarDespesa implements Initializable {
         });
 
         SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30);
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 31);
         valueFactory.setValue(0);
         spnrRecorrente.setValueFactory(valueFactory);
 
@@ -143,7 +143,7 @@ public class ControllerRegistrarDespesa implements Initializable {
 
         txtfldValor.setText(despesa.getValor_despesa().toString());
 
-        spnrRecorrente.getValueFactory().setValue(despesa.getRecorrencia_despesa());
+        spnrRecorrente.getValueFactory().setValue(despesa.getDia_pagamento_despesa());
         dtpkrDataPagamento.setValue(despesa.getData_pagamento_despesa());
         dtpkrDataVencimento.setValue(despesa.getData_vencimento_despesa());
         txtfldDescricao.setText(despesa.getDescricao_despesa());

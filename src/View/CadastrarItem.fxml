@@ -48,7 +48,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="18.0" layoutY="152.0" prefHeight="35.0" prefWidth="182.0" text="Preço de Custo *">
+            <Label layoutX="18.0" layoutY="152.0" prefHeight="35.0" prefWidth="182.0" text="Preço de Custo">
                <font>
                   <Font size="24.0" />
                </font>
