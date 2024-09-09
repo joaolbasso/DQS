@@ -19,10 +19,10 @@ public class Cliente implements Serializable {
     @Column(nullable = false, length = 50)
     private String nome_cliente;
     
-    @Column(nullable = false, length = 14)
+    @Column(nullable = false, length = 11)
     private String telefone;
     
-    @Column(nullable = false, unique = true, length = 14)
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
     
     @Column(length = 60)

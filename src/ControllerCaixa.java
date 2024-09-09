@@ -155,6 +155,7 @@ public class ControllerCaixa implements Initializable {
         return;
         }
         
+        
         Venda venda = new Venda(getValor_venda(), data);
         venda.setItens_venda(itensDaVenda);
         
@@ -168,6 +169,7 @@ public class ControllerCaixa implements Initializable {
         // Definir a cena atual como a anterior no controller da nova tela
         controllerPagamento.setCenaAnterior(((Node) event.getSource()).getScene());
         controllerPagamento.setVenda(venda);
+        controllerPagamento.setIndex_cliente(cmbboxCliente.getSelectionModel().getSelectedIndex());
         
         // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);

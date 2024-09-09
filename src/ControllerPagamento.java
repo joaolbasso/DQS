@@ -56,6 +56,7 @@ public class ControllerPagamento implements Initializable {
 
     private Scene cenaAnterior;
     private Venda venda;
+    private int index_cliente;
     
     @FXML
     private Label lblValorVenda;
@@ -134,6 +135,15 @@ public class ControllerPagamento implements Initializable {
         
     }
 
+    public int getIndex_cliente() {
+        return index_cliente;
+    }
+
+    public void setIndex_cliente(int index_cliente) {
+        this.index_cliente = index_cliente;
+    }
+
+
     public Scene getCenaAnterior() {
         return cenaAnterior;
     }
@@ -187,6 +197,11 @@ public class ControllerPagamento implements Initializable {
     
     @FXML
     public void concluirVenda(ActionEvent event) throws IOException, InterruptedException {
+        if (cmbboxMetodoPagamento.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Escolha um método de pagamento!", "Método de pagamento", 0);
+            return;
+        }
+        
         VendaDAO vendaDAO = new VendaDAO();
         ParcelaDAO parcelaDAO = new ParcelaDAO();
         PagamentoDAO pagamentoDAO = new PagamentoDAO();
@@ -216,7 +231,7 @@ public class ControllerPagamento implements Initializable {
         
         if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista
             if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
-                
+                this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda);
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
                 
@@ -302,6 +317,8 @@ public class ControllerPagamento implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         criaSpinnerValueFactory();
         tbclnParcelaN.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
         tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_parcela"));
@@ -337,6 +354,7 @@ public class ControllerPagamento implements Initializable {
         spnrNumeroParcelas.setDisable(true);
         
         cmbboxMetodoPagamento.setItems(metodos_pagamento);
+        cmbboxMetodoPagamento.getSelectionModel().select(0);
         
         tipo_venda.selectedToggleProperty().addListener((ObservableValue<? extends javafx.scene.control.Toggle> observable, javafx.scene.control.Toggle oldValue, javafx.scene.control.Toggle newValue) -> {
             RadioButton selectedRadioButton = (RadioButton) newValue;
@@ -347,12 +365,12 @@ public class ControllerPagamento implements Initializable {
                 spnrNumeroParcelas.setDisable(true);
                 paneAPrazo.setVisible(false);
             } else {
+                cmbboxCliente.getSelectionModel().select(getIndex_cliente());
                 spnrNumeroParcelas.setOpacity(1);
                 spnrNumeroParcelas.setDisable(false);
                 lblValorRecebidoOuEntrada.setText("Valor de entrada:");
                 paneAPrazo.setVisible(true);
                 Double valorMetade = this.venda.getValor_venda() / 2;
-                
                 txtfldValorRecebido.setText(valorMetade.toString());
             }                
         });
