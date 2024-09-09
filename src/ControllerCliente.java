@@ -48,7 +48,7 @@ public class ControllerCliente implements Initializable {
     private TableColumn<Cliente, Void> editarColuna = new TableColumn<>("");
 
     @FXML
-    private TableColumn<Cliente, Void> deletarColuna = new TableColumn<>("");
+    private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("");
 
     @FXML
     private SplitMenuButton spmbFiltro;
@@ -182,29 +182,31 @@ private void adicionarBotoesTabela() {
         });
 
         // Coluna Deletar
-        deletarColuna.setCellFactory(coluna -> {
+        financaColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
-                private final Button btnDeletar = new Button();
-                private final ImageView ivDeletar = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/deletar.png")));
+                private final Button btnFinanceiro = new Button();
+                private final ImageView ivFinanca = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/moeda.png")));
 
                 {
-                    ivDeletar.setFitHeight(16);
-                    ivDeletar.setFitWidth(16);
-                    btnDeletar.setGraphic(ivDeletar);
-                    btnDeletar.setStyle("-fx-background-color: transparent;"); // Remove fundo do botão
+                    ivFinanca.setFitHeight(16);
+                    ivFinanca.setFitWidth(16);
+                    btnFinanceiro.setGraphic(ivFinanca);
+                    btnFinanceiro.setStyle("-fx-background-color: transparent;"); // Remove fundo do botão
 
-                    btnDeletar.setOnAction(event -> {
+                    btnFinanceiro.setOnAction(event -> {
                         Cliente clienteSelecionada = getTableView().getItems().get(getIndex());
 
+                        
+                        
                         // Confirmação para exclusão
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmação de Exclusão");
-                        alert.setHeaderText("Tem certeza que deseja deletar esta cliente?");
-                        alert.setContentText(clienteSelecionada.getNome_cliente());
+                        //Alert alert = new Alert(AlertType.CONFIRMATION);
+                        //alert.setTitle("Confirmação de Exclusão");
+                        //alert.setHeaderText("Tem certeza que deseja deletar esta cliente?");
+                        //alert.setContentText(clienteSelecionada.getNome_cliente());
 
-                        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                            deletarCliente(clienteSelecionada);
-                        }
+                        //if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                        //    deletarCliente(clienteSelecionada);
+                        //}
                     });
                 }
 
@@ -214,14 +216,14 @@ private void adicionarBotoesTabela() {
                     if (empty) {
                         setGraphic(null);
                     } else {
-                        setGraphic(btnDeletar);
+                        setGraphic(btnFinanceiro);
                         setStyle("-fx-alignment: CENTER;"); // Centraliza o ícone
                     }
                 }
             };
         });
 
-        tbvwClientes.getColumns().addAll(editarColuna, deletarColuna);
+        tbvwClientes.getColumns().addAll(editarColuna, financaColuna);
     }
     
     public void editarCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
@@ -231,6 +233,21 @@ private void adicionarBotoesTabela() {
 
             ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
             controllerCadastrarCliente.setCliente(clienteSelecionada);
+
+            Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cadastrarClienteScene);
+            window.show();
+        }
+    }
+    
+    public void financaCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
+        if (clienteSelecionada != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FinancaCliente.fxml"));
+            Parent cadastrarClienteView = loader.load();
+
+            ControllerFinancaCliente controllerFinancaCliente = loader.getController();
+            controllerFinancaCliente.setCliente(clienteSelecionada);
 
             Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
