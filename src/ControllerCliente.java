@@ -136,7 +136,8 @@ public class ControllerCliente implements Initializable {
         atualizarListaClientes();
     }
     
-private void adicionarBotoesTabela() {
+    // Adiciona botões à tabela
+    private void adicionarBotoesTabela() {
         // Coluna Editar
         editarColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
@@ -147,12 +148,11 @@ private void adicionarBotoesTabela() {
                     ivEditar.setFitHeight(16);
                     ivEditar.setFitWidth(16);
                     btnEditar.setGraphic(ivEditar);
-                    btnEditar.setStyle("-fx-background-color: transparent;"); // Remove fundo do botão
+                    btnEditar.setStyle("-fx-background-color: transparent;");
 
                     btnEditar.setOnAction(event -> {
                         Cliente clienteSelecionada = getTableView().getItems().get(getIndex());
 
-                        // Confirmação para edição
                         Alert alert = new Alert(AlertType.CONFIRMATION);
                         alert.setTitle("Confirmação de Edição");
                         alert.setHeaderText("Tem certeza que deseja editar esta cliente?");
@@ -175,13 +175,13 @@ private void adicionarBotoesTabela() {
                         setGraphic(null);
                     } else {
                         setGraphic(btnEditar);
-                        setStyle("-fx-alignment: CENTER;"); // Centraliza o ícone
+                        setStyle("-fx-alignment: CENTER;");
                     }
                 }
             };
         });
 
-        // Coluna Deletar
+        // Coluna Finança
         financaColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
                 private final Button btnFinanceiro = new Button();
@@ -191,22 +191,15 @@ private void adicionarBotoesTabela() {
                     ivFinanca.setFitHeight(16);
                     ivFinanca.setFitWidth(16);
                     btnFinanceiro.setGraphic(ivFinanca);
-                    btnFinanceiro.setStyle("-fx-background-color: transparent;"); // Remove fundo do botão
+                    btnFinanceiro.setStyle("-fx-background-color: transparent;");
 
                     btnFinanceiro.setOnAction(event -> {
                         Cliente clienteSelecionada = getTableView().getItems().get(getIndex());
-
-                        
-                        
-                        // Confirmação para exclusão
-                        //Alert alert = new Alert(AlertType.CONFIRMATION);
-                        //alert.setTitle("Confirmação de Exclusão");
-                        //alert.setHeaderText("Tem certeza que deseja deletar esta cliente?");
-                        //alert.setContentText(clienteSelecionada.getNome_cliente());
-
-                        //if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                        //    deletarCliente(clienteSelecionada);
-                        //}
+                        try {
+                            financaCliente(event, clienteSelecionada);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     });
                 }
 
@@ -217,7 +210,7 @@ private void adicionarBotoesTabela() {
                         setGraphic(null);
                     } else {
                         setGraphic(btnFinanceiro);
-                        setStyle("-fx-alignment: CENTER;"); // Centraliza o ícone
+                        setStyle("-fx-alignment: CENTER;");
                     }
                 }
             };
@@ -225,6 +218,24 @@ private void adicionarBotoesTabela() {
 
         tbvwClientes.getColumns().addAll(editarColuna, financaColuna);
     }
+
+    // Navega para a tela FinancaCliente
+    public void financaCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
+        if (clienteSelecionada != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FinancaCliente.fxml"));
+            Parent financaClienteView = loader.load();
+
+            // Obtém o controller da nova view
+            ControllerFinancaCliente controllerFinancaCliente = loader.getController();
+            controllerFinancaCliente.setCliente(clienteSelecionada); // Passa o cliente para a próxima tela
+
+            Scene financaClienteScene = new Scene(financaClienteView);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(financaClienteScene);
+            window.show();
+        }
+    }
+
     
     public void editarCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
         if (clienteSelecionada != null) {
@@ -240,29 +251,14 @@ private void adicionarBotoesTabela() {
             window.show();
         }
     }
-    
-    public void financaCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
-        if (clienteSelecionada != null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FinancaCliente.fxml"));
-            Parent cadastrarClienteView = loader.load();
 
-            ControllerFinancaCliente controllerFinancaCliente = loader.getController();
-            controllerFinancaCliente.setCliente(clienteSelecionada);
-
-            Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(cadastrarClienteScene);
-            window.show();
-        }
-    }
-
-    public void deletarCliente(Cliente clienteSelecionada) {
-        if (clienteSelecionada != null) {
-            ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.delete(clienteSelecionada);
-            atualizarListaClientes();  // Atualiza a lista de clientes após a exclusão
-        }
-    }
+//    public void deletarCliente(Cliente clienteSelecionada) {
+//        if (clienteSelecionada != null) {
+//            ClienteDAO clienteDAO = new ClienteDAO();
+//            clienteDAO.delete(clienteSelecionada);
+//            atualizarListaClientes();  // Atualiza a lista de clientes após a exclusão
+//        }
+//    }
 
     private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
