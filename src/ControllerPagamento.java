@@ -58,6 +58,7 @@ public class ControllerPagamento implements Initializable {
     private Venda venda;
     private int index_cliente;
     
+    
     @FXML
     private Label lblValorVenda;
     
@@ -163,6 +164,13 @@ public class ControllerPagamento implements Initializable {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(this.cenaAnterior);
+        window.show();
+    }
+    
+    @FXML
+    public void voltarConcluido(ActionEvent event) throws IOException {
         String nomeDaView = "Caixa.fxml";
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
@@ -182,9 +190,14 @@ public class ControllerPagamento implements Initializable {
 
         // Obter o controller da nova tela
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
+        
+        controllerCadastrarCliente.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizaComboBoxCliente();
+        });
 
         // Definir a cena atual como a anterior no controller da nova tela
-        controllerCadastrarCliente.setCenaAnterior("Pagamento.fxml");
+        controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
 
         // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);
@@ -264,7 +277,7 @@ public class ControllerPagamento implements Initializable {
                 caixaDAO.update(caixaAtual);
                 
                 JOptionPane.showMessageDialog(null, "Venda a vista registrada com sucesso!", "Venda a vista com sucesso!", JOptionPane.INFORMATION_MESSAGE);
-                voltar(event);
+                voltarConcluido(event);
             } 
         } else { // A prazo
                 if (cmbboxCliente.getValue() == null) {
@@ -309,7 +322,7 @@ public class ControllerPagamento implements Initializable {
                 }
                 
                 JOptionPane.showMessageDialog(null, "Venda a prazo registrada com sucesso!", "Venda a prazo com sucesso!", JOptionPane.INFORMATION_MESSAGE);
-                voltar(event);
+                voltarConcluido(event);
         }
     }
 

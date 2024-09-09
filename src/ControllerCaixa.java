@@ -26,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -130,6 +131,11 @@ public class ControllerCaixa implements Initializable {
 
         // Obter o controller da nova tela
         ControllerCadastrarItem controllerCadastrarItem = loader.getController();
+        
+        controllerCadastrarItem.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizaComboBoxItem();
+        });
 
         // Definir a cena atual como a anterior no controller da nova tela
         controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
@@ -141,20 +147,29 @@ public class ControllerCaixa implements Initializable {
         window.show();
     }
     
+    
+    
     @FXML
     public void finalizarVenda(ActionEvent event) throws IOException {
         //Quando o usuário clicar em finalizar, pegar a lista local e adicionar a uma Venda associada.
         //ao finalizar adicionar ao ArrayList<> daquela Venda todos os itens_vendas criados
+        
         LocalDate data = dtpkrDataVenda.getValue();
+        
         if (data == null || data.isAfter(LocalDate.now())) {
             JOptionPane.showMessageDialog(null, "Não é possível atribuir data futura!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        return;
-        }
-        if (itensDaVenda.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Adicione itens à venda antes de finalizar!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        return;
+            return;
         }
         
+        if (data.isBefore(LocalDate.now().minusDays(5))) {
+            JOptionPane.showMessageDialog(null, "Não é possível atribuir data anterior a 5 dias!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        if (itensDaVenda.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Adicione itens à venda antes de finalizar!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         Venda venda = new Venda(getValor_venda(), data);
         venda.setItens_venda(itensDaVenda);
@@ -217,9 +232,14 @@ public class ControllerCaixa implements Initializable {
 
         // Obter o controller da nova tela
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
+        
+        controllerCadastrarCliente.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizaComboBoxCliente();
+        });
 
         // Definir a cena atual como a anterior no controller da nova tela
-        controllerCadastrarCliente.setCenaAnterior("Caixa.fxml");
+        controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
 
         // Mudar para a nova cena
         Scene caixaScene = new Scene(caixaView);

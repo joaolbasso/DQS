@@ -31,8 +31,9 @@ import javax.swing.JOptionPane;
 
 public class ControllerCadastrarCliente implements Initializable {
 
-    private String cenaAnterior;
+    private Scene cenaAnterior;
     private Cliente clienteEdicao;
+    private ItemCallback itemCallBack;
     
     @FXML
     private Label txtTitulo;
@@ -144,9 +145,16 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
             }
         });
         
-        
     }
 
+    public interface ItemCallback {
+        void onItemUpdated();
+    } 
+
+    public void setItemCallBack(ItemCallback itemCallBack) {
+        this.itemCallBack = itemCallBack;
+    }
+    
     @FXML
     public void cadastrarCliente(ActionEvent event) {
          ClienteDAO clienteDAO = new ClienteDAO();
@@ -186,12 +194,16 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + getCenaAnterior()));
-        Parent view = loader.load();
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + getCenaAnterior()));
+        //Parent view = loader.load();
 
-        Scene cena = new Scene(view);
+        //Scene cena = new Scene(view);
+        if (itemCallBack != null) {
+            itemCallBack.onItemUpdated();
+        }
+        
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(cena);
+        window.setScene(this.cenaAnterior);
         window.show();
     }
 
@@ -283,12 +295,12 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
         });
     }
 */
-    public String getCenaAnterior() {
+    public Scene getCenaAnterior() {
         return cenaAnterior;
     }
 
-    public void setCenaAnterior(String cenaAnterior) {
+    public void setCenaAnterior(Scene cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
     }
-
+    
 }

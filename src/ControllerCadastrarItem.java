@@ -27,6 +27,8 @@ public class ControllerCadastrarItem implements Initializable {
     
     private Scene cenaAnterior;
     
+    private ItemCallback itemCallBack;
+    
     @FXML
     private Label txtTitulo;
 
@@ -97,23 +99,33 @@ public class ControllerCadastrarItem implements Initializable {
     public void setCenaAnterior(Scene cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
     }
+
+    public void setItemCallBack(ItemCallback itemCallBack) {
+        this.itemCallBack = itemCallBack;
+    }
     
     @FXML
     public void voltar(ActionEvent event) throws IOException {
+        /*
         String nomeDaView;
         if (this.cenaAnterior == null) {
              nomeDaView = "Item.fxml";
         } else {
             nomeDaView = "Caixa.fxml";
         }
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
-        Parent view = loader.load();
+        */
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + ));
+        //Parent view = loader.load();
 
-        Scene cena = new Scene(view);
+         if (itemCallBack != null) {
+            itemCallBack.onItemUpdated();
+        }
+        
+        //Scene cena = new Scene(view);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(cena);
+        window.setScene(this.cenaAnterior);
         window.show();
+        
     }
     
     public void limparCampos(ActionEvent event) throws IOException {    
@@ -146,6 +158,10 @@ public class ControllerCadastrarItem implements Initializable {
         }
     }
 
+    public interface ItemCallback {
+        void onItemUpdated();
+    }   
+    
     public void cadastrarItem(ActionEvent event) throws IOException {
         try {
             Item itemSalvar = criarItem();

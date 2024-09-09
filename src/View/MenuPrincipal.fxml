@@ -74,8 +74,8 @@
          </font>
       </Label>
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
-      <Button fx:id="btnAbrirCaixa" layoutX="527.0" layoutY="44.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="29.0" prefWidth="79.0" text="Abrir Caixa" />
-      <Button fx:id="btnFecharCaixa" layoutX="827.0" layoutY="43.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="29.0" prefWidth="88.0" text="Fechar Caixa" />
+      <Button fx:id="btnAbrirCaixa" layoutX="527.0" layoutY="44.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="30.0" prefWidth="126.0" text="Abrir Caixa" />
+      <Button fx:id="btnFecharCaixa" layoutX="789.0" layoutY="43.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
       <TableView fx:id="tbvwItensCaixa" layoutX="527.0" layoutY="117.0" prefHeight="222.0" prefWidth="388.0">
          <columns>
             <TableColumn fx:id="tbclnDescricao" prefWidth="136.0" text="Descrição do Item" />

@@ -292,7 +292,7 @@ private void adicionarBotoesTabela() {
         Parent cadastrarClienteView = loader.load(); 
         
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
-        controllerCadastrarCliente.setCenaAnterior("Cliente.fxml");
+        controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
         
         Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -311,5 +311,10 @@ private void adicionarBotoesTabela() {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cena);
         window.show();
+    }
+    
+    @FXML
+    public void atualizaComboItens(ActionEvent event) throws IOException {
+        
     }
 }
