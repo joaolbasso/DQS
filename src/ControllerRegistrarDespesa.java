@@ -1,5 +1,6 @@
 import DAO.BeneficiarioDAO;
 import DAO.DespesaDAO;
+import DAO.ItemDAO;
 import Model.Beneficiario;
 import Model.Despesa;
 import Model.Item;
@@ -207,10 +208,23 @@ public class ControllerRegistrarDespesa implements Initializable {
         Parent cadastrarBeneficiarioView = loader.load();
 
         ControllerCadastrarBeneficiario controllerCadastrarBeneficiario = loader.getController();
+        
+        controllerCadastrarBeneficiario.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizaComboBoxBeneficiario();
+        });
+        
+        controllerCadastrarBeneficiario.setCenaAnterior(((Node) event.getSource()).getScene());
 
         Scene cadastrarBeneficiarioScene = new Scene(cadastrarBeneficiarioView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarBeneficiarioScene);
         window.show();
+    }
+
+    private void atualizaComboBoxBeneficiario() {
+        BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
+        ObservableList<Beneficiario> beneficiarios = FXCollections.observableArrayList(beneficiarioDAO.todosOsBeneficiarios());
+        cmbboxBeneficiario.setItems(beneficiarios);
     }
 }

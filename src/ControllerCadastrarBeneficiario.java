@@ -20,19 +20,20 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 public class ControllerCadastrarBeneficiario implements Initializable {
+    
+    private Scene cenaAnterior;
+    private ItemCallback itemCallBack;
+    
     @FXML
     private TextField txtfldNomeBeneficiario;
     
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        String nomeDaView = "RegistrarDespesa.fxml";
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
-        Parent view = loader.load();
-
-        Scene cena = new Scene(view);
+        if (itemCallBack != null) {
+            itemCallBack.onItemUpdated();
+        }
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(cena);
+        window.setScene(this.cenaAnterior);
         window.show();
     }
     
@@ -44,6 +45,22 @@ public class ControllerCadastrarBeneficiario implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    public Scene getCenaAnterior() {
+        return cenaAnterior;
+    }
+
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
+    
+    public interface ItemCallback {
+        void onItemUpdated();
+    } 
+
+    public void setItemCallBack(ItemCallback itemCallBack) {
+        this.itemCallBack = itemCallBack;
+    }
     
     public void cadastrarBeneficiario(ActionEvent event) {
         Beneficiario beneficiario = new Beneficiario(txtfldNomeBeneficiario.getText());
