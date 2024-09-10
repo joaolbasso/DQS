@@ -76,15 +76,13 @@
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
       <Button fx:id="btnAbrirCaixa" layoutX="527.0" layoutY="44.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="30.0" prefWidth="126.0" text="Abrir Caixa" />
       <Button fx:id="btnFecharCaixa" layoutX="789.0" layoutY="43.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
-      <TableView fx:id="tbvwItensCaixa" layoutX="527.0" layoutY="117.0" prefHeight="222.0" prefWidth="388.0">
+      <TableView fx:id="tbvwItensCaixa" layoutX="462.0" layoutY="120.0" prefHeight="222.0" prefWidth="539.0">
          <columns>
-            <TableColumn fx:id="tbclnDescricao" prefWidth="136.0" text="Descrição do Item" />
-            <TableColumn fx:id="tbclnValor" prefWidth="190.0" text="Valor do Item" />
-            <TableColumn fx:id="tbclnData" prefWidth="190.0" text="Data do Item" />
+            <TableColumn fx:id="tbclnDescricao" prefWidth="220.0" text="Item/Itens" />
+            <TableColumn fx:id="tbclnValor" prefWidth="106.0" text="Valor do Item" />
+            <TableColumn fx:id="tbclnOperacao" minWidth="0.0" prefWidth="99.0" text="Operação" />
+            <TableColumn fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" text="Data do Item" />
          </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
       </TableView>
       <Label fx:id="lblTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="517.0" layoutY="80.0" prefHeight="25.0" prefWidth="408.0" text="Já existe um caixa aberto ou não existe um caixa aberto!">
          <font>

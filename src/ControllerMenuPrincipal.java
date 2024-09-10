@@ -3,9 +3,11 @@ import DAO.Item_caixaDAO;
 import DAO.UsuarioDAO;
 import Model.Caixa;
 import Model.Item_caixa;
+import Model.Pagamento;
 import Model.Usuario;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -19,10 +21,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,21 +62,90 @@ public class ControllerMenuPrincipal implements Initializable {
     private Button btnFecharCaixa;
     
     @FXML
-    private TableColumn<Item_caixa, String> tbclnDescricao = new TableColumn<>("Descrição do Item");
+    private TableColumn<Item_caixa, String> tbclnDescricao = new TableColumn<>("Item/Itens");
     @FXML
     private TableColumn<Item_caixa, Double> tbclnValor = new TableColumn<>("Valor do Item");
     @FXML
     private TableColumn<Item_caixa, LocalDateTime> tbclnData = new TableColumn<>("Data do Item");
+    @FXML
+    private TableColumn<Item_caixa, String> tbclnOperacao = new TableColumn<>("Operação");
     
     Item_caixaDAO item_caixaDAO = new Item_caixaDAO();
     private ObservableList<Item_caixa> itens_caixa = FXCollections.observableArrayList();
     
     @FXML
     public void abrirCaixa(ActionEvent event) throws IOException {
-        Usuario usuario = usuarioDAO.selectUnico(); //Por enquanto busca um unico usuario na base, com id 5
         
-        Caixa caixaNovo = new Caixa(usuario); // Usuario Logado
+        //Usuario usuario = usuarioDAO.selectUnico(); //Por enquanto busca um unico usuario na base, com id 5
+        
+        final double LIMITE_MINIMO = 0.10;
+        final double LIMITE_MAXIMO = 1000.0;
+        
+        ImageIcon icon = new ImageIcon("View/Icons/aporte.png");
+        
+        //
+        String input;
+        double valor = 0;
+        boolean entradaValida = false;
+
+        // Loop até obter uma entrada válida
+        while (!entradaValida) {
+            // Solicita a entrada do usuário
+            input = (String) JOptionPane.showInputDialog(null,
+                "Deseja fazer um aporte inicial no caixa?",
+                "Aporte Inicial",
+                JOptionPane.QUESTION_MESSAGE,
+                icon,
+                null,
+                null
+            );
+
+            // Verifica se a entrada é nula (usuário clicou em Cancelar)
+            if (input == null) {
+                JOptionPane.showMessageDialog(null, "Entrada cancelada.");
+                System.exit(0); // Ou apenas saia do loop se você preferir
+            }
+
+            try {
+                // Tenta converter a entrada para um número de ponto flutuante
+                valor = Double.parseDouble(input);
+
+                // Verifica se o valor está dentro dos limites
+                if (valor >= LIMITE_MINIMO && valor <= LIMITE_MAXIMO) {
+                    entradaValida = true; // Entrada válida, saia do loop
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                        "Por favor, digite um número dentro do intervalo especificado.",
+                        "Entrada Inválida",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            } catch (NumberFormatException e) {
+                // Se ocorrer uma exceção, a entrada não é um número válido
+                JOptionPane.showMessageDialog(null,
+                    "Entrada inválida. Por favor, digite um número válido.",
+                    "Entrada Inválida",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+        // Exibe o valor válido digitado
+        JOptionPane.showMessageDialog(null, "Você digitou: " + valor);
+        
+        Caixa caixaNovo = new Caixa();
         caixaDAO.insert(caixaNovo);
+        Item_caixa item_aporte = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.A, caixaNovo);
+        
+        System.out.println(item_aporte.getValor_item_caixa()); 
+        System.out.println(item_aporte.getTipo_operacao());
+        System.out.println(item_aporte.getCaixa().getData_hora_abertura());
+        System.out.println(item_aporte.getData_hora());
+        System.out.println(item_aporte.getTipo_operacao());
+        
+        caixaNovo.getItens_caixa().add(item_aporte);
+        item_caixaDAO.insert(item_aporte);
+        caixaDAO.update(caixaNovo);
+        
         JOptionPane.showMessageDialog(null, "Caixa aberto com sucesso!", "Caixa aberto com sucesso!", JOptionPane.INFORMATION_MESSAGE);
         updateUI();
     }
@@ -179,7 +252,13 @@ public class ControllerMenuPrincipal implements Initializable {
             tbclnData.setCellValueFactory(new PropertyValueFactory<>("data_hora"));
             tbclnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao_item_caixa"));
             tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_item_caixa"));
+            tbclnOperacao.setCellValueFactory(new PropertyValueFactory<>("tipo_operacao"));
         
+            centralizarTextoNaColuna(tbclnData);
+            centralizarTextoNaColuna(tbclnDescricao);
+            centralizarTextoNaColuna(tbclnValor);
+            centralizarTextoNaColuna(tbclnOperacao);
+            
         // TODO
         btnCaixa.getStyleClass().add("color-button");
         btnDespesas.getStyleClass().add("color-button");
@@ -188,6 +267,22 @@ public class ControllerMenuPrincipal implements Initializable {
     }
     }
         
+        private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+        coluna.setCellFactory(column -> new TableCell<T, U>() {
+        @Override
+        protected void updateItem(U item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+                setText(null);
+                setStyle("");
+            } else {
+                setText(item.toString());
+                setStyle("-fx-alignment: CENTER;");
+            }
+        }
+    });
+}
+    
     public Caixa getCaixa() {
         return caixa;
     }
