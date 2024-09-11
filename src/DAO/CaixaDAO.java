@@ -5,6 +5,7 @@ import Model.Caixa.StatusCaixa;
 import Model.Cidade;
 import Model.Cliente;
 import Model.Item;
+import Model.Item_caixa;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,31 @@ public class CaixaDAO extends AbstractDAO {
         }
         return null;
 }
+    
+    public Double somaCaixa(Caixa caixa) {
+        Double somaCaixa = 0.0;
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            String jpql = "SELECT sum(c.valor_item_caixa) FROM Item_caixa c WHERE c.caixa = :caixa";
+            TypedQuery<Double> query = em.createQuery(jpql, Double.class);
+            query.setParameter("caixa", caixa);
+
+            somaCaixa = query.getSingleResult();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return somaCaixa;
+    } 
     
     public void insert(Caixa caixa) {
         try {

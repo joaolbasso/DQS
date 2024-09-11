@@ -53,6 +53,9 @@ public class ControllerMenuPrincipal implements Initializable {
     private Label lblTitulo;
     
     @FXML
+    private Label lblSaldoCaixa;
+    
+    @FXML
     private TableView<Item_caixa> tbvwItensCaixa;
     
     @FXML
@@ -76,9 +79,9 @@ public class ControllerMenuPrincipal implements Initializable {
     @FXML
     public void abrirCaixa(ActionEvent event) throws IOException {
         
-        //Usuario usuario = usuarioDAO.selectUnico(); //Por enquanto busca um unico usuario na base, com id 5
+        Usuario usuario = usuarioDAO.selectUnico();
         
-        final double LIMITE_MINIMO = 0.10;
+        final double LIMITE_MINIMO = 0.0;
         final double LIMITE_MAXIMO = 1000.0;
         
         ImageIcon icon = new ImageIcon("View/Icons/aporte.png");
@@ -94,7 +97,7 @@ public class ControllerMenuPrincipal implements Initializable {
             input = (String) JOptionPane.showInputDialog(null,
                 "Deseja fazer um aporte inicial no caixa?",
                 "Aporte Inicial",
-                JOptionPane.QUESTION_MESSAGE,
+                JOptionPane.YES_NO_OPTION,
                 icon,
                 null,
                 null
@@ -102,8 +105,13 @@ public class ControllerMenuPrincipal implements Initializable {
 
             // Verifica se a entrada é nula (usuário clicou em Cancelar)
             if (input == null) {
-                JOptionPane.showMessageDialog(null, "Entrada cancelada.");
-                System.exit(0); // Ou apenas saia do loop se você preferir
+                int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza que não realizará um aporte inicial ao caixa? Isso não poderá ser feito posteriormente.", "Confirmação", 0, 0);
+                if (resposta == 0) {
+                    valor = 0.0;
+                    break;
+                } else {
+                    continue;
+                }
             }
 
             try {
@@ -115,7 +123,7 @@ public class ControllerMenuPrincipal implements Initializable {
                     entradaValida = true; // Entrada válida, saia do loop
                 } else {
                     JOptionPane.showMessageDialog(null,
-                        "Por favor, digite um número dentro do intervalo especificado.",
+                        "Por favor, digite um número entre R$0.00 a R$1000.00.",
                         "Entrada Inválida",
                         JOptionPane.ERROR_MESSAGE
                     );
@@ -123,18 +131,18 @@ public class ControllerMenuPrincipal implements Initializable {
             } catch (NumberFormatException e) {
                 // Se ocorrer uma exceção, a entrada não é um número válido
                 JOptionPane.showMessageDialog(null,
-                    "Entrada inválida. Por favor, digite um número válido.",
+                    "Por favor, digite um número ou cancele a operação.",
                     "Entrada Inválida",
                     JOptionPane.ERROR_MESSAGE
                 );
             }
         }
         // Exibe o valor válido digitado
-        JOptionPane.showMessageDialog(null, "Você digitou: " + valor);
+        //JOptionPane.showMessageDialog(null, "Você digitou: " + valor);
         
-        Caixa caixaNovo = new Caixa();
+        Caixa caixaNovo = new Caixa(usuario);
         caixaDAO.insert(caixaNovo);
-        Item_caixa item_aporte = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.A, caixaNovo);
+        Item_caixa item_aporte = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.A, caixaNovo, 'A', "Aporte Inicial");
         
         System.out.println(item_aporte.getValor_item_caixa()); 
         System.out.println(item_aporte.getTipo_operacao());
@@ -143,11 +151,18 @@ public class ControllerMenuPrincipal implements Initializable {
         System.out.println(item_aporte.getTipo_operacao());
         
         caixaNovo.getItens_caixa().add(item_aporte);
+        
         item_caixaDAO.insert(item_aporte);
+        
         caixaDAO.update(caixaNovo);
         
         JOptionPane.showMessageDialog(null, "Caixa aberto com sucesso!", "Caixa aberto com sucesso!", JOptionPane.INFORMATION_MESSAGE);
         updateUI();
+        
+        //
+        
+        //
+        
     }
     
     @FXML
@@ -242,6 +257,7 @@ public class ControllerMenuPrincipal implements Initializable {
             btnAbrirCaixa.setDisable(false);
             btnFecharCaixa.setDisable(true);
             lblTitulo.setText("Não há um caixa aberto!");
+            lblSaldoCaixa.setText("R$ -");
         } else {
             btnAbrirCaixa.setDisable(true);
             btnFecharCaixa.setDisable(false);
@@ -258,6 +274,10 @@ public class ControllerMenuPrincipal implements Initializable {
             centralizarTextoNaColuna(tbclnDescricao);
             centralizarTextoNaColuna(tbclnValor);
             centralizarTextoNaColuna(tbclnOperacao);
+            
+            
+            Double saldoCaixa = caixaDAO.somaCaixa(this.caixa);
+            lblSaldoCaixa.setText("R$" + saldoCaixa);
             
         // TODO
         btnCaixa.getStyleClass().add("color-button");

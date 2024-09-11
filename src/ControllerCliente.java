@@ -233,7 +233,14 @@ private void adicionarBotoesTabela() {
 
             ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
             controllerCadastrarCliente.setCliente(clienteSelecionada);
+            controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
+            
+            controllerCadastrarCliente.setItemCallBack(() -> {
+            // Atualizar a ComboBox
+            atualizarListaClientes();
+            });
 
+            
             Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(cadastrarClienteScene);
@@ -248,6 +255,7 @@ private void adicionarBotoesTabela() {
 
             ControllerFinancaCliente controllerFinancaCliente = loader.getController();
             controllerFinancaCliente.setCliente(clienteSelecionada);
+            //controllerFinancaCliente.setCenaAnterior(((Node) event.getSource()).getScene());
 
             Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -294,6 +302,11 @@ private void adicionarBotoesTabela() {
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
         controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
         
+        controllerCadastrarCliente.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizarListaClientes();
+        });
+        
         Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarClienteScene);
@@ -312,9 +325,5 @@ private void adicionarBotoesTabela() {
         window.setScene(cena);
         window.show();
     }
-    
-    @FXML
-    public void atualizaComboItens(ActionEvent event) throws IOException {
-        
-    }
 }
+    

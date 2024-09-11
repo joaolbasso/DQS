@@ -162,7 +162,7 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
             JOptionPane.showMessageDialog(null, "CPF não é válido!", "CPF Inválido", 0);
             return;
             } 
-        if (clienteDAO.cpfExiste(txtfldCPF.getText())) {
+        if (clienteDAO.cpfExiste(txtfldCPF.getText()) && clienteEdicao == null) {
             JOptionPane.showMessageDialog(null, "CPF já inserido no sistema!", "CPF Repetido", 0);
         }
         else { 
