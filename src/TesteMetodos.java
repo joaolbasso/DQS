@@ -29,5 +29,19 @@ public class TesteMetodos {
        System.out.println(Config.ValidaCPF.isCPF(cpfValido));
         System.out.println(Config.ValidaCPF.isCPF(cpfFalso));
         
+        
+        Cliente cliente = new Cliente();
+        
+        ClienteDAO clienteDAO = new ClienteDAO();
+        
+        cliente = clienteDAO.getCliente(1);
+        
+        System.out.println(cliente.getNome_cliente());
+        
+        CaixaDAO caixaDAO = new CaixaDAO();
+        
+        Caixa caixa = caixaDAO.buscarCaixaAberto();
+        
+        System.out.println(caixaDAO.somaCaixa(caixa));
     }
 }

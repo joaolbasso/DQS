@@ -196,7 +196,14 @@ public class ControllerCliente implements Initializable {
 
             ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
             controllerCadastrarCliente.setCliente(clienteSelecionada);
+            controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
+            
+            controllerCadastrarCliente.setItemCallBack(() -> {
+            // Atualizar a ComboBox
+            atualizarListaClientes();
+            });
 
+            
             Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(cadastrarClienteScene);
@@ -211,6 +218,7 @@ public class ControllerCliente implements Initializable {
 
             ControllerFinancaCliente controllerFinancaCliente = loader.getController();
             controllerFinancaCliente.setCliente(clienteSelecionada);
+            //controllerFinancaCliente.setCenaAnterior(((Node) event.getSource()).getScene());
 
             Scene financaClienteScene = new Scene(financaClienteView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -248,7 +256,12 @@ public class ControllerCliente implements Initializable {
 
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
         controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
-
+        
+        controllerCadastrarCliente.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizarListaClientes();
+        });
+       
         Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarClienteScene);
@@ -268,3 +281,4 @@ public class ControllerCliente implements Initializable {
         window.show();
     }
 }
+

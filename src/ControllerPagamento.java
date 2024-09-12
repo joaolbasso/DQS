@@ -13,6 +13,7 @@ import Model.Item_caixa;
 import Model.Item_venda;
 import Model.Pagamento;
 import Model.Parcela;
+import Model.Usuario;
 import Model.Venda;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -51,6 +52,7 @@ import javax.swing.JOptionPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javax.swing.ImageIcon;
 
 public class ControllerPagamento implements Initializable {
 
@@ -228,8 +230,77 @@ public class ControllerPagamento implements Initializable {
         Caixa caixaAtual = caixaDAO.buscarCaixaAberto();
         
         if (caixaAtual == null) {
-            caixaAtual = new Caixa();
-            caixaDAO.insert(caixaAtual); // Persistir o novo caixa no banco de dados
+            JOptionPane.showMessageDialog(null, "Não há um caixa existente aberto, um novo será criado", "Caixa novo criado", JOptionPane.INFORMATION_MESSAGE);
+            Usuario usuario = usuarioDAO.selectUnico();
+        
+        final double LIMITE_MINIMO = 0.0;
+        final double LIMITE_MAXIMO = 1000.0;
+        
+        ImageIcon icon = new ImageIcon("View/Icons/aporte.png");
+        
+        //
+        String input;
+        double valor = 0;
+        boolean entradaValida = false;
+
+        // Loop até obter uma entrada válida
+        while (!entradaValida) {
+            // Solicita a entrada do usuário
+            input = (String) JOptionPane.showInputDialog(null,
+                "Deseja fazer um aporte inicial no caixa?",
+                "Aporte Inicial",
+                JOptionPane.YES_NO_OPTION,
+                icon,
+                null,
+                null
+            );
+
+            // Verifica se a entrada é nula (usuário clicou em Cancelar)
+            if (input == null) {
+                int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza que não realizará um aporte inicial ao caixa? Isso não poderá ser feito posteriormente.", "Confirmação", 0, 0);
+                if (resposta == 0) {
+                    valor = 0.0;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+
+            try {
+                // Tenta converter a entrada para um número de ponto flutuante
+                valor = Double.parseDouble(input);
+
+                // Verifica se o valor está dentro dos limites
+                if (valor >= LIMITE_MINIMO && valor <= LIMITE_MAXIMO) {
+                    entradaValida = true; // Entrada válida, saia do loop
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                        "Por favor, digite um número entre R$0.00 a R$1000.00.",
+                        "Entrada Inválida",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            } catch (NumberFormatException e) {
+                // Se ocorrer uma exceção, a entrada não é um número válido
+                JOptionPane.showMessageDialog(null,
+                    "Por favor, digite um número ou cancele a operação.",
+                    "Entrada Inválida",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+        // Exibe o valor válido digitado
+        //JOptionPane.showMessageDialog(null, "Você digitou: " + valor);
+        
+        caixaAtual = new Caixa(usuario);
+        caixaDAO.insert(caixaAtual);
+        Item_caixa item_aporte = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.A, caixaAtual, 'A', "Aporte Inicial");
+        
+        caixaAtual.getItens_caixa().add(item_aporte);
+        
+        item_caixaDAO.insert(item_aporte);
+        
+        caixaDAO.update(caixaAtual);
         }
 
         if (cmbboxMetodoPagamento.getValue() == null) {
@@ -267,7 +338,6 @@ public class ControllerPagamento implements Initializable {
                 
                 Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), lista_nome_itens, Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
 
-                
                 vendaDAO.insert(this.venda);
                 parcelaDAO.insert(parcelaUnica);
                 pagamentoDAO.insert(pagamento);

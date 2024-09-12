@@ -39,10 +39,20 @@ public class Item_caixa implements Serializable {
     private Caixa caixa;
     
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_pagamento")
+    @JoinColumn(name = "id_pagamento", nullable = true)
     private Pagamento pagamento;
     
     public Item_caixa() {
+    }
+
+    public Item_caixa(Double valor_item_caixa, LocalDate data_hora, TipoOperacao tipo_operacao, Caixa caixa, char metodo_pagamento, String descricao_item_caixa) {
+        this.valor_item_caixa = valor_item_caixa;
+        this.data_hora = data_hora;
+        this.tipo_operacao = tipo_operacao;
+        this.caixa = caixa;
+        //this.pagamento = pagamento;
+        this.metodo_pagamento = metodo_pagamento;
+        this.descricao_item_caixa = descricao_item_caixa;
     }
 
     public Item_caixa(Double valor_item_caixa, LocalDate data_hora, String descricao_item_caixa, TipoOperacao tipo_operacao, char metodo_pagamento, Caixa caixa, Pagamento pagamento) {
