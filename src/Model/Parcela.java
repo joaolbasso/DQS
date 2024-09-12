@@ -2,7 +2,6 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,24 +27,27 @@ public class Parcela implements Serializable {
     private Venda venda;
     
     private int numero_parcela;
-    
+
+    @Column
+    private String condicao; // Nova coluna
+
     public Parcela() {
     }
 
-    
-    //Parcela única de pagamento a vista
-    public Parcela(Double valor_parcela, Venda venda) {
+    // Parcela única de pagamento a vista
+    public Parcela(Double valor_parcela, Venda venda, String condicao) {
         this.valor_parcela = valor_parcela;
         this.venda = venda;
+        this.condicao = condicao;
     }
-    
-    //Parcelas a prazo
-    
-    public Parcela(Double valor_parcela, LocalDate data_vencimento, Venda venda, int numero_parcela) {
+
+    // Parcelas a prazo
+    public Parcela(Double valor_parcela, LocalDate data_vencimento, Venda venda, int numero_parcela, String condicao ) {
         this.valor_parcela = valor_parcela;
         this.data_vencimento = data_vencimento;
         this.venda = venda;
         this.numero_parcela = numero_parcela;
+        this.condicao = condicao;
     }
 
     public int getNumero_parcela() {
@@ -55,10 +57,7 @@ public class Parcela implements Serializable {
     public void setNumero_parcela(int numero_parcela) {
         this.numero_parcela = numero_parcela;
     }
-    
 
-    
-    
     public Venda getVenda() {
         return venda;
     }
@@ -66,7 +65,7 @@ public class Parcela implements Serializable {
     public void setVenda(Venda venda) {
         this.venda = venda;
     }
-    
+
     public int getId_parcela() {
         return id_parcela;
     }
@@ -91,4 +90,11 @@ public class Parcela implements Serializable {
         this.data_vencimento = data_vencimento;
     }
     
+    public String getCondicao() {
+        return condicao;
+    }
+
+    public void setCondicao(String condicao) {
+        this.condicao = condicao;
+    }
 }

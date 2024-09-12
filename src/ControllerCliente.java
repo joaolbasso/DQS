@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableCell;
@@ -46,7 +43,7 @@ public class ControllerCliente implements Initializable {
 
     @FXML
     private TableColumn<Cliente, Void> editarColuna = new TableColumn<>("");
-
+    
     @FXML
     private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("");
 
@@ -64,16 +61,9 @@ public class ControllerCliente implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configura as opções do SplitMenuButton
         configurarOpcoesFiltro();
-        
-        // Define "Nome" como filtro padrão
         spmbFiltro.setText("Nome");
-        
-        // Configura a ação do botão Limpar Filtro
         btnLimparFiltro.setOnAction(event -> limparFiltro());
-
-        // Ação do botão Consultar
         btnConsultar.setOnAction(event -> aplicarFiltro());
 
         id_cliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
@@ -85,36 +75,27 @@ public class ControllerCliente implements Initializable {
         centralizarTextoNaColuna(nome_cliente);
         centralizarTextoNaColuna(cpf);
         centralizarTextoNaColuna(telefone);
-        
 
         adicionarBotoesTabela();
         atualizarListaClientes();
     }
-   
-    // Método para configurar as opções do SplitMenuButton
+
     private void configurarOpcoesFiltro() {
         MenuItem filtrarPorNome = new MenuItem("Nome");
-        //MenuItem filtrarPorCidade = new MenuItem("Cidade");
-
-        // Adiciona as opções ao SplitMenuButton
         spmbFiltro.getItems().addAll(filtrarPorNome);
 
-        // Define a opção selecionada no SplitMenuButton
         for (MenuItem item : spmbFiltro.getItems()) {
             item.setOnAction(event -> spmbFiltro.setText(item.getText()));
         }
     }
 
-    // Método para aplicar o filtro na TableView
     private void aplicarFiltro() {
         String filtro = txtFiltro.getText().toLowerCase();
         String criterio = spmbFiltro.getText();
         ClienteDAO clienteDAO = new ClienteDAO();
 
-        // Recupera todas as clientes
         ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
 
-        // Filtra as clientes com base no critério e no valor fornecido
         ObservableList<Cliente> clientesFiltrados = clientes.filtered(cliente -> {
             switch (criterio) {
                 case "Nome":
@@ -124,20 +105,18 @@ public class ControllerCliente implements Initializable {
             }
         });
 
-        // Atualiza a TableView com as clientes filtradas
         tbvwClientes.setItems(clientesFiltrados);
     }
 
     @FXML
     private void limparFiltro() {
-        txtFiltro.clear(); 
-        spmbFiltro.setText("Nome"); 
-
+        txtFiltro.clear();
+        spmbFiltro.setText("Nome");
         atualizarListaClientes();
     }
-    
-private void adicionarBotoesTabela() {
-        // Coluna Editar
+
+    private void adicionarBotoesTabela() {
+        // Botão Editar
         editarColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
                 private final Button btnEditar = new Button();
@@ -147,23 +126,14 @@ private void adicionarBotoesTabela() {
                     ivEditar.setFitHeight(16);
                     ivEditar.setFitWidth(16);
                     btnEditar.setGraphic(ivEditar);
-                    btnEditar.setStyle("-fx-background-color: transparent;"); // Remove fundo do botão
+                    btnEditar.setStyle("-fx-background-color: transparent;");
 
                     btnEditar.setOnAction(event -> {
                         Cliente clienteSelecionada = getTableView().getItems().get(getIndex());
-
-                        // Confirmação para edição
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmação de Edição");
-                        alert.setHeaderText("Tem certeza que deseja editar esta cliente?");
-                        alert.setContentText(clienteSelecionada.getNome_cliente());
-
-                        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                            try {
-                                editarCliente(event, clienteSelecionada);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            editarCliente(event, clienteSelecionada);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     });
                 }
@@ -175,13 +145,13 @@ private void adicionarBotoesTabela() {
                         setGraphic(null);
                     } else {
                         setGraphic(btnEditar);
-                        setStyle("-fx-alignment: CENTER;"); // Centraliza o ícone
+                        setStyle("-fx-alignment: CENTER;");
                     }
                 }
             };
         });
 
-        // Coluna Deletar
+        // Botão Finanças
         financaColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
                 private final Button btnFinanceiro = new Button();
@@ -191,22 +161,15 @@ private void adicionarBotoesTabela() {
                     ivFinanca.setFitHeight(16);
                     ivFinanca.setFitWidth(16);
                     btnFinanceiro.setGraphic(ivFinanca);
-                    btnFinanceiro.setStyle("-fx-background-color: transparent;"); // Remove fundo do botão
+                    btnFinanceiro.setStyle("-fx-background-color: transparent;");
 
                     btnFinanceiro.setOnAction(event -> {
                         Cliente clienteSelecionada = getTableView().getItems().get(getIndex());
-
-                        
-                        
-                        // Confirmação para exclusão
-                        //Alert alert = new Alert(AlertType.CONFIRMATION);
-                        //alert.setTitle("Confirmação de Exclusão");
-                        //alert.setHeaderText("Tem certeza que deseja deletar esta cliente?");
-                        //alert.setContentText(clienteSelecionada.getNome_cliente());
-
-                        //if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                        //    deletarCliente(clienteSelecionada);
-                        //}
+                        try {
+                            financaCliente(event, clienteSelecionada);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     });
                 }
 
@@ -217,7 +180,7 @@ private void adicionarBotoesTabela() {
                         setGraphic(null);
                     } else {
                         setGraphic(btnFinanceiro);
-                        setStyle("-fx-alignment: CENTER;"); // Centraliza o ícone
+                        setStyle("-fx-alignment: CENTER;");
                     }
                 }
             };
@@ -225,7 +188,7 @@ private void adicionarBotoesTabela() {
 
         tbvwClientes.getColumns().addAll(editarColuna, financaColuna);
     }
-    
+
     public void editarCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
         if (clienteSelecionada != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
@@ -240,27 +203,19 @@ private void adicionarBotoesTabela() {
             window.show();
         }
     }
-    
+
     public void financaCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
         if (clienteSelecionada != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FinancaCliente.fxml"));
-            Parent cadastrarClienteView = loader.load();
+            Parent financaClienteView = loader.load();
 
             ControllerFinancaCliente controllerFinancaCliente = loader.getController();
             controllerFinancaCliente.setCliente(clienteSelecionada);
 
-            Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
+            Scene financaClienteScene = new Scene(financaClienteView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(cadastrarClienteScene);
+            window.setScene(financaClienteScene);
             window.show();
-        }
-    }
-
-    public void deletarCliente(Cliente clienteSelecionada) {
-        if (clienteSelecionada != null) {
-            ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.delete(clienteSelecionada);
-            atualizarListaClientes();  // Atualiza a lista de clientes após a exclusão
         }
     }
 
@@ -289,11 +244,11 @@ private void adicionarBotoesTabela() {
     @FXML
     public void entrarCadastrarCliente(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
-        Parent cadastrarClienteView = loader.load(); 
-        
+        Parent cadastrarClienteView = loader.load();
+
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
         controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
-        
+
         Scene cadastrarClienteScene = new Scene(cadastrarClienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarClienteScene);
@@ -311,10 +266,5 @@ private void adicionarBotoesTabela() {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cena);
         window.show();
-    }
-    
-    @FXML
-    public void atualizaComboItens(ActionEvent event) throws IOException {
-        
     }
 }

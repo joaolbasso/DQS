@@ -1,14 +1,16 @@
 package DAO;
 
-import Model.Pagamento;
-import Model.Parcela;
 import Model.Venda;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class VendaDAO extends AbstractDAO {
 
     public void insert(Venda venda) {
+        EntityManager em = null;
         try {
-            System.out.println("ENTREI AQUI");
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             em.persist(venda);
@@ -25,16 +27,22 @@ public class VendaDAO extends AbstractDAO {
         }
     }
 
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Venda> listaVendasPorCliente(int id_cliente) {
+        EntityManager em = null;
+        List<Venda> vendas = null;
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            TypedQuery<Venda> query = em.createQuery("SELECT v FROM Venda v WHERE v.cliente.id_cliente = :id_cliente", Venda.class);
+            query.setParameter("id_cliente", id_cliente);
+            vendas = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return vendas;
     }
 
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void select() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }
