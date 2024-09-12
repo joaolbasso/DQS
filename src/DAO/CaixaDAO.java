@@ -49,7 +49,7 @@ public class CaixaDAO extends AbstractDAO {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            String jpql = "SELECT sum(c.valor_item_caixa) FROM Item_caixa c WHERE c.caixa = :caixa";
+            String jpql = "SELECT sum(c.valor_item_caixa) FROM Item_caixa c WHERE c.caixa = :caixa"; //select sum(item_caixa.valor_item_caixa) from item_caixa where id_caixa < 27
             TypedQuery<Double> query = em.createQuery(jpql, Double.class);
             query.setParameter("caixa", caixa);
 

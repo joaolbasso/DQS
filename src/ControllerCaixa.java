@@ -223,6 +223,7 @@ public class ControllerCaixa implements Initializable {
         tbvwItensVenda.setItems(itens_venda_observable);
         lblValorTotal.setText(("R$ " + String.valueOf(valor_venda) + "0"));
         
+        limparCampos();
     }
     
     @FXML
@@ -354,6 +355,12 @@ public class ControllerCaixa implements Initializable {
         ClienteDAO clienteDAO = new ClienteDAO();
         ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
         cmbboxCliente.setItems(clientes);
+    }
+
+    private void limparCampos() {
+        cmbboxItem.getSelectionModel().clearSelection();
+        txtfldValorUnitario.setText("");
+        txtfldPreco.setText("");
     }
     
 }

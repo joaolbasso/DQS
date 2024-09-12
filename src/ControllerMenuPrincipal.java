@@ -144,11 +144,6 @@ public class ControllerMenuPrincipal implements Initializable {
         caixaDAO.insert(caixaNovo);
         Item_caixa item_aporte = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.A, caixaNovo, 'A', "Aporte Inicial");
         
-        System.out.println(item_aporte.getValor_item_caixa()); 
-        System.out.println(item_aporte.getTipo_operacao());
-        System.out.println(item_aporte.getCaixa().getData_hora_abertura());
-        System.out.println(item_aporte.getData_hora());
-        System.out.println(item_aporte.getTipo_operacao());
         
         caixaNovo.getItens_caixa().add(item_aporte);
         
