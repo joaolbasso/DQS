@@ -8,6 +8,7 @@ import Model.Beneficiario;
 import Model.Caixa;
 import Model.Cidade;
 import Model.Cliente;
+import Model.Despesa;
 import Model.Item_caixa;
 import Model.Item_venda;
 import Model.Venda;
@@ -42,6 +43,16 @@ public class TesteMetodos {
         
         Caixa caixa = caixaDAO.buscarCaixaAberto();
         
-        System.out.println(caixaDAO.somaCaixa(caixa));
+        System.out.println(caixaDAO.entradasCaixa(caixa));
+    
+        Beneficiario bene = new Beneficiario("COPEL");
+        
+        Item_caixa item_caixa = new Item_caixa(0.0, LocalDate.now(), Item_caixa.TipoOperacao.D, caixaDAO.buscarCaixaAberto(), 'D', "Despesa");
+        Despesa despesa = new Despesa("Luz", 50.0, "Luz da copel", 15, LocalDate.now(), LocalDate.now().plusDays(3), bene, item_caixa);
+        
+        item_caixa.setValor_item_caixa(despesa.getValor_despesa());
+        
+        
+        
     }
 }

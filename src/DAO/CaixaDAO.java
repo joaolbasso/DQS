@@ -43,13 +43,13 @@ public class CaixaDAO extends AbstractDAO {
         return null;
 }
     
-    public Double somaCaixa(Caixa caixa) {
+    public Double entradasCaixa(Caixa caixa) {
         Double somaCaixa = 0.0;
         try {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            String jpql = "SELECT sum(c.valor_item_caixa) FROM Item_caixa c WHERE c.caixa = :caixa"; //select sum(item_caixa.valor_item_caixa) from item_caixa where id_caixa < 27
+            String jpql = "SELECT sum(c.valor_item_caixa) FROM Item_caixa c WHERE c.caixa = :caixa AND c.tipo_operacao IN ('A', 'V')"; //select sum(item_caixa.valor_item_caixa) from item_caixa where id_caixa < 27
             TypedQuery<Double> query = em.createQuery(jpql, Double.class);
             query.setParameter("caixa", caixa);
 
@@ -66,7 +66,32 @@ public class CaixaDAO extends AbstractDAO {
             }
         }
         return somaCaixa;
-    } 
+    }
+    
+    public Double saidasCaixa(Caixa caixa) {
+        Double saidaCaixa = 0.0;
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            String jpql = "SELECT sum(c.valor_item_caixa) FROM Item_caixa c WHERE c.caixa = :caixa AND c.tipo_operacao IN ('D', 'S')"; //select sum(item_caixa.valor_item_caixa) from item_caixa where id_caixa < 27
+            TypedQuery<Double> query = em.createQuery(jpql, Double.class);
+            query.setParameter("caixa", caixa);
+
+            saidaCaixa = query.getSingleResult();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return saidaCaixa;
+    }
     
     public void insert(Caixa caixa) {
         try {

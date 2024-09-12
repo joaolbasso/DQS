@@ -52,6 +52,11 @@ public class ControllerMenuPrincipal implements Initializable {
     @FXML
     private Label lblTitulo;
     
+    
+    @FXML
+    private Label lblEntradas;
+    @FXML
+    private Label lblSaidas;
     @FXML
     private Label lblSaldoCaixa;
     
@@ -144,6 +149,11 @@ public class ControllerMenuPrincipal implements Initializable {
         caixaDAO.insert(caixaNovo);
         Item_caixa item_aporte = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.A, caixaNovo, 'A', "Aporte Inicial");
         
+        System.out.println(item_aporte.getValor_item_caixa()); 
+        System.out.println(item_aporte.getTipo_operacao());
+        System.out.println(item_aporte.getCaixa().getData_hora_abertura());
+        System.out.println(item_aporte.getData_hora());
+        System.out.println(item_aporte.getTipo_operacao());
         
         caixaNovo.getItens_caixa().add(item_aporte);
         
@@ -271,8 +281,14 @@ public class ControllerMenuPrincipal implements Initializable {
             centralizarTextoNaColuna(tbclnOperacao);
             
             
-            Double saldoCaixa = caixaDAO.somaCaixa(this.caixa);
-            lblSaldoCaixa.setText("R$" + saldoCaixa);
+            Double entradaCaixa = caixaDAO.entradasCaixa(this.caixa);
+            Double saidasCaixa = caixaDAO.saidasCaixa(this.caixa);
+            
+            Double saldoCaixa = entradaCaixa - saidasCaixa;
+            
+            lblEntradas.setText("R$ " + entradaCaixa + "0");
+            lblSaidas.setText("R$ " + saidasCaixa + "0");
+            lblSaldoCaixa.setText("R$" + saldoCaixa + "0");
             
         // TODO
         btnCaixa.getStyleClass().add("color-button");

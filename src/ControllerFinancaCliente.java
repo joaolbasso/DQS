@@ -73,11 +73,18 @@ public class ControllerFinancaCliente implements Initializable {
             }
         });
 
-        id_parcela.setCellValueFactory(new PropertyValueFactory<>("id_parcela"));
+        id_parcela.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
         data_vencimento.setCellValueFactory(new PropertyValueFactory<>("data_vencimento"));
         valor_parcela.setCellValueFactory(new PropertyValueFactory<>("valor_parcela"));
 
         condicao.setCellValueFactory(new PropertyValueFactory<>("condicao"));
+        
+        centralizarTextoNaColuna(condicao);
+        centralizarTextoNaColuna(id_parcela);
+        centralizarTextoNaColuna(data_vencimento);
+        centralizarTextoNaColuna(valor_parcela);
+        centralizarTextoNaColuna(id_venda);
+        
         
         condicao.setCellFactory(column -> new TableCell<Parcela, String>() {
             @Override
@@ -91,6 +98,22 @@ public class ControllerFinancaCliente implements Initializable {
             }
         });
     }
+    
+        private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+        coluna.setCellFactory(column -> new TableCell<T, U>() {
+        @Override
+        protected void updateItem(U item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+                setText(null);
+                setStyle("");
+            } else {
+                setText(item.toString());
+                setStyle("-fx-alignment: CENTER;");
+            }
+        }
+    });
+}
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
