@@ -159,7 +159,7 @@ public class ControllerPagamento implements Initializable {
         this.venda = venda;
         atualizarValorVenda();
         txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
-        Parcela parcela = new Parcela(this.venda.getValor_venda() / 2, LocalDate.now().plusDays(28 * 1), this.venda, 1);
+        Parcela parcela = new Parcela(this.venda.getValor_venda() / 2, LocalDate.now().plusDays(28 * 1), this.venda, 1, "Pago");
         lista_parcelas_observable.add(parcela);
         tbvwParcelas.setItems(lista_parcelas_observable);
     }
@@ -316,7 +316,7 @@ public class ControllerPagamento implements Initializable {
         if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista
             if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
                 this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
-                Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda);
+                Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda, "Pago");
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
                 
                 StringBuilder lista_nome_itens_builder = new StringBuilder();
@@ -357,7 +357,7 @@ public class ControllerPagamento implements Initializable {
                 
                 this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 vendaDAO.insert(this.venda);
-                Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda);
+                Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda, "Pago");
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaEntrada);
                 
                 StringBuilder lista_nome_itens_builder = new StringBuilder();
@@ -490,16 +490,10 @@ public class ControllerPagamento implements Initializable {
                 double valor_cada_parcela = bd.doubleValue();
                 lista_parcelas_observable.clear();
                 for(int i = 1; i <= numero_parcelas; i++) {
-                    Parcela parcela = new Parcela(valor_cada_parcela, LocalDate.now().plusDays(28 * i), this.venda, i);
+                    Parcela parcela = new Parcela(valor_cada_parcela, LocalDate.now().plusDays(28 * i), this.venda, i, "pendente");
                     lista_parcelas_observable.add(parcela);
+
                 }
             tbvwParcelas.setItems(lista_parcelas_observable);
-    }
-    
-    
-    
-        
-    
-
-    
+    } 
 }
