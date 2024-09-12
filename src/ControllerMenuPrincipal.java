@@ -224,7 +224,6 @@ public class ControllerMenuPrincipal implements Initializable {
     public void entrarClientes(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Cliente.fxml"));
         Parent clienteView = loader.load();
-       
 
         Scene clienteScene = new Scene(clienteView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -284,11 +283,16 @@ public class ControllerMenuPrincipal implements Initializable {
             Double entradaCaixa = caixaDAO.entradasCaixa(this.caixa);
             Double saidasCaixa = caixaDAO.saidasCaixa(this.caixa);
             
-            Double saldoCaixa = entradaCaixa - saidasCaixa;
-            
-            lblEntradas.setText("R$ " + entradaCaixa + "0");
-            lblSaidas.setText("R$ " + saidasCaixa + "0");
-            lblSaldoCaixa.setText("R$" + saldoCaixa + "0");
+            if (entradaCaixa != null && saidasCaixa != null) { //Fazer validação de entrada e saida separada
+                Double saldoCaixa = entradaCaixa - saidasCaixa;
+                lblEntradas.setText("R$ " + String.format("%.2f", entradaCaixa));
+                lblSaidas.setText("R$ " + String.format("%.2f", saidasCaixa));
+                lblSaldoCaixa.setText("R$ " + String.format("%.2f", saldoCaixa));
+            } else {
+                lblEntradas.setText("R$ 0.00");
+                lblSaidas.setText("R$ 0.00");
+                lblSaldoCaixa.setText("R$ 0.00");
+            }
             
         // TODO
         btnCaixa.getStyleClass().add("color-button");

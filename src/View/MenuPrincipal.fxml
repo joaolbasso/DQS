@@ -89,32 +89,32 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="1064.0" layoutY="245.0" prefHeight="25.0" prefWidth="114.0" text="Saldo do caixa:">
+      <Label layoutX="1064.0" layoutY="196.0" prefHeight="25.0" prefWidth="114.0" text="Saldo do caixa:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaldoCaixa" layoutX="1187.0" layoutY="242.0" text="R$00,00">
+      <Label fx:id="lblSaldoCaixa" layoutX="1187.0" layoutY="193.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="1072.0" layoutY="194.0" prefHeight="25.0" prefWidth="54.0" text="Saídas:">
+      <Label layoutX="1064.0" layoutY="145.0" prefHeight="25.0" prefWidth="54.0" text="Saídas:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaidas" contentDisplay="RIGHT" layoutX="1187.0" layoutY="194.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
+      <Label fx:id="lblSaidas" contentDisplay="RIGHT" layoutX="1187.0" layoutY="145.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="1072.0" layoutY="169.0" prefHeight="25.0" prefWidth="69.0" text="Entradas:">
+      <Label layoutX="1064.0" layoutY="120.0" prefHeight="25.0" prefWidth="69.0" text="Entradas:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1187.0" layoutY="169.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
+      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1187.0" layoutY="120.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
