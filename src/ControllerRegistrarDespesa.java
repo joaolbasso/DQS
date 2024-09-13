@@ -33,8 +33,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -82,11 +84,31 @@ public class ControllerRegistrarDespesa implements Initializable {
             } 
         });
 
-        SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 31);
-        valueFactory.setValue(0);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 31);
         spnrRecorrente.setValueFactory(valueFactory);
 
+        TextFormatter<Integer> formatter = new TextFormatter<>(new IntegerStringConverter(), 0, c -> {
+            if (c.getControlNewText().matches("\\d*")) {
+                return c;
+            } else {
+                return null;
+            }
+        });
+
+        spnrRecorrente.getEditor().setTextFormatter(formatter);
+
+        spnrRecorrente.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+    if (!newValue.matches("\\d*")) {
+        spnrRecorrente.getEditor().setText(oldValue);
+    } else {
+        try {
+            spnrRecorrente.getValueFactory().setValue(Integer.parseInt(newValue));
+        } catch (NumberFormatException e) {
+            spnrRecorrente.getEditor().setText(oldValue);
+        }
+    }
+});
+        
         BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
         ObservableList<Beneficiario> beneficiarios = FXCollections.observableArrayList(beneficiarioDAO.todosOsBeneficiarios());
         cmbboxBeneficiario.setItems(beneficiarios);
@@ -162,6 +184,11 @@ public class ControllerRegistrarDespesa implements Initializable {
     @FXML
     public void registrarDespesa(ActionEvent event) {
         try {
+            if (txtfldNomeDespesa.getText().isEmpty() || txtfldValor.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Insira os dados obrigatórios para cadastrar despesa!", "Despesa Vazia", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
             Despesa despesaSalvar = criarDespesa();
             if (despesaSalvar != null) {
                 DespesaDAO despesaDAO = new DespesaDAO();
@@ -177,9 +204,7 @@ public class ControllerRegistrarDespesa implements Initializable {
                     voltar(event);
                 }
                 limparCampos(event);
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao inserir a DESPESA!", "Erro ao inserir", JOptionPane.ERROR_MESSAGE);
-            }
+            } 
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao registrar a despesa.", "Erro", JOptionPane.ERROR_MESSAGE);

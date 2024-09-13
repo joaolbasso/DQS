@@ -131,6 +131,8 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
         txtfldTelefone.setText(oldValue);
     } else if (newValue.length() > 11) {
         txtfldTelefone.setText(oldValue);
+    } else if (newValue.length() == 11) {
+        txtfldTelefone.setText(newValue);
     }
 });
 
@@ -161,7 +163,13 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
         if (!Config.ValidaCPF.isCPF(txtfldCPF.getText() )) {
             JOptionPane.showMessageDialog(null, "CPF não é válido!", "CPF Inválido", 0);
             return;
-            } 
+        }
+        
+        if(txtfldTelefone.getText().length() != 11) {
+            JOptionPane.showMessageDialog(null, "Telefone não é válido, não tem 11 números!", "Telefone Inválido", 0);
+            return;
+        }
+        
         if (clienteDAO.cpfExiste(txtfldCPF.getText()) && clienteEdicao == null) {
             JOptionPane.showMessageDialog(null, "CPF já inserido no sistema!", "CPF Repetido", 0);
         }
