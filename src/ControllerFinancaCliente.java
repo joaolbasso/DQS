@@ -122,7 +122,8 @@ public class ControllerFinancaCliente implements Initializable {
 
                     btnPagar.setOnAction(event -> {
                         try {
-                            pagamentoParcela(event);
+                            Parcela parcela = (Parcela) getTableRow().getItem();
+                            pagamentoParcela(event, parcela);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -130,27 +131,33 @@ public class ControllerFinancaCliente implements Initializable {
                 }
 
                 @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        setGraphic(btnPagar);
-                        setStyle("-fx-alignment: CENTER;");
-                    }
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                setGraphic(null);
+            } else {
+                Parcela parcela = (Parcela) getTableRow().getItem();
+                if ("A Pagar".equals(parcela.getCondicao())) {
+                    setGraphic(btnPagar);
+                    setStyle("-fx-alignment: CENTER;");
+                } else {
+                    setGraphic(null);
                 }
+            }
+        }
 
             };
         });
 }
     
-        private void pagamentoParcela(ActionEvent event) throws IOException {
+        private void pagamentoParcela(ActionEvent event, Parcela parcela) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
             Parent pagamentoParcelaView = loader.load();
 
             ControllerPagamentoParcelado controllerPagamentoParcelado = loader.getController();
             controllerPagamentoParcelado.setCenaAnterior(((Node) event.getSource()).getScene());
-        
+            controllerPagamentoParcelado.setParcela(parcela);
+            
             controllerPagamentoParcelado.setItemCallBack(() -> {
             // Atualizar a ComboBox
             carregarParcelasDoCliente();
