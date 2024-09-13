@@ -244,6 +244,11 @@ public class ControllerItem implements Initializable {
 
             ControllerCadastrarItem controllerCadastrarItem = loader.getController();
             controllerCadastrarItem.setItem(itemSelecionado);
+            controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+            
+            controllerCadastrarItem.setItemCallBack(() -> {
+                atualizarListaItens();
+            });
 
             Scene cadastrarItemScene = new Scene(cadastrarItemView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -306,6 +311,14 @@ public class ControllerItem implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarItem.fxml"));
         Parent cadastrarItemView = loader.load();      
 
+        ControllerCadastrarItem controllerCadastrarItem = loader.getController();
+        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+        
+        controllerCadastrarItem.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizarListaItens();
+        });
+        
         Scene cadastrarItemScene = new Scene(cadastrarItemView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarItemScene);

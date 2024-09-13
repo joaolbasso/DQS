@@ -21,8 +21,9 @@ public class DQSApp extends Application {
         stage.getIcons().add(icon);
         stage.setScene(scene);
         
+        
+        stage.setResizable(false);
         /*
-        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Aperte q");
         stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
         */

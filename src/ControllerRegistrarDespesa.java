@@ -278,16 +278,19 @@ public class ControllerRegistrarDespesa implements Initializable {
         LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
         String descricao_despesa = txtfldDescricao.getText();
         Beneficiario beneficiario = cmbboxBeneficiario.getSelectionModel().getSelectedItem();
-
-        Item_caixa item_caixa = new Item_caixa(valor_despesa, LocalDate.now(), Item_caixa.TipoOperacao.D, caixaAtual, '-', descricao_despesa);
-        
-        item_caixaDAO.insert(item_caixa);
         
         if (nome_despesa.isEmpty() || valor_despesa.isNaN()) {
             return null;
         }
-
-        return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
+        
+        if (despesaEdicao == null) {
+            Item_caixa item_caixa = new Item_caixa(valor_despesa, LocalDate.now(), Item_caixa.TipoOperacao.D, caixaAtual, '-', nome_despesa);
+            item_caixaDAO.insert(item_caixa);
+            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
+        } else {
+            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
+        }
+        
     } catch (NumberFormatException e) {
         e.printStackTrace();
         return null;

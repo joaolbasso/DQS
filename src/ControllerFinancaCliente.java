@@ -123,9 +123,9 @@ public class ControllerFinancaCliente implements Initializable {
 
     private void preencherDadosCliente() {
         // Definindo os dados do cliente nos labels
-        nome_cliente.setText("Cliente: " + cliente.getNome_cliente());
-        cpf_cliente.setText("CPF: " + cliente.getCpf());
-        telefone_cliente.setText("Telefone: " + cliente.getTelefone());
+        nome_cliente.setText(cliente.getNome_cliente());
+        cpf_cliente.setText(cliente.getCpf());
+        telefone_cliente.setText(cliente.getTelefone());
     }
 
     private void carregarParcelasDoCliente() {

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="1233.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerFinancaCliente">
+<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="1233.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerFinancaCliente">
     <stylesheets>
         <URL value="@/View/CSS/financacliente.css" />
     </stylesheets>
@@ -43,19 +43,34 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="nome_cliente" layoutX="43.0" layoutY="113.0" prefHeight="53.0" prefWidth="489.0" text="Cliente:">
+      <Label fx:id="nome_cliente" layoutX="134.0" layoutY="113.0" prefHeight="53.0" prefWidth="489.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="cpf_cliente" layoutX="43.0" layoutY="166.0" prefHeight="53.0" prefWidth="489.0" text="CPF:">
+      <Label fx:id="cpf_cliente" layoutX="134.0" layoutY="166.0" prefHeight="53.0" prefWidth="489.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="telefone_cliente" layoutX="43.0" layoutY="219.0" prefHeight="53.0" prefWidth="489.0" text="Telefone:">
+      <Label fx:id="telefone_cliente" layoutX="134.0" layoutY="219.0" prefHeight="53.0" prefWidth="489.0">
          <font>
             <Font size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="nome_cliente1" layoutX="42.0" layoutY="113.0" prefHeight="53.0" prefWidth="78.0" text="Cliente:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="cpf_cliente1" layoutX="42.0" layoutY="166.0" prefHeight="53.0" prefWidth="43.0" text="CPF:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="telefone_cliente1" layoutX="42.0" layoutY="219.0" prefHeight="53.0" prefWidth="92.0" text="Telefone:">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
    </children>

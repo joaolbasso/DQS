@@ -158,11 +158,13 @@ public class ControllerCaixa implements Initializable {
         
         if (data == null || data.isAfter(LocalDate.now())) {
             JOptionPane.showMessageDialog(null, "Não é possível atribuir data futura!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            dtpkrDataVenda.setValue(LocalDate.now());
             return;
         }
         
         if (data.isBefore(LocalDate.now().minusDays(5))) {
             JOptionPane.showMessageDialog(null, "Não é possível atribuir data anterior a 5 dias!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            dtpkrDataVenda.setValue(LocalDate.now());
             return;
         }
         

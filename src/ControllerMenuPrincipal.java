@@ -283,17 +283,24 @@ public class ControllerMenuPrincipal implements Initializable {
             Double entradaCaixa = caixaDAO.entradasCaixa(this.caixa);
             Double saidasCaixa = caixaDAO.saidasCaixa(this.caixa);
             
-            if (entradaCaixa != null && saidasCaixa != null) { //Fazer validação de entrada e saida separada
-                Double saldoCaixa = entradaCaixa - saidasCaixa;
+            if (entradaCaixa != null) { //Fazer validação de entrada e saida separada
                 lblEntradas.setText("R$ " + String.format("%.2f", entradaCaixa));
-                lblSaidas.setText("R$ " + String.format("%.2f", saidasCaixa));
-                lblSaldoCaixa.setText("R$ " + String.format("%.2f", saldoCaixa));
             } else {
+                entradaCaixa = 0.0;
                 lblEntradas.setText("R$ 0.00");
-                lblSaidas.setText("R$ 0.00");
-                lblSaldoCaixa.setText("R$ 0.00");
+                
             }
             
+            if (saidasCaixa != null) {
+                lblSaidas.setText("R$ " + String.format("%.2f", saidasCaixa));
+            } else {
+                saidasCaixa = 0.0;
+                lblSaidas.setText("R$ 0.00");
+            }
+            
+            Double saldoCaixa = entradaCaixa - saidasCaixa;
+            lblSaldoCaixa.setText("R$ " + String.format("%.2f", saldoCaixa));
+            lblSaldoCaixa.setText("R$ " + saldoCaixa + "0");
         // TODO
         btnCaixa.getStyleClass().add("color-button");
         btnDespesas.getStyleClass().add("color-button");
