@@ -358,7 +358,7 @@ public class ControllerPagamento implements Initializable {
                 this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 vendaDAO.insert(this.venda);
                 Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda, "Pago");
-                Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaEntrada);
+                Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), parcelaEntrada.getValor_parcela(), parcelaEntrada);
                 
                 StringBuilder lista_nome_itens_builder = new StringBuilder();
                 
@@ -377,7 +377,7 @@ public class ControllerPagamento implements Initializable {
 
                 String lista_nome_itens = lista_nome_itens_builder.toString();
                 
-                Item_caixa item_caixa = new Item_caixa(this.venda.getValor_venda(), pagamento.getData_pagamento(), lista_nome_itens, Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
+                Item_caixa item_caixa = new Item_caixa(pagamento.getValor_pagamento(), pagamento.getData_pagamento(), lista_nome_itens + " (a prazo)", Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
 
                 parcelaDAO.insert(parcelaEntrada);
                 pagamentoDAO.insert(pagamento);

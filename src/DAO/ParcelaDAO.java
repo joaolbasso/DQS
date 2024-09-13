@@ -26,6 +26,24 @@ public class ParcelaDAO extends AbstractDAO {
             }
         }
     }
+    
+    public void update(Parcela parcela) {
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            em.merge(parcela);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                e.printStackTrace();
+            }
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 
     public List<Parcela> listarParcelasPorVenda(int id_venda) {
         EntityManager em = null;
