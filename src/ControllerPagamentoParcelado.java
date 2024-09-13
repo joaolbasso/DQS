@@ -30,105 +30,55 @@ import javafx.stage.Stage;
 public class ControllerPagamentoParcelado implements Initializable {
 
     private Scene cenaAnterior;
-    private Venda venda;
+    private ItemCallback itemCallBack;
     
     @FXML
-    private Label lblValorRestante;
+    private Label lblValorParcela;
     
     @FXML
-    private ComboBox<Cliente> cmbboxCliente;
+    private Label lblNumeroParcela;
     
     @FXML
-    private ComboBox<Integer> cmbboxParcelas;
+    private ComboBox<String> cmbboxMetodoPagamento;
     
-    @FXML
-    private DatePicker dtpkrDataVencimento;
-    
-    @FXML
-    private TableView<Parcela> tbvwParcelas;
-    
-    @FXML
-    private TableColumn<Parcela, Integer> tbclnParcela;
-    
-    @FXML
-    private TableColumn<Parcela, Double> tbclnValorParcela;
+    ObservableList<String> metodos_pagamento = FXCollections.observableArrayList("Espécie", "PIX", "Débito", "Crédito");
     
     // Método para definir a cena anterior
     public void setCenaAnterior(Scene cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
     }
 
-    public Venda getVenda() {
-        return venda;
-    }
-
-    public void setVenda(Venda venda) {
-        this.venda = venda;
-        atualizaValorRestante();
-        if (this.venda.getCliente() != null) {
-            cmbboxCliente.setValue(this.venda.getCliente());
-        } else {
-            cmbboxCliente.setItems(clientes);
-        }
-    }
-    
-    
-
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        // Retornar para a cena anterior se existir
-        if (cenaAnterior != null) {
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(cenaAnterior);
-            window.show();
+    if (itemCallBack != null) {
+            itemCallBack.onItemUpdated();
         }
-    }
-    
-    @FXML
-    public void cadastarCliente(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
-        Parent pagamentoView = loader.load();
-
-
-
-        Scene pagamentoScene = new Scene(pagamentoView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(pagamentoScene);
+        window.setScene(this.cenaAnterior);
         window.show();
     }
     
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cmbboxMetodoPagamento.setItems(metodos_pagamento);
+    }    
+    
     @FXML
-    public void registrarParcelas(ActionEvent event) throws IOException {
-        System.out.println("REGISTRAR");
+    public void quitarParcela(ActionEvent event) throws IOException {
+        System.out.println("QUITAR");
     }
     
     @FXML
     public void limparCampos(ActionEvent event) throws IOException {
         System.out.println("LIMPAR CAMPOS");
     }
-    
-    ClienteDAO clienteDAO = new ClienteDAO();
-    ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        cmbboxCliente.setCellFactory(cell -> new ListCell<Cliente>() {
-            @Override
-            protected void updateItem(Cliente cliente, boolean empty) {
-                super.updateItem(cliente, empty);
-                if (empty || cliente == null) {
-                    setText(null);
-                } else {
-                    setText(cliente.getNome_cliente());
-                }
-            }
-        });
-        
-        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
-    }    
-
-    private void atualizaValorRestante() {
-        String valorRestante = Double.toString(this.venda.getValor_venda() - 10.0);
-        lblValorRestante.setText(valorRestante);
+    public interface ItemCallback {
+        void onItemUpdated();
     }
+
+    public void setItemCallBack(ItemCallback itemCallBack) {
+        this.itemCallBack = itemCallBack;
+    }
+    
+    
 }

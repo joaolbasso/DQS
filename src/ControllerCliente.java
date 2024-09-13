@@ -42,10 +42,10 @@ public class ControllerCliente implements Initializable {
     private TableColumn<Cliente, String> telefone = new TableColumn<>("Telefone");
 
     @FXML
-    private TableColumn<Cliente, Void> editarColuna = new TableColumn<>("");
+    private TableColumn<Cliente, Void> editarColuna = new TableColumn<>("Editar");
     
     @FXML
-    private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("");
+    private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("Financeiro");
 
     @FXML
     private SplitMenuButton spmbFiltro;
@@ -121,7 +121,6 @@ public class ControllerCliente implements Initializable {
             return new TableCell<Cliente, Void>() {
                 private final Button btnEditar = new Button();
                 private final ImageView ivEditar = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/editar.png")));
-
                 {
                     ivEditar.setFitHeight(16);
                     ivEditar.setFitWidth(16);
@@ -155,7 +154,7 @@ public class ControllerCliente implements Initializable {
         financaColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
                 private final Button btnFinanceiro = new Button();
-                private final ImageView ivFinanca = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/moeda.png")));
+                private final ImageView ivFinanca = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/financaCliente.png")));
 
                 {
                     ivFinanca.setFitHeight(16);

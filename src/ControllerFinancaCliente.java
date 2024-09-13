@@ -28,6 +28,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class ControllerFinancaCliente implements Initializable {
@@ -60,6 +63,9 @@ public class ControllerFinancaCliente implements Initializable {
 
     @FXML
     private TableColumn<Parcela, String> condicao;
+    
+    @FXML
+    private TableColumn<Parcela, Void> pagarColuna = new TableColumn<>("Receber Parcela");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,7 +103,64 @@ public class ControllerFinancaCliente implements Initializable {
                 }
             }
         });
+        adicionarBotaoTabela();
+        
+        tbvwParcelas.getColumns().addAll(pagarColuna);
     }
+    
+    private void adicionarBotaoTabela() {
+        
+            pagarColuna.setCellFactory(coluna -> {
+            return new TableCell<Parcela, Void>() {
+                private final Button btnPagar = new Button();
+                private final ImageView ivMoeda = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/moeda.png")));
+                {
+                    ivMoeda.setFitHeight(16);
+                    ivMoeda.setFitWidth(16);
+                    btnPagar.setGraphic(ivMoeda);
+                    btnPagar.setStyle("-fx-background-color: transparent;");
+
+                    btnPagar.setOnAction(event -> {
+                        try {
+                            pagamentoParcela(event);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(btnPagar);
+                        setStyle("-fx-alignment: CENTER;");
+                    }
+                }
+
+            };
+        });
+}
+    
+        private void pagamentoParcela(ActionEvent event) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
+            Parent pagamentoParcelaView = loader.load();
+
+            ControllerPagamentoParcelado controllerPagamentoParcelado = loader.getController();
+            controllerPagamentoParcelado.setCenaAnterior(((Node) event.getSource()).getScene());
+        
+            controllerPagamentoParcelado.setItemCallBack(() -> {
+            // Atualizar a ComboBox
+            carregarParcelasDoCliente();
+            });
+       
+            Scene cadastrarClienteScene = new Scene(pagamentoParcelaView);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cadastrarClienteScene);
+            window.show();
+        }
     
         private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
@@ -168,4 +231,5 @@ public class ControllerFinancaCliente implements Initializable {
         window.setScene(cena);
         window.show();
     }
+
 }

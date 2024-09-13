@@ -5,89 +5,73 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamentoParcelado">
+<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamentoParcelado">
     <stylesheets>
         <URL value="@/View/CSS/venda.css" />
     </stylesheets>
    <children>
-      <Label layoutX="198.0" layoutY="25.0" prefHeight="67.0" prefWidth="230.0" text="Venda a Prazo">
+      <Label layoutX="128.0" layoutY="25.0" prefHeight="67.0" prefWidth="363.0" text="Pagamento de parcela">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="58.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="28.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="58.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button layoutX="28.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="232.0" layoutY="93.0" prefHeight="35.0" prefWidth="162.0" text="Valor Restante:">
+      <Label layoutX="273.0" layoutY="129.0" prefHeight="35.0" prefWidth="179.0" text="Valor da parcela:">
          <font>
-            <Font size="24.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="71.0" layoutY="193.0" prefHeight="35.0" prefWidth="230.0" text="Selecionar Cliente *">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="cmbboxCliente" layoutX="71.0" layoutY="228.0" prefHeight="35.0" prefWidth="300.0" />
-      <Button fx:id="btnRegistrar" layoutX="153.0" layoutY="524.0" mnemonicParsing="false" onAction="#registrarParcelas" prefHeight="44.0" prefWidth="136.0" text="Registrar">
+      <Button fx:id="btnRegistrar" layoutX="145.0" layoutY="377.0" mnemonicParsing="false" onAction="#quitarParcela" prefHeight="44.0" prefWidth="136.0" text="Concluir">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <TextField fx:id="txtfldValorParcela" layoutX="302.0" layoutY="311.0" prefHeight="35.0" prefWidth="190.0">
-         <cursor>
-            <Cursor fx:constant="TEXT" />
-         </cursor>
-      </TextField>
-      <Label layoutX="302.0" layoutY="276.0" prefHeight="35.0" prefWidth="179.0" text="Valor da Parcela:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="109.0" layoutY="276.0" prefHeight="35.0" prefWidth="162.0" text="Nº de Parcelas:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="cmbboxParcelas" layoutX="145.0" layoutY="311.0" prefHeight="35.0" prefWidth="82.0" />
-      <Button fx:id="btnLimpar" layoutX="312.0" layoutY="524.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="17.0" prefWidth="171.0" text="Limpar Campos">
+      <Button fx:id="btnLimpar" layoutX="304.0" layoutY="377.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="17.0" prefWidth="171.0" text="Limpar Campos">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btnCadastrarCliente" layoutX="394.0" layoutY="226.0" mnemonicParsing="false" onAction="#cadastarCliente" prefHeight="39.0" prefWidth="145.0" text="Cadastrar Cliente">
+      <Label fx:id="lblValorParcela" alignment="CENTER" contentDisplay="CENTER" layoutX="416.0" layoutY="120.0" prefHeight="53.0" prefWidth="143.0" text="R$00,00">
          <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Label fx:id="lblValorRestante" alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="128.0" prefHeight="53.0" prefWidth="233.0" text="R$00,00">
-         <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvwParcelas" layoutX="67.0" layoutY="356.0" prefHeight="153.0" prefWidth="466.0">
-        <columns>
-          <TableColumn fx:id="tbclnParcela" prefWidth="60.0" text="Parcela" />
-          <TableColumn fx:id="tbclnValorParcela" prefWidth="90.0" text="Valor" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
+      <TextField fx:id="txtfldValorPagamento" layoutX="355.0" layoutY="201.0" prefHeight="35.0" prefWidth="143.0" />
+      <Label layoutX="103.0" layoutY="201.0" prefHeight="35.0" prefWidth="233.0" text="Valor do pagamento:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="103.0" layoutY="264.0" prefHeight="35.0" prefWidth="224.0" text="Método Pagamento:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="355.0" layoutY="264.0" prefHeight="35.0" prefWidth="143.0" />
+      <Label layoutX="49.0" layoutY="129.0" prefHeight="35.0" prefWidth="179.0" text="Número da parcela:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNumeroParcela" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="120.0" prefHeight="53.0" prefWidth="71.0" text="1">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
