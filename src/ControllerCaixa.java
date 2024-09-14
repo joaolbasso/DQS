@@ -40,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
@@ -89,6 +90,8 @@ public class ControllerCaixa implements Initializable {
     private TableColumn<Item_venda, Integer> tbclnQuantidade = new TableColumn<>("Quantidade");
     @FXML
     private TableColumn<Item_venda, Double> tbclnValor = new TableColumn<>("Valor");
+    @FXML
+    private TableColumn<Item_venda, Void> tbclnAcoes = new TableColumn<>("Ações");
     
     
     private ArrayList<Item_venda> itensDaVenda = new ArrayList<>();
@@ -146,9 +149,7 @@ public class ControllerCaixa implements Initializable {
         window.setScene(caixaScene);
         window.show();
     }
-    
-    
-    
+        
     @FXML
     public void finalizarVenda(ActionEvent event) throws IOException {
         //Quando o usuário clicar em finalizar, pegar a lista local e adicionar a uma Venda associada.
@@ -208,24 +209,52 @@ public class ControllerCaixa implements Initializable {
     
     @FXML
     public void adicionarItemAVenda(ActionEvent event) throws IOException {
-        //Quando eu clicar em adicionar Item a Venda preciso criar o item_venda
-        //Preciso pegar os dados dos campos da View de Nova Venda e criar um novo item_venda, adicionar a uma lista de item_venda (local) e mostrar na tabela
-        
+        // Verifica se algum item está selecionado
         if (cmbboxItem.getValue() != null) {
-            
+
             Item_venda novo_item_venda = criarItemVenda();
+
+            // Validação para garantir que o campo de preço tenha um valor válido
+            if (!txtfldPreco.getText().isEmpty()) {
+                try {
+                    Double preco_alterado = Double.valueOf(txtfldPreco.getText());
+                    novo_item_venda.setValor_unitario(preco_alterado);  // Atualiza o valor do item com o valor modificado
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Atualiza o valor total somando os itens já presentes na venda
             valor_venda += novo_item_venda.getValor_unitario();
             itensDaVenda.add(novo_item_venda);
+
+            // Atualiza a tabela e o total
+            atualizaTabelaItens();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um item para adicionar item a venda!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        
+
+        limparCampos();
+    }
+    
+    // Atualizar a exibição da tabela e recalcular o valor total
+    private void atualizaTabelaItens() {
         ObservableList<Item_venda> itens_venda_observable = FXCollections.observableArrayList(itensDaVenda);
         tbvwItensVenda.setItems(itens_venda_observable);
-        lblValorTotal.setText(("R$ " + String.valueOf(valor_venda) + "0"));
-        
-        limparCampos();
+
+        // Recalcula o valor total
+        valor_venda = itensDaVenda.stream().mapToDouble(Item_venda::getValor_unitario).sum();
+        lblValorTotal.setText("R$ " + String.valueOf(valor_venda) + "0");
+    }
+
+    // Método para garantir que o campo de preço aceite apenas números
+    private void configurarCampoPreco() {
+        txtfldPreco.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {  // Permite números e ponto decimal
+                txtfldPreco.setText(newValue.replaceAll("[^\\d.]", ""));  // Remove caracteres não numéricos
+            }
+        });
     }
     
     @FXML
@@ -268,9 +297,7 @@ public class ControllerCaixa implements Initializable {
 }
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        
+    public void initialize(URL url, ResourceBundle rb) {   
         //Data do sistema no DataPicker
         dtpkrDataVenda.setValue(LocalDate.now());
         
@@ -330,6 +357,28 @@ public class ControllerCaixa implements Initializable {
         
         cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
+        configurarCampoPreco();
+        
+        tbclnProdutoServico.setCellValueFactory(cellData -> 
+        {
+            return new SimpleStringProperty(cellData.getValue().getItem().getNome_item());
+        });
+        tbclnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        tbclnValor.setCellValueFactory((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> 
+            new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
+
+        // Centralizar as colunas
+        centralizarTextoNaColuna(tbclnProdutoServico);
+        centralizarTextoNaColuna(tbclnValor);
+        centralizarTextoNaColuna(tbclnQuantidade);
+
+        // Configurar os botões de editar e remover
+        adicionarColunaAcoes();
+
+        // Atualiza combo boxes e outros campos
+        atualizaComboBoxItem();
+        atualizaComboBoxCliente();
+        
     }    
     
     public void criaSpinnerValueFactory() {
@@ -339,6 +388,7 @@ public class ControllerCaixa implements Initializable {
         valueFactory.setValue(1);
         spnrQuantidade.setValueFactory(valueFactory);
     }
+    
     private Item_venda criarItemVenda() {
         int quantidade = spnrQuantidade.getValue();
         Double valor_item_venda = Double.valueOf(txtfldPreco.getText());
@@ -363,6 +413,68 @@ public class ControllerCaixa implements Initializable {
         cmbboxItem.getSelectionModel().clearSelection();
         txtfldValorUnitario.setText("");
         txtfldPreco.setText("");
+    }
+    
+    // Método para adicionar a coluna de botões
+    private void adicionarColunaAcoes() {
+        Callback<TableColumn<Item_venda, Void>, TableCell<Item_venda, Void>> cellFactory = new Callback<TableColumn<Item_venda, Void>, TableCell<Item_venda, Void>>() {
+            @Override
+            public TableCell<Item_venda, Void> call(final TableColumn<Item_venda, Void> param) {
+                final TableCell<Item_venda, Void> cell = new TableCell<Item_venda, Void>() {
+
+                    private final Button btnEditar = new Button("Editar");
+                    private final Button btnRemover = new Button("Remover");
+
+                    {
+                        // Configurar o botão "Remover"
+                        btnRemover.setOnAction((ActionEvent event) -> {
+                            Item_venda item = getTableView().getItems().get(getIndex());
+                            removerItem(item);
+                        });
+
+                        // Configurar o botão "Editar"
+                        btnEditar.setOnAction((ActionEvent event) -> {
+                            Item_venda item = getTableView().getItems().get(getIndex());
+                            editarItem(item);
+                        });
+                    }
+
+                    // Criar uma HBox com os botões para exibir na célula
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(new HBox(10, btnEditar, btnRemover));
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        tbclnAcoes.setCellFactory(cellFactory);
+        tbvwItensVenda.getColumns().add(tbclnAcoes);
+    }
+
+    // Método para remover o item da lista local e atualizar a tabela
+    private void removerItem(Item_venda item) {
+        itensDaVenda.remove(item);  // Remove da lista local
+        atualizaTabelaItens();  // Recalcula o valor total e atualiza a tabela
+    }
+
+    // Método para editar o item selecionado
+    private void editarItem(Item_venda item) {
+        // Preencher os campos com os valores do item selecionado
+        cmbboxItem.getSelectionModel().select(item.getItem());
+        spnrQuantidade.getValueFactory().setValue(item.getQuantidade());
+        txtfldValorUnitario.setText(item.getItem().getValor_item().toString());
+        txtfldPreco.setText(String.valueOf(item.getValor_unitario()));
+
+        // Remover o item da lista temporariamente para permitir edição
+        itensDaVenda.remove(item);
+        tbvwItensVenda.setItems(FXCollections.observableArrayList(itensDaVenda)); // Atualiza a tabela
     }
     
 }

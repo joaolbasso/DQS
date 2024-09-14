@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMenuPrincipal">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMenuPrincipal">
     <stylesheets>
         <URL value="@/View/CSS/menuprincipal.css" />
     </stylesheets>
@@ -63,7 +63,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fitHeight="170.0" fitWidth="149.0" layoutX="989.0" layoutY="531.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="170.0" fitWidth="149.0" layoutX="632.0" layoutY="641.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Logo%20Farofoto.png" />
          </image>
@@ -74,9 +74,9 @@
          </font>
       </Label>
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
-      <Button fx:id="btnAbrirCaixa" layoutX="571.0" layoutY="44.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="30.0" prefWidth="126.0" text="Abrir Caixa" />
-      <Button fx:id="btnFecharCaixa" layoutX="833.0" layoutY="43.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
-      <TableView fx:id="tbvwItensCaixa" layoutX="506.0" layoutY="120.0" prefHeight="222.0" prefWidth="539.0">
+      <Button fx:id="btnAbrirCaixa" layoutX="502.0" layoutY="51.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="30.0" prefWidth="126.0" text="Abrir Caixa" />
+      <Button fx:id="btnFecharCaixa" layoutX="764.0" layoutY="50.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
+      <TableView fx:id="tbvwItensCaixa" layoutX="437.0" layoutY="141.0" prefHeight="222.0" prefWidth="539.0">
          <columns>
             <TableColumn fx:id="tbclnDescricao" prefWidth="220.0" text="Item/Itens" />
             <TableColumn fx:id="tbclnValor" prefWidth="106.0" text="Valor do Item" />
@@ -84,39 +84,55 @@
             <TableColumn fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" text="Data do Item" />
          </columns>
       </TableView>
-      <Label fx:id="lblTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="561.0" layoutY="80.0" prefHeight="25.0" prefWidth="408.0" text="Já existe um caixa aberto ou não existe um caixa aberto!">
+      <Label fx:id="lblTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="492.0" layoutY="87.0" prefHeight="25.0" prefWidth="408.0" text="Já existe um caixa aberto ou não existe um caixa aberto!">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="1064.0" layoutY="196.0" prefHeight="25.0" prefWidth="114.0" text="Saldo do caixa:">
+      <Label layoutX="1010.0" layoutY="217.0" prefHeight="25.0" prefWidth="114.0" text="Saldo do caixa:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaldoCaixa" layoutX="1187.0" layoutY="193.0" text="R$00,00">
+      <Label fx:id="lblSaldoCaixa" layoutX="1133.0" layoutY="214.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="1064.0" layoutY="145.0" prefHeight="25.0" prefWidth="54.0" text="Saídas:">
+      <Label layoutX="1010.0" layoutY="166.0" prefHeight="25.0" prefWidth="54.0" text="Saídas:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaidas" contentDisplay="RIGHT" layoutX="1187.0" layoutY="145.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
+      <Label fx:id="lblSaidas" contentDisplay="RIGHT" layoutX="1133.0" layoutY="166.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="1064.0" layoutY="120.0" prefHeight="25.0" prefWidth="69.0" text="Entradas:">
+      <Label layoutX="1010.0" layoutY="141.0" prefHeight="25.0" prefWidth="69.0" text="Entradas:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1187.0" layoutY="120.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
+      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1133.0" layoutY="141.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tbvwDespesas" layoutX="437.0" layoutY="407.0" prefHeight="222.0" prefWidth="539.0">
+         <columns>
+            <TableColumn fx:id="tbclnBeneficiario" minWidth="0.0" prefWidth="163.0" text="Beneficiario" />
+            <TableColumn fx:id="tbclnNome" prefWidth="181.0" text="Nome" />
+            <TableColumn fx:id="tbclnValorDespesa" prefWidth="85.0" text="Valor" />
+            <TableColumn fx:id="tbclnVencimento" minWidth="0.0" prefWidth="140.0" text="Data de Vencimento" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="437.0" layoutY="372.0" prefHeight="35.0" prefWidth="336.0" text="Despesas dos próximos 10 dias:">
+         <font>
+            <Font size="24.0" />
          </font>
       </Label>
    </children>

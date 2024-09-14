@@ -84,11 +84,6 @@ public class ControllerDespesa implements Initializable {
 
         nome_despesa.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
         valor_despesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
-
-        beneficiario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario()));
-
-        nome_despesa.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
-        valor_despesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
         beneficiario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario()));
 
         // Configurar colunas de data
