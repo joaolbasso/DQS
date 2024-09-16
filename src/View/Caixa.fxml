@@ -63,7 +63,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </Spinner>
-      <Button fx:id="btnAdicionar" layoutX="519.0" layoutY="291.0" mnemonicParsing="false" onAction="#adicionarItemAVenda" prefHeight="43.0" prefWidth="226.0" text="Adicionar Item à Venda">
+      <Button fx:id="btnAdicionar" layoutX="223.0" layoutY="346.0" mnemonicParsing="false" onAction="#adicionarItemAVenda" prefHeight="43.0" prefWidth="226.0" text="Adicionar Item à Venda">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -91,7 +91,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldPreco" layoutX="381.0" layoutY="291.0" prefHeight="43.0" prefWidth="127.0">
+      <TextField fx:id="txtfldPreco" layoutX="405.0" layoutY="292.0" prefHeight="43.0" prefWidth="127.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -99,7 +99,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="381.0" layoutY="256.0" prefHeight="35.0" prefWidth="127.0" text="Total do item*">
+      <Label layoutX="405.0" layoutY="257.0" prefHeight="35.0" prefWidth="127.0" text="Total do item*">
          <font>
             <Font size="20.0" />
          </font>
@@ -155,5 +155,18 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <Label layoutX="580.0" layoutY="257.0" prefHeight="35.0" prefWidth="127.0" text="Desconto:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtfldDesconto" layoutX="580.0" layoutY="291.0" prefHeight="43.0" prefWidth="127.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
    </children>
 </AnchorPane>

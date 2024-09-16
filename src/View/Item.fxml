@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerItem">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerItem">
     <stylesheets>
         <URL value="@/View/CSS/item.css" />
     </stylesheets>
@@ -72,5 +72,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label fx:id="lblTitulo11" alignment="CENTER" contentDisplay="CENTER" layoutX="1123.0" layoutY="679.0" prefHeight="27.0" prefWidth="107.0" text="P = Produto">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTitulo111" alignment="CENTER" contentDisplay="CENTER" layoutX="1119.0" layoutY="695.0" prefHeight="27.0" prefWidth="107.0" text="S = Serviço">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
