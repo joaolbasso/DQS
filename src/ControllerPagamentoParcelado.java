@@ -4,6 +4,7 @@ import DAO.Item_caixaDAO;
 import DAO.PagamentoDAO;
 import DAO.ParcelaDAO;
 import DAO.UsuarioDAO;
+import DAO.VendaDAO;
 import Model.Caixa;
 import Model.Cliente;
 import Model.Item_caixa;
@@ -14,6 +15,7 @@ import Model.Venda;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -113,12 +115,39 @@ public class ControllerPagamentoParcelado implements Initializable {
         }
         
         Double valor_parcela = Double.valueOf(txtfldValorPagamento.getText());
+        Pagamento pagamento;
         
-        Pagamento pagamento = new Pagamento('c', metodo_pagamento, LocalDate.now(), valor_parcela, this.parcela);
-        this.parcela.setCondicao("PAGO");
-        parcelaDAO.update(this.parcela);
-        pagamentoDAO.insert(pagamento);
-        
+        if (Objects.equals(valor_parcela, this.parcela.getValor_parcela())) {
+            System.out.println("================================================================================================================================================================IGUAL: " + valor_parcela + " == " + this.parcela.getValor_parcela());
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            
+            pagamento = new Pagamento('c', metodo_pagamento, LocalDate.now(), this.parcela.getValor_parcela(), this.parcela);
+            this.parcela.setCondicao("Pago");
+            parcelaDAO.update(this.parcela);
+            pagamentoDAO.insert(pagamento);
+            
+            JOptionPane.showMessageDialog(null, "Parcela paga com sucesso!");
+            
+        } else {
+            pagamento = new Pagamento('c', metodo_pagamento, LocalDate.now(), valor_parcela, this.parcela);
+            
+            Parcela parcela_nova = new Parcela(this.parcela.getValor_parcela() - valor_parcela, LocalDate.now().plusDays(28), this.parcela.getVenda(), this.parcela.getNumero_parcela(), "Pendente");
+            
+            this.parcela.setCondicao("Pago parcial");
+            parcelaDAO.update(this.parcela);
+            parcelaDAO.insert(parcela_nova);
+            pagamentoDAO.insert(pagamento);
+            
+            JOptionPane.showMessageDialog(null, "Valor pago é menor que o valor da parcela. Parcela atualizada!");
+            
+        }
         //Criar um item_caixa que irá entrar na soma atual do caixa já aberto, vai ter que fazer lógica de abrir um novo caixa por aqui também...
         Caixa caixaAtual = caixaDAO.buscarCaixaAberto();
         
@@ -197,9 +226,11 @@ public class ControllerPagamentoParcelado implements Initializable {
         
         }
         
-        Item_caixa item_caixa = new Item_caixa(valor_parcela, LocalDate.now(), "Parcela " + this.parcela.getNumero_parcela() + " de " + this.parcela.getVenda().getCliente().getNome_cliente(), Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
+        Item_caixa item_caixa = new Item_caixa(pagamento.getValor_pagamento(), LocalDate.now(), "Parcela " + this.parcela.getNumero_parcela() + " de " + this.parcela.getVenda().getCliente().getNome_cliente(), Item_caixa.TipoOperacao.V, metodo_pagamento, caixaAtual, pagamento);
         item_caixaDAO.insert(item_caixa);
         caixaDAO.update(caixaAtual);
+        
+        voltar(event);
     }
     
     @FXML

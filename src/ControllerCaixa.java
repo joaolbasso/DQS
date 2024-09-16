@@ -441,6 +441,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         txtfldValorUnitario.setText("");
         txtfldPreco.setText("");
         txtfldDesconto.setText("");
+        criaSpinnerValueFactory();
     }
     
     // Método para adicionar a coluna de botões

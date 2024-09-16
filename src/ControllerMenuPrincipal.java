@@ -49,6 +49,9 @@ public class ControllerMenuPrincipal implements Initializable {
     @FXML
     private Button btnCaixaAbrir;
     
+    @FXML
+    private Button btnSangria;
+    
     private Caixa caixa;
 
     @FXML
@@ -118,7 +121,7 @@ public class ControllerMenuPrincipal implements Initializable {
         while (!entradaValida) {
             // Solicita a entrada do usuário
             input = (String) JOptionPane.showInputDialog(null,
-                "Deseja fazer um aporte inicial no caixa?",
+                "Deseja fazer um aporte inicial no caixa? Insira o valor: ",
                 "Aporte Inicial",
                 JOptionPane.YES_NO_OPTION,
                 icon,
@@ -258,7 +261,75 @@ public class ControllerMenuPrincipal implements Initializable {
         window.setScene(itemScene);
         window.show();
     }
+    
+    @FXML
+    public void sangriaCaixa(ActionEvent event) throws IOException {
+        //So entra quando caixa aberto
+        String input;
+        double valor = 0;
+        boolean entradaValida = false;
+        ImageIcon icon = new ImageIcon("View/Icons/aporte.png");
+        
+        if (saldoCaixa <= 0.0) {
+            JOptionPane.showMessageDialog(null, "Não há saldo em caixa para sangria", "Não há saldo!", 0);
+            return;
+        }
+        
+        // Loop até obter uma entrada válida
+        while (!entradaValida) {
+            // Solicita a entrada do usuário
+            input = (String) JOptionPane.showInputDialog(null,
+                "Deseja fazer uma sangria no caixa? Insira o valor:",
+                "Sangria",
+                JOptionPane.YES_NO_OPTION,
+                icon,
+                null,
+                null
+            );
 
+            // Verifica se a entrada é nula (usuário clicou em Cancelar)
+            if (input == null) {
+                return;
+            }
+
+            try {
+                // Tenta converter a entrada para um número de ponto flutuante
+                valor = Double.parseDouble(input);
+
+                // Verifica se o valor está dentro dos limites
+                if (valor > 0.0 && valor <= saldoCaixa) {
+                    entradaValida = true; // Entrada válida, saia do loop
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                        "Por favor, digite um número entre R$0.01 e " + "R$ " + saldoCaixa,
+                        "Entrada Inválida",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            } catch (NumberFormatException e) {
+                // Se ocorrer uma exceção, a entrada não é um número válido
+                JOptionPane.showMessageDialog(null,
+                    "Por favor, digite um número ou cancele a operação.",
+                    "Entrada Inválida",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+        
+        
+        Caixa caixa_atual = caixaDAO.buscarCaixaAberto();
+        Item_caixa item_sangria = new Item_caixa(valor, LocalDate.now(), Item_caixa.TipoOperacao.S, caixa_atual, 'S', "Sangria (Retirou dinheiro)");
+        caixa_atual.getItens_caixa().add(item_sangria);
+        
+        caixaDAO.update(caixa_atual);
+        
+        JOptionPane.showMessageDialog(null, "Sangria realizada com sucesso!", "Confirmação de sangria", 1);
+        
+        updateUI();
+    }
+
+    private Double saldoCaixa;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.caixa = caixaDAO.buscarCaixaAberto();
@@ -269,11 +340,13 @@ public class ControllerMenuPrincipal implements Initializable {
         if (this.caixa == null) {
             btnAbrirCaixa.setDisable(false);
             btnFecharCaixa.setDisable(true);
+            btnSangria.setDisable(true);
             lblTitulo.setText("Não há um caixa aberto!");
             lblSaldoCaixa.setText("R$ -");
         } else {
             btnAbrirCaixa.setDisable(true);
             btnFecharCaixa.setDisable(false);
+            btnSangria.setDisable(false);
             lblTitulo.setText("Há um caixa aberto!");
             
             itens_caixa.addAll(item_caixaDAO.todosOsItens_Caixa(this.caixa));
@@ -306,9 +379,8 @@ public class ControllerMenuPrincipal implements Initializable {
                 lblSaidas.setText("R$ 0.00");
             }
             
-            Double saldoCaixa = entradaCaixa - saidasCaixa;
+            saldoCaixa = entradaCaixa - saidasCaixa;
             lblSaldoCaixa.setText("R$ " + String.format("%.2f", saldoCaixa));
-            lblSaldoCaixa.setText("R$ " + saldoCaixa + "0");
         // TODO
         btnCaixa.getStyleClass().add("color-button");
         btnDespesas.getStyleClass().add("color-button");
