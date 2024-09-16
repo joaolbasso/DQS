@@ -89,12 +89,12 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="1010.0" layoutY="217.0" prefHeight="25.0" prefWidth="114.0" text="Saldo do caixa:">
+      <Label layoutX="1010.0" layoutY="194.0" prefHeight="25.0" prefWidth="114.0" text="Saldo do caixa:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaldoCaixa" layoutX="1133.0" layoutY="214.0" text="R$00,00">
+      <Label fx:id="lblSaldoCaixa" layoutX="1133.0" layoutY="191.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -114,7 +114,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1133.0" layoutY="141.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
+      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1133.0" layoutY="141.0" prefHeight="25.0" prefWidth="102.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -133,6 +133,21 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="437.0" layoutY="372.0" prefHeight="35.0" prefWidth="336.0" text="Despesas dos próximos 10 dias:">
          <font>
             <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTitulo1" alignment="CENTER" contentDisplay="CENTER" layoutX="980.0" layoutY="294.0" prefHeight="25.0" prefWidth="84.0" text="A = Aporte">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTitulo11" alignment="CENTER" contentDisplay="CENTER" layoutX="981.0" layoutY="312.0" prefHeight="25.0" prefWidth="94.0" text="D = Despesa">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTitulo111" alignment="CENTER" contentDisplay="CENTER" layoutX="974.0" layoutY="329.0" prefHeight="25.0" prefWidth="94.0" text="V = Venda">
+         <font>
+            <Font size="16.0" />
          </font>
       </Label>
    </children>

@@ -1,7 +1,5 @@
 import DAO.ClienteDAO;
 import DAO.ItemDAO;
-import DAO.VendaDAO;
-import Model.Beneficiario;
 import Model.Cliente;
 import Model.Item;
 import Model.Item_venda;
@@ -13,7 +11,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,11 +23,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableCell;
@@ -76,6 +71,8 @@ public class ControllerCaixa implements Initializable {
     private TextField txtfldValorUnitario;
     @FXML
     private TextField txtfldPreco;
+    @FXML
+    private TextField txtfldDesconto;
     @FXML
     private Button btnFecharCaixa;
     @FXML
@@ -207,36 +204,56 @@ public class ControllerCaixa implements Initializable {
         System.out.println("Fechar Caixa");
     }
     
-    @FXML
-    public void adicionarItemAVenda(ActionEvent event) throws IOException {
-        // Verifica se algum item está selecionado
-        if (cmbboxItem.getValue() != null) {
+@FXML
+public void adicionarItemAVenda(ActionEvent event) throws IOException {
+    // Verifica se algum item está selecionado
+    if (cmbboxItem.getValue() != null) {
 
-            Item_venda novo_item_venda = criarItemVenda();
+        Item_venda novo_item_venda = criarItemVenda();  // Cria uma instância de Item_venda
 
-            // Validação para garantir que o campo de preço tenha um valor válido
-            if (!txtfldPreco.getText().isEmpty()) {
-                try {
-                    Double preco_alterado = Double.valueOf(txtfldPreco.getText());
-                    novo_item_venda.setValor_unitario(preco_alterado);  // Atualiza o valor do item com o valor modificado
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
+        // Validação para garantir que o campo de preço tenha um valor válido
+        if (!txtfldPreco.getText().isEmpty()) {
+            try {
+                Double preco_alterado = Double.valueOf(txtfldPreco.getText());
+
+                // Verificação e aplicação do desconto
+                if (!txtfldDesconto.getText().isEmpty()) {
+                    try {
+                        Double desconto = Double.valueOf(txtfldDesconto.getText());
+                        // Certifique-se de que o desconto não exceda o preço
+                        if (desconto > preco_alterado) {
+                            JOptionPane.showMessageDialog(null, "O desconto não pode ser maior que o preço!", "Erro", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        preco_alterado -= desconto;  // Aplica o desconto ao preço
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Insira um valor de desconto válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
+
+                // Define o valor unitário ajustado com desconto
+                novo_item_venda.setValor_unitario_com_desconto(preco_alterado / novo_item_venda.getQuantidade());
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-
-            // Atualiza o valor total somando os itens já presentes na venda
-            valor_venda += novo_item_venda.getValor_unitario();
-            itensDaVenda.add(novo_item_venda);
-
-            // Atualiza a tabela e o total
-            atualizaTabelaItens();
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um item para adicionar item a venda!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        limparCampos();
+        // Atualiza o valor total somando os itens já presentes na venda
+        valor_venda += novo_item_venda.getValor_unitario();
+        itensDaVenda.add(novo_item_venda);
+
+        // Atualiza a tabela e o total
+        atualizaTabelaItens();
+    } else {
+        JOptionPane.showMessageDialog(null, "Selecione um item para adicionar item a venda!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    limparCampos();
+}
+
     
     // Atualizar a exibição da tabela e recalcular o valor total
     private void atualizaTabelaItens() {
@@ -253,6 +270,15 @@ public class ControllerCaixa implements Initializable {
         txtfldPreco.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {  // Permite números e ponto decimal
                 txtfldPreco.setText(newValue.replaceAll("[^\\d.]", ""));  // Remove caracteres não numéricos
+            }
+        });
+    }
+    
+    // Método para garantir que o campo de preço aceite apenas números
+    private void configurarCampoDesconto() {
+        txtfldDesconto.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {  // Permite números e ponto decimal
+                txtfldDesconto.setText(newValue.replaceAll("[^\\d.]", ""));  // Remove caracteres não numéricos
             }
         });
     }
@@ -358,6 +384,7 @@ public class ControllerCaixa implements Initializable {
         cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
         configurarCampoPreco();
+        configurarCampoDesconto();
         
         tbclnProdutoServico.setCellValueFactory(cellData -> 
         {
@@ -413,6 +440,7 @@ public class ControllerCaixa implements Initializable {
         cmbboxItem.getSelectionModel().clearSelection();
         txtfldValorUnitario.setText("");
         txtfldPreco.setText("");
+        txtfldDesconto.setText("");
     }
     
     // Método para adicionar a coluna de botões
