@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Despesa;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -97,6 +98,34 @@ public class DespesaDAO extends AbstractDAO {
                 em.close();
             }
         }
+    }
+    
+    public List<Despesa> buscarDespesasNaoPagas() {
+        EntityManager em = null;
+        List<Despesa> despesasNaoPagas = new ArrayList<>();
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            LocalDate dataLimite = LocalDate.now().plusDays(10);
+            String jpql = "SELECT d FROM Despesa d WHERE d.data_pagamento_despesa IS NULL AND d.data_vencimento_despesa <= :dataLimite";
+            
+            TypedQuery<Despesa> query = em.createQuery(jpql, Despesa.class);
+            query.setParameter("dataLimite", dataLimite);
+            despesasNaoPagas = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return despesasNaoPagas != null ? despesasNaoPagas : new ArrayList<>();
     }
     
 }

@@ -1,7 +1,9 @@
 import DAO.CaixaDAO;
+import DAO.DespesaDAO;
 import DAO.Item_caixaDAO;
 import DAO.UsuarioDAO;
 import Model.Caixa;
+import Model.Despesa;
 import Model.Item_caixa;
 import Model.Pagamento;
 import Model.Usuario;
@@ -78,8 +80,24 @@ public class ControllerMenuPrincipal implements Initializable {
     @FXML
     private TableColumn<Item_caixa, String> tbclnOperacao = new TableColumn<>("Operação");
     
+    @FXML
+    private TableView<Despesa> tbvwDespesas;
+    @FXML
+    private TableColumn<Despesa, String> tbclnBeneficiario;
+    @FXML
+    private TableColumn<Despesa, LocalDate> tbclnNome;
+    @FXML
+    private TableColumn<Despesa, Double> tbclnValorDespesa;
+    @FXML
+    private TableColumn<Despesa, LocalDate> tbclnVencimento;
+    
     Item_caixaDAO item_caixaDAO = new Item_caixaDAO();
     private ObservableList<Item_caixa> itens_caixa = FXCollections.observableArrayList();
+    private DespesaDAO despesaDAO = new DespesaDAO();
+    private ObservableList<Despesa> despesas = FXCollections.observableArrayList();
+    
+    private CaixaDAO caixaDAO = new CaixaDAO();
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
     
     @FXML
     public void abrirCaixa(ActionEvent event) throws IOException {
@@ -163,11 +181,6 @@ public class ControllerMenuPrincipal implements Initializable {
         
         JOptionPane.showMessageDialog(null, "Caixa aberto com sucesso!", "Caixa aberto com sucesso!", JOptionPane.INFORMATION_MESSAGE);
         updateUI();
-        
-        //
-        
-        //
-        
     }
     
     @FXML
@@ -183,8 +196,6 @@ public class ControllerMenuPrincipal implements Initializable {
         
         
     }
-    private CaixaDAO caixaDAO = new CaixaDAO();
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
     
     @FXML
     public void entrarCaixa(ActionEvent event) throws IOException {
@@ -247,12 +258,7 @@ public class ControllerMenuPrincipal implements Initializable {
         window.setScene(itemScene);
         window.show();
     }
-    
-     /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.caixa = caixaDAO.buscarCaixaAberto();
@@ -273,6 +279,9 @@ public class ControllerMenuPrincipal implements Initializable {
             tbclnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao_item_caixa"));
             tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_item_caixa"));
             tbclnOperacao.setCellValueFactory(new PropertyValueFactory<>("tipo_operacao"));
+            
+            configurarTabela();
+            carregarDespesas();
         
             centralizarTextoNaColuna(tbclnData);
             centralizarTextoNaColuna(tbclnDescricao);
@@ -308,22 +317,39 @@ public class ControllerMenuPrincipal implements Initializable {
         btnItens.getStyleClass().add("color-button");
     }
     }
+    
+    private void configurarTabela() {
+        tbclnBeneficiario.setCellValueFactory(new PropertyValueFactory<>("beneficiario"));
+        tbclnNome.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
+        tbclnValorDespesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
+        tbclnVencimento.setCellValueFactory(new PropertyValueFactory<>("data_vencimento_despesa"));
+
+        centralizarTextoNaColuna(tbclnBeneficiario);
+        centralizarTextoNaColuna(tbclnNome);
+        centralizarTextoNaColuna(tbclnValorDespesa);
+        centralizarTextoNaColuna(tbclnVencimento);
+    }
+
+    private void carregarDespesas() {
+        despesas.setAll(despesaDAO.buscarDespesasNaoPagas());
+        tbvwDespesas.setItems(despesas);
+    }
         
-        private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
-        @Override
-        protected void updateItem(U item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item == null || empty) {
-                setText(null);
-                setStyle("");
-            } else {
-                setText(item.toString());
-                setStyle("-fx-alignment: CENTER;");
+            @Override
+            protected void updateItem(U item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment: CENTER;"); // Centraliza o texto
+                }
             }
-        }
-    });
-}
+        });
+    }
     
     public Caixa getCaixa() {
         return caixa;

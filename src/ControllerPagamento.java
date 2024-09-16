@@ -146,7 +146,6 @@ public class ControllerPagamento implements Initializable {
         this.index_cliente = index_cliente;
     }
 
-
     public Scene getCenaAnterior() {
         return cenaAnterior;
     }
@@ -208,8 +207,6 @@ public class ControllerPagamento implements Initializable {
         window.show();
     }
 
-    
-    
     @FXML
     public void concluirVenda(ActionEvent event) throws IOException, InterruptedException {
         if (cmbboxMetodoPagamento.getValue() == null) {
@@ -308,10 +305,11 @@ public class ControllerPagamento implements Initializable {
             return;
         }
         
-        if (Double.valueOf(txtfldValorRecebido.getText()) > this.venda.getValor_venda()) {
-            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+        if (Double.valueOf(txtfldValorRecebido.getText()) >= this.venda.getValor_venda() && tipo_venda.getSelectedToggle() != rdbtnAVista)  {
+            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior ou igual que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
         
         if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista
             if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
@@ -430,6 +428,8 @@ public class ControllerPagamento implements Initializable {
             }
         });
         
+        configurarValorRecebido();
+        
         cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
         lblValorRecebidoOuEntrada.setText("Valor recebido:");
@@ -496,4 +496,12 @@ public class ControllerPagamento implements Initializable {
                 }
             tbvwParcelas.setItems(lista_parcelas_observable);
     } 
+    
+    private void configurarValorRecebido() {
+        txtfldValorRecebido.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) { 
+                txtfldValorRecebido.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
+        });
+    }
 }
