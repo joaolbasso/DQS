@@ -1,5 +1,5 @@
 package Model;
-
+//Ok DIAGs
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.CascadeType;

@@ -276,7 +276,7 @@ public class ControllerRegistrarDespesa implements Initializable {
 
             caixaAtual.getItens_caixa().add(item_aporte);
             item_caixaDAO.insert(item_aporte);
-            caixaDAO.update(caixaAtual);
+            
         }
 
         String nome_despesa = txtfldNomeDespesa.getText();
@@ -296,11 +296,14 @@ public class ControllerRegistrarDespesa implements Initializable {
             // Se a despesa foi paga, criar um Item_caixa
             Item_caixa item_caixa = new Item_caixa(valor_despesa, LocalDate.now(), Item_caixa.TipoOperacao.D, caixaAtual, '-', nome_despesa);
             item_caixaDAO.insert(item_caixa);
+            caixaDAO.update(caixaAtual);
             return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
         } else {
             // Se a despesa não foi paga, não criar um Item_caixa
             return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
         }
+        
+        
 
     } catch (NumberFormatException e) {
         e.printStackTrace();

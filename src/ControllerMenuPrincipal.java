@@ -263,6 +263,9 @@ public class ControllerMenuPrincipal implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.caixa = caixaDAO.buscarCaixaAberto();
         
+        configurarTabela();
+        carregarDespesas();
+        
         if (this.caixa == null) {
             btnAbrirCaixa.setDisable(false);
             btnFecharCaixa.setDisable(true);
@@ -279,15 +282,11 @@ public class ControllerMenuPrincipal implements Initializable {
             tbclnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao_item_caixa"));
             tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_item_caixa"));
             tbclnOperacao.setCellValueFactory(new PropertyValueFactory<>("tipo_operacao"));
-            
-            configurarTabela();
-            carregarDespesas();
         
             centralizarTextoNaColuna(tbclnData);
             centralizarTextoNaColuna(tbclnDescricao);
             centralizarTextoNaColuna(tbclnValor);
             centralizarTextoNaColuna(tbclnOperacao);
-            
             
             Double entradaCaixa = caixaDAO.entradasCaixa(this.caixa);
             Double saidasCaixa = caixaDAO.saidasCaixa(this.caixa);

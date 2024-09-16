@@ -23,7 +23,6 @@ public class Item_caixa implements Serializable {
     private Double valor_item_caixa;
     
     private LocalDate data_hora;
-    //private String data_hora;
     
     @Column(length = 150)
     private String descricao_item_caixa;

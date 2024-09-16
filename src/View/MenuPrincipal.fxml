@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMenuPrincipal">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMenuPrincipal">
     <stylesheets>
         <URL value="@/View/CSS/menuprincipal.css" />
     </stylesheets>
@@ -119,10 +119,10 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvwDespesas" layoutX="437.0" layoutY="407.0" prefHeight="222.0" prefWidth="539.0">
+      <TableView fx:id="tbvwDespesas" layoutX="437.0" layoutY="417.0" prefHeight="222.0" prefWidth="539.0">
          <columns>
-            <TableColumn fx:id="tbclnBeneficiario" minWidth="0.0" prefWidth="163.0" text="Beneficiario" />
             <TableColumn fx:id="tbclnNome" prefWidth="181.0" text="Nome" />
+            <TableColumn fx:id="tbclnBeneficiario" minWidth="0.0" prefWidth="163.0" text="Beneficiario" />
             <TableColumn fx:id="tbclnValorDespesa" prefWidth="85.0" text="Valor" />
             <TableColumn fx:id="tbclnVencimento" minWidth="0.0" prefWidth="140.0" text="Data de Vencimento" />
          </columns>
