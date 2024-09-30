@@ -2,6 +2,12 @@ import DAO.ItemDAO;
 import Model.Item;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerItem implements Initializable {
 
@@ -38,8 +45,8 @@ public class ControllerItem implements Initializable {
     @FXML
     private TableColumn<Item, Double> valor_item = new TableColumn<>("Valor");
 
-    @FXML
-    private TableColumn<Item, Integer> quantidade = new TableColumn<>("Quantidade");
+    //@FXML
+    //private TableColumn<Item, Integer> quantidade = new TableColumn<>("Quantidade");
 
     @FXML
     private TableColumn<Item, Character> tipo_item = new TableColumn<>("Tipo");
@@ -75,19 +82,21 @@ public class ControllerItem implements Initializable {
 
         nome_item.setCellValueFactory(new PropertyValueFactory<>("nome_item"));
         valor_item.setCellValueFactory(new PropertyValueFactory<>("valor_item"));
-        quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        //quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tipo_item.setCellValueFactory(new PropertyValueFactory<>("tipo_item"));
 
         // Define o tamanho das colunas
         nome_item.setPrefWidth(325);
         valor_item.setPrefWidth(200);
-        quantidade.setPrefWidth(100);
+        //quantidade.setPrefWidth(100);
         tipo_item.setPrefWidth(100);
 
-        centralizarTextoNaColuna(nome_item);
-        centralizarTextoNaColuna(valor_item);
-        centralizarTextoNaColuna(quantidade);
-        centralizarTextoNaColuna(tipo_item);
+        alinharTextoNaColuna(nome_item, "CENTER-LEFT");
+        alinharTextoNaColuna(valor_item, "CENTER-RIGHT");
+        //alinharTextoNaColuna(quantidade);
+        alinharTextoNaColuna(tipo_item, "CENTER-LEFT");
+        
+        formatarMoedaNaColuna(valor_item);
 
         adicionarBotoesTabela();
         ajustarLarguraTabela();
@@ -265,22 +274,67 @@ public class ControllerItem implements Initializable {
         }
     }
 
-    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
-        coluna.setCellFactory(tc -> {
-            TableCell<T, U> cell = new TableCell<T, U>() {
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
+        coluna.setCellFactory(column -> new TableCell<T, U>() {
+            @Override
+            protected void updateItem(U item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
+                }
+            }
+        });
+    }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
                 @Override
-                protected void updateItem(U item, boolean empty) {
+                protected void updateItem(Double item, boolean empty) {
                     super.updateItem(item, empty);
-                    if (empty) {
+                    if (item == null || empty) {
                         setText(null);
+                        setStyle("");
                     } else {
-                        setText(item.toString());
-                        setStyle("-fx-alignment: CENTER;");
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
                     }
                 }
             };
-            return cell;
-        });
+        }
+    });
+}
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
     }
 
     private void atualizarListaItens() {

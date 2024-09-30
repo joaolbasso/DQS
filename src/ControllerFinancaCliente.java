@@ -19,9 +19,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableCell;
 import javafx.util.Callback;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -50,10 +55,7 @@ public class ControllerFinancaCliente implements Initializable {
     private TableView<Parcela> tbvwParcelas;
 
     @FXML
-    private TableColumn<Parcela, Integer> id_venda;
-
-    @FXML
-    private TableColumn<Parcela, Integer> id_parcela;
+    private TableColumn<Parcela, Integer> numero_parcela;
 
     @FXML
     private TableColumn<Parcela, LocalDate> data_vencimento;
@@ -70,26 +72,21 @@ public class ControllerFinancaCliente implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Inicializando as colunas da tabela
-        id_venda.setCellValueFactory(cellData -> {
-            Parcela parcela = cellData.getValue();
-            if (parcela != null && parcela.getVenda() != null) {
-                return new javafx.beans.property.SimpleIntegerProperty(parcela.getVenda().getId_venda()).asObject();
-            } else {
-                return new javafx.beans.property.SimpleIntegerProperty(0).asObject();
-            }
-        });
-
-        id_parcela.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
+        numero_parcela.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
         data_vencimento.setCellValueFactory(new PropertyValueFactory<>("data_vencimento"));
         valor_parcela.setCellValueFactory(new PropertyValueFactory<>("valor_parcela"));
 
         condicao.setCellValueFactory(new PropertyValueFactory<>("condicao"));
         
-        centralizarTextoNaColuna(condicao);
-        centralizarTextoNaColuna(id_parcela);
-        centralizarTextoNaColuna(data_vencimento);
-        centralizarTextoNaColuna(valor_parcela);
-        centralizarTextoNaColuna(id_venda);
+        alinharTextoNaColuna(condicao, "CENTER-LEFT");
+        alinharTextoNaColuna(numero_parcela, "CENTER-LEFT");
+        alinharTextoNaColuna(data_vencimento, "CENTER-RIGHT");
+        alinharTextoNaColuna(valor_parcela, "CENTER-RIGHT");
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        formatarDataNaColuna(data_vencimento, formatter);
+        
+        formatarMoedaNaColuna(valor_parcela);
         
         
         condicao.setCellFactory(column -> new TableCell<Parcela, String>() {
@@ -150,7 +147,7 @@ public class ControllerFinancaCliente implements Initializable {
         });
 }
     
-        private void pagamentoParcela(ActionEvent event, Parcela parcela) throws IOException {
+    private void pagamentoParcela(ActionEvent event, Parcela parcela) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/PagamentoParcelado.fxml"));
             Parent pagamentoParcelaView = loader.load();
 
@@ -169,22 +166,68 @@ public class ControllerFinancaCliente implements Initializable {
             window.show();
         }
     
-        private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
-        @Override
-        protected void updateItem(U item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item == null || empty) {
-                setText(null);
-                setStyle("");
-            } else {
-                setText(item.toString());
-                setStyle("-fx-alignment: CENTER;");
+            @Override
+            protected void updateItem(U item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
+                }
             }
+        });
+    }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
         }
     });
 }
-
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
+    }
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
         preencherDadosCliente();

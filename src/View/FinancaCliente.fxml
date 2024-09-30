@@ -23,15 +23,11 @@
       </Label>
       <TableView fx:id="tbvwParcelas" layoutX="42.0" layoutY="312.0" prefHeight="476.0" prefWidth="1150.0">
          <columns>
-            <TableColumn fx:id="id_venda" prefWidth="300.0" text="ID Venda" />
-            <TableColumn fx:id="id_parcela" prefWidth="100.0" text="ID Parcela" />
-            <TableColumn fx:id="data_vencimento" prefWidth="252.0" text="Data de Vencimento" />
-            <TableColumn fx:id="valor_parcela" minWidth="0.0" prefWidth="218.0" text="Valor Parcela" />
-            <TableColumn fx:id="condicao" minWidth="0.0" prefWidth="218.0" text="Condição" />
+            <TableColumn fx:id="id_parcela" prefWidth="93.0" text="Nº Parcela" />
+            <TableColumn fx:id="data_vencimento" prefWidth="174.0" text="Data de Vencimento" />
+            <TableColumn fx:id="valor_parcela" minWidth="0.0" prefWidth="189.0" text="Valor Parcela" />
+            <TableColumn fx:id="condicao" minWidth="0.0" prefWidth="208.0" text="Condição" />
          </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
       </TableView>
       <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="43.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -45,17 +41,17 @@
       </Button>
       <Label fx:id="nome_cliente" layoutX="134.0" layoutY="113.0" prefHeight="53.0" prefWidth="489.0">
          <font>
-            <Font size="36.0" />
+            <Font size="24.0" />
          </font>
       </Label>
       <Label fx:id="cpf_cliente" layoutX="134.0" layoutY="166.0" prefHeight="53.0" prefWidth="489.0">
          <font>
-            <Font size="36.0" />
+            <Font size="24.0" />
          </font>
       </Label>
       <Label fx:id="telefone_cliente" layoutX="134.0" layoutY="219.0" prefHeight="53.0" prefWidth="489.0">
          <font>
-            <Font size="36.0" />
+            <Font size="24.0" />
          </font>
       </Label>
       <Label fx:id="nome_cliente1" layoutX="42.0" layoutY="113.0" prefHeight="53.0" prefWidth="78.0" text="Cliente:">

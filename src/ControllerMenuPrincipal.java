@@ -9,8 +9,14 @@ import Model.Pagamento;
 import Model.Usuario;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -99,12 +106,13 @@ public class ControllerMenuPrincipal implements Initializable {
     private DespesaDAO despesaDAO = new DespesaDAO();
     private ObservableList<Despesa> despesas = FXCollections.observableArrayList();
     
+    //private Map<String, String> substituicoes = new HashMap<>();
+    
     private CaixaDAO caixaDAO = new CaixaDAO();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     
     @FXML
     public void abrirCaixa(ActionEvent event) throws IOException {
-        
         Usuario usuario = usuarioDAO.selectUnico();
         
         final double LIMITE_MINIMO = 0.0;
@@ -356,10 +364,22 @@ public class ControllerMenuPrincipal implements Initializable {
             tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_item_caixa"));
             tbclnOperacao.setCellValueFactory(new PropertyValueFactory<>("tipo_operacao"));
         
-            centralizarTextoNaColuna(tbclnData);
-            centralizarTextoNaColuna(tbclnDescricao);
-            centralizarTextoNaColuna(tbclnValor);
-            centralizarTextoNaColuna(tbclnOperacao);
+            alinharTextoNaColuna(tbclnData, "CENTER-RIGHT");
+            alinharTextoNaColuna(tbclnDescricao, "CENTER-LEFT");
+            alinharTextoNaColuna(tbclnValor, "CENTER-RIGHT");
+            alinharTextoNaColuna(tbclnOperacao, "CENTER-LEFT");
+            
+            formatarMoedaNaColuna(tbclnValor);
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            formatarDataNaColuna(tbclnData, formatter);
+            
+            //substituicoes.put("A", "Aporte");
+            //substituicoes.put("D", "Despesa");
+            //substituicoes.put("V", "Venda");
+            //substituicoes.put("S", "Sangria");
+            
+            //substituirCaractereNaColuna(tbclnOperacao, substituicoes);
             
             Double entradaCaixa = caixaDAO.entradasCaixa(this.caixa);
             Double saidasCaixa = caixaDAO.saidasCaixa(this.caixa);
@@ -368,7 +388,7 @@ public class ControllerMenuPrincipal implements Initializable {
                 lblEntradas.setText("R$ " + String.format("%.2f", entradaCaixa));
             } else {
                 entradaCaixa = 0.0;
-                lblEntradas.setText("R$ 0.00");
+                lblEntradas.setText("R$ 0,00");
                 
             }
             
@@ -376,7 +396,7 @@ public class ControllerMenuPrincipal implements Initializable {
                 lblSaidas.setText("R$ " + String.format("%.2f", saidasCaixa));
             } else {
                 saidasCaixa = 0.0;
-                lblSaidas.setText("R$ 0.00");
+                lblSaidas.setText("R$ 0,00");
             }
             
             saldoCaixa = entradaCaixa - saidasCaixa;
@@ -395,10 +415,15 @@ public class ControllerMenuPrincipal implements Initializable {
         tbclnValorDespesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
         tbclnVencimento.setCellValueFactory(new PropertyValueFactory<>("data_vencimento_despesa"));
 
-        centralizarTextoNaColuna(tbclnBeneficiario);
-        centralizarTextoNaColuna(tbclnNome);
-        centralizarTextoNaColuna(tbclnValorDespesa);
-        centralizarTextoNaColuna(tbclnVencimento);
+        alinharTextoNaColuna(tbclnBeneficiario, "CENTER-LEFT");
+        alinharTextoNaColuna(tbclnNome, "CENTER-LEFT");
+        alinharTextoNaColuna(tbclnValorDespesa, "CENTER-RIGHT");
+        alinharTextoNaColuna(tbclnVencimento, "CENTER-RIGHT");
+        
+        formatarMoedaNaColuna(tbclnValorDespesa);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formatarDataNaColuna(tbclnVencimento, formatter);
     }
 
     private void carregarDespesas() {
@@ -406,7 +431,7 @@ public class ControllerMenuPrincipal implements Initializable {
         tbvwDespesas.setItems(despesas);
     }
         
-    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
             @Override
             protected void updateItem(U item, boolean empty) {
@@ -416,11 +441,82 @@ public class ControllerMenuPrincipal implements Initializable {
                     setStyle("");
                 } else {
                     setText(item.toString());
-                    setStyle("-fx-alignment: CENTER;"); // Centraliza o texto
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
                 }
             }
         });
     }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
+        }
+    });
+}
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
+}
+    
+    private <T> void substituirCaractereNaColuna(TableColumn<T, String> coluna, Map<String, String> substituicoes) {
+    coluna.setCellFactory(new Callback<TableColumn<T, String>, TableCell<T, String>>() {
+        @Override
+        public TableCell<T, String> call(TableColumn<T, String> param) {
+            return new TableCell<T, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        String textoSubstituido = substituicoes.getOrDefault(item, item);
+                        setText(textoSubstituido);
+                        setStyle("-fx-alignment: CENTER-LEFT;");
+                    }
+                }
+            };
+        }
+    });
+}
+
+    
     
     public Caixa getCaixa() {
         return caixa;

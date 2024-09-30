@@ -2,6 +2,12 @@ import DAO.ClienteDAO;
 import Model.Cliente;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,14 +29,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerCliente implements Initializable {
 
     @FXML
     private TableView<Cliente> tbvwClientes;
-
-    @FXML
-    private TableColumn<Cliente, Integer> id_cliente = new TableColumn<>("Id");
 
     @FXML
     private TableColumn<Cliente, String> nome_cliente = new TableColumn<>("Nome");
@@ -66,15 +70,13 @@ public class ControllerCliente implements Initializable {
         btnLimparFiltro.setOnAction(event -> limparFiltro());
         btnConsultar.setOnAction(event -> aplicarFiltro());
 
-        id_cliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
         nome_cliente.setCellValueFactory(new PropertyValueFactory<>("nome_cliente"));
         cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         telefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 
-        centralizarTextoNaColuna(id_cliente);
-        centralizarTextoNaColuna(nome_cliente);
-        centralizarTextoNaColuna(cpf);
-        centralizarTextoNaColuna(telefone);
+        alinharTextoNaColuna(nome_cliente, "CENTER-LEFT");
+        alinharTextoNaColuna(cpf, "CENTER-RIGHT");
+        alinharTextoNaColuna(telefone, "CENTER-RIGHT");
 
         adicionarBotoesTabela();
         atualizarListaClientes();
@@ -226,7 +228,7 @@ public class ControllerCliente implements Initializable {
         }
     }
 
-    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
             @Override
             protected void updateItem(U item, boolean empty) {
@@ -236,10 +238,57 @@ public class ControllerCliente implements Initializable {
                     setStyle("");
                 } else {
                     setText(item.toString());
-                    setStyle("-fx-alignment: CENTER;");
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
                 }
             }
         });
+    }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
+        }
+    });
+}
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
     }
 
     public void atualizarListaClientes() {

@@ -14,5 +14,13 @@
     
 }
 
+.right-aligned {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.left-aligned {
+    -fx-alignment: CENTER_LEFT;
+}
+
 
 

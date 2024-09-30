@@ -76,13 +76,16 @@
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
       <Button fx:id="btnAbrirCaixa" layoutX="502.0" layoutY="51.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="30.0" prefWidth="126.0" text="Abrir Caixa" />
       <Button fx:id="btnFecharCaixa" layoutX="655.0" layoutY="51.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
-      <TableView fx:id="tbvwItensCaixa" layoutX="437.0" layoutY="141.0" prefHeight="222.0" prefWidth="539.0">
+      <TableView fx:id="tbvwItensCaixa" layoutX="437.0" layoutY="141.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="222.0" prefWidth="539.0">
          <columns>
             <TableColumn fx:id="tbclnDescricao" prefWidth="220.0" text="Item/Itens" />
             <TableColumn fx:id="tbclnValor" prefWidth="106.0" text="Valor do Item" />
             <TableColumn fx:id="tbclnOperacao" minWidth="0.0" prefWidth="99.0" text="Operação" />
             <TableColumn fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" text="Data do Item" />
          </columns>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </TableView>
       <Label fx:id="lblTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="495.0" layoutY="99.0" prefHeight="25.0" prefWidth="408.0" text="Já existe um caixa aberto ou não existe um caixa aberto!">
          <font>
@@ -94,9 +97,9 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaldoCaixa" layoutX="1133.0" layoutY="191.0" text="R$00,00">
+      <Label fx:id="lblSaldoCaixa" alignment="CENTER_RIGHT" layoutX="1120.0" layoutY="191.0" prefHeight="30.0" prefWidth="114.0" text="R$00,00">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="1010.0" layoutY="166.0" prefHeight="25.0" prefWidth="54.0" text="Saídas:">
@@ -104,7 +107,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblSaidas" contentDisplay="RIGHT" layoutX="1133.0" layoutY="166.0" prefHeight="25.0" prefWidth="76.0" text="R$00,00">
+      <Label fx:id="lblSaidas" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1133.0" layoutY="166.0" prefHeight="25.0" prefWidth="101.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -114,7 +117,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblEntradas" contentDisplay="RIGHT" layoutX="1133.0" layoutY="141.0" prefHeight="25.0" prefWidth="102.0" text="R$00,00">
+      <Label fx:id="lblEntradas" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1134.0" layoutY="141.0" prefHeight="25.0" prefWidth="101.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
