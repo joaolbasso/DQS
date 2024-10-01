@@ -5,6 +5,7 @@ import DAO.EstadoDAO;
 import Model.Cidade;
 import Model.Cliente;
 import Model.Estado;
+import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -82,6 +85,8 @@ public class ControllerCadastrarCliente implements Initializable {
     
     @FXML
     private CheckBox ckbxAlterarCidade;
+    
+    private final StringBuilder typedText = new StringBuilder();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -150,6 +155,27 @@ public class ControllerCadastrarCliente implements Initializable {
         cmbboxEstado.setDisable(true);
         txtfldCEP.setDisable(true);
         
+        cmbboxCidade.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().isLetterKey()) {
+                typedText.append(event.getText().toLowerCase());
+                String filter = typedText.toString();
+                for (Cidade cidade : cidades) {
+                    if (cidade.getNome_cidade().toLowerCase().startsWith(filter)) {
+                        cmbboxCidade.getSelectionModel().select(cidade);
+                        break;
+                    }
+                }
+            } else if (event.getCode().isWhitespaceKey() || event.getCode().isDigitKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+
+        cmbboxCidade.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode().isWhitespaceKey() || event.getCode().isDigitKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+        
         ckbxAlterarCidade.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -164,6 +190,10 @@ public class ControllerCadastrarCliente implements Initializable {
                 }
             }
         });
+        
+        
+        
+        
         
         if (clienteEdicao != null) {
             txtTitulo.setText("Editar Cliente");
