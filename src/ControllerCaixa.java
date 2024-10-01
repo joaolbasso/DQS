@@ -6,8 +6,13 @@ import Model.Item_venda;
 import Model.Venda;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -306,18 +311,40 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         window.show();
     }
 
-    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
-        @Override
-        protected void updateItem(U item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item == null || empty) {
-                setText(null);
-                setStyle("");
-            } else {
-                setText(item.toString());
-                setStyle("-fx-alignment: CENTER;");
+            @Override
+            protected void updateItem(U item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
+                }
             }
+        });
+    }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
         }
     });
 }
@@ -336,9 +363,9 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         tbclnValor.setCellValueFactory((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
         
         //Centralizar
-        centralizarTextoNaColuna(tbclnProdutoServico);
-        centralizarTextoNaColuna(tbclnValor);
-        centralizarTextoNaColuna(tbclnQuantidade);
+        alinharTextoNaColuna(tbclnProdutoServico, "CENTER-LEFT");
+        formatarMoedaNaColuna(tbclnValor);
+        alinharTextoNaColuna(tbclnQuantidade, "CENTER-RIGHT");
         
         //Povoando os ComboBox
         atualizaComboBoxItem();
@@ -395,9 +422,9 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
             new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
 
         // Centralizar as colunas
-        centralizarTextoNaColuna(tbclnProdutoServico);
-        centralizarTextoNaColuna(tbclnValor);
-        centralizarTextoNaColuna(tbclnQuantidade);
+        alinharTextoNaColuna(tbclnProdutoServico, "CENTER-LEFT");
+        formatarMoedaNaColuna(tbclnValor);
+        alinharTextoNaColuna(tbclnQuantidade, "CENTER-RIGHT");
 
         // Configurar os botões de editar e remover
         adicionarColunaAcoes();

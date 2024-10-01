@@ -19,10 +19,15 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -43,6 +48,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -52,6 +58,7 @@ import javax.swing.JOptionPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 import javax.swing.ImageIcon;
 
 public class ControllerPagamento implements Initializable {
@@ -399,11 +406,16 @@ public class ControllerPagamento implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        
         criaSpinnerValueFactory();
         tbclnParcelaN.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
         tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_parcela"));
         tbclnVencimento.setCellValueFactory(new PropertyValueFactory<>("data_vencimento"));
+        
+        alinharTextoNaColuna(tbclnParcelaN, "CENTER-RIGHT");
+        formatarMoedaNaColuna(tbclnValor);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formatarDataNaColuna(tbclnVencimento, formatter);
         
         spnrNumeroParcelas.valueProperty().addListener((ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) -> {
                 atualizaParcelas();
@@ -484,7 +496,9 @@ public class ControllerPagamento implements Initializable {
     private void atualizaParcelas() {
         Integer numero_parcelas = spnrNumeroParcelas.getValue();
                 Double valor_restante = this.venda.getValor_venda() - Double.valueOf(txtfldValorRecebido.getText());
-                lblValorRestante.setText(valor_restante.toString());
+                
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                lblValorRestante.setText(currencyFormat.format(valor_restante));
                 Double valor_cada_parcela_todo = valor_restante / numero_parcelas;
                 BigDecimal bd = new BigDecimal(valor_cada_parcela_todo).setScale(2, RoundingMode.HALF_UP);
                 double valor_cada_parcela = bd.doubleValue();
@@ -504,4 +518,68 @@ public class ControllerPagamento implements Initializable {
             }
         });
     }
+    
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
+        coluna.setCellFactory(column -> new TableCell<T, U>() {
+            @Override
+            protected void updateItem(U item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
+                }
+            }
+        });
+    }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
+        }
+    });
+}
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
+    }
+    
 }

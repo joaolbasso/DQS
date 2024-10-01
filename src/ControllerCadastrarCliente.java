@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -67,13 +70,27 @@ public class ControllerCadastrarCliente implements Initializable {
 
     @FXML
     private TextField txtfldBairro;
+    
+    @FXML
+    private TextField txtfldCidade;
+    
+    @FXML
+    private TextField txtfldEstado;
+    
+    @FXML
+    private TextField txtfldCep;    
+    
+    @FXML
+    private CheckBox ckbxAlterarCidade;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //aplicarMascaraCPF(txtfldCPF);
         //aplicarMascaraTelefone(txtfldTelefone);
         //aplicarMascaraCEP(txtfldCEP);
-
+        
+        
+        
         CidadeDAO cidadeDAO = new CidadeDAO();
         ObservableList<Cidade> cidades = FXCollections.observableArrayList(cidadeDAO.todasAsCidades(1));
         cmbboxCidade.setItems(cidades);
@@ -105,13 +122,48 @@ public class ControllerCadastrarCliente implements Initializable {
                 }
             }
         });
-
+        
         cmbboxCidade.setButtonCell(cmbboxCidade.getCellFactory().call(null));
         cmbboxEstado.setButtonCell(cmbboxEstado.getCellFactory().call(null));
         
-        cmbboxCidade.getSelectionModel().select(347);
-        cmbboxEstado.getSelectionModel().select(0);
-        txtfldCEP.setText("84530-000");
+        for (Cidade cidade : cmbboxCidade.getItems()) {
+            if (cidade.getNome_cidade().equals("Teixeira Soares")) {
+                cmbboxCidade.getSelectionModel().select(cidade);
+                break;
+            }
+        }
+        
+        for (Estado estado : cmbboxEstado.getItems()) {
+            if (estado.getSigla_uf().equals("PR")) {
+                cmbboxEstado.getSelectionModel().select(estado);
+                break;
+            }
+        }
+        
+        
+        
+        //cmbboxCidade.getSelectionModel().select(347);
+        //cmbboxEstado.getSelectionModel().select(0);
+        cmbboxCidade.setDisable(true);
+        cmbboxCidade.setVisible(true);
+        txtfldCidade.setVisible(false);
+        cmbboxEstado.setDisable(true);
+        txtfldCEP.setDisable(true);
+        
+        ckbxAlterarCidade.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    cmbboxCidade.setDisable(false);
+                    cmbboxEstado.setDisable(false);
+                    txtfldCEP.setDisable(false);
+                } else {
+                    cmbboxCidade.setDisable(true);
+                    cmbboxEstado.setDisable(true);
+                    txtfldCEP.setDisable(true);
+                }
+            }
+        });
         
         if (clienteEdicao != null) {
             txtTitulo.setText("Editar Cliente");
@@ -227,8 +279,8 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
             txtfldBairro.setText(cliente.getBairro());
             txtfldNumero.setText(cliente.getNumero());
             txtfldComplemento.setText(cliente.getComplemento());
-            cmbboxCidade.getSelectionModel().select(347);
-            cmbboxEstado.getSelectionModel().select(0);
+            //cmbboxCidade.getSelectionModel().select(347);
+            //cmbboxEstado.getSelectionModel().select(0);
             txtfldCEP.setText("84530-000");
         }
     }
@@ -242,8 +294,20 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
         txtfldNumero.setText("");
         txtfldComplemento.setText("");
         txtfldBairro.setText("");
-        cmbboxCidade.getSelectionModel().clearSelection();
-        cmbboxEstado.getSelectionModel().clearSelection();
+        
+        for (Cidade cidade : cmbboxCidade.getItems()) {
+            if (cidade.getNome_cidade().equals("Teixeira Soares")) {
+                cmbboxCidade.getSelectionModel().select(cidade);
+                break;
+            }
+        }
+        
+        for (Estado estado : cmbboxEstado.getItems()) {
+            if (estado.getSigla_uf().equals("PR")) {
+                cmbboxEstado.getSelectionModel().select(estado);
+                break;
+            }
+        }
     }
 
     private Cliente criarCliente() {

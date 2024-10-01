@@ -36,7 +36,7 @@
          </cursor></Button>
       <AnchorPane layoutX="9.0" layoutY="116.0" prefHeight="674.0" prefWidth="584.0">
          <children>
-            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Registrar ">
+            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Concluir">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

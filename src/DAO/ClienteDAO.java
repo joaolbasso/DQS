@@ -58,7 +58,7 @@ public class ClienteDAO extends AbstractDAO {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            String jpql = "SELECT c FROM Cliente c";
+            String jpql = "SELECT c FROM Cliente c ORDER BY c.nome_cliente ASC";
             TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
             todosOsClientes = query.getResultList();
             

@@ -35,7 +35,7 @@ public class ItemDAO extends AbstractDAO {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            String jpql = "SELECT i FROM Item i";
+            String jpql = "SELECT i FROM Item i ORDER BY i.nome_item ASC";
             TypedQuery<Item> query = em.createQuery(jpql, Item.class);
             todosOsItens = query.getResultList();
             

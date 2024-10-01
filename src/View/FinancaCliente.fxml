@@ -23,7 +23,7 @@
       </Label>
       <TableView fx:id="tbvwParcelas" layoutX="42.0" layoutY="312.0" prefHeight="476.0" prefWidth="1150.0">
          <columns>
-            <TableColumn fx:id="id_parcela" prefWidth="93.0" text="Nº Parcela" />
+            <TableColumn fx:id="numero_parcela" prefWidth="93.0" text="Nº Parcela" />
             <TableColumn fx:id="data_vencimento" prefWidth="174.0" text="Data de Vencimento" />
             <TableColumn fx:id="valor_parcela" minWidth="0.0" prefWidth="189.0" text="Valor Parcela" />
             <TableColumn fx:id="condicao" minWidth="0.0" prefWidth="208.0" text="Condição" />

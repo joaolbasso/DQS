@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="307.0" prefWidth="532.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCadastrarBeneficiario">
+<AnchorPane id="AnchorPane" prefHeight="307.0" prefWidth="532.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCadastrarBeneficiario">
     <stylesheets>
         <URL value="@/View/CSS/cadastrarbeneficiario.css" />
     </stylesheets>
    <children>
-      <Label layoutX="48.0" layoutY="103.0" text="Nome Beneficiário*">
+      <Label layoutX="48.0" layoutY="103.0" text="Nome do Beneficiário*">
          <font>
             <Font size="24.0" />
          </font>
@@ -36,7 +36,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Button fx:id="btnCadastrarBeneficiario" layoutX="92.0" layoutY="233.0" mnemonicParsing="false" onAction="#cadastrarBeneficiario" prefHeight="60.0" prefWidth="170.0" text="Registrar Beneficiário">
+      <Button fx:id="btnCadastrarBeneficiario" layoutX="92.0" layoutY="233.0" mnemonicParsing="false" onAction="#cadastrarBeneficiario" prefHeight="60.0" prefWidth="170.0" text="Concluir">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

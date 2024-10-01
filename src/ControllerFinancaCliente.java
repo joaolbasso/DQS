@@ -83,7 +83,7 @@ public class ControllerFinancaCliente implements Initializable {
         alinharTextoNaColuna(data_vencimento, "CENTER-RIGHT");
         alinharTextoNaColuna(valor_parcela, "CENTER-RIGHT");
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formatarDataNaColuna(data_vencimento, formatter);
         
         formatarMoedaNaColuna(valor_parcela);
@@ -228,6 +228,7 @@ public class ControllerFinancaCliente implements Initializable {
         }
     });
     }
+    
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
         preencherDadosCliente();
