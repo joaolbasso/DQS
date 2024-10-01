@@ -35,6 +35,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javax.swing.ImageIcon;
@@ -67,6 +68,8 @@ public class ControllerRegistrarDespesa implements Initializable {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    private final StringBuilder typedText = new StringBuilder();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dtpkrDataPagamento.setValue(LocalDate.now());
@@ -140,6 +143,28 @@ public class ControllerRegistrarDespesa implements Initializable {
                 txtfldValor.setText(newValue.replace(",", "."));
             }
         });
+        
+        cmbboxBeneficiario.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().isLetterKey()) {
+                typedText.append(event.getText().toLowerCase());
+                String filter = typedText.toString();
+                for (Beneficiario beneficiario : beneficiarios) {
+                    if (beneficiario.getNome_beneficiario().toLowerCase().startsWith(filter)) {
+                        cmbboxBeneficiario.getSelectionModel().select(beneficiario);
+                        break;
+                    }
+                }
+            } else if (event.getCode().isWhitespaceKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+
+        cmbboxBeneficiario.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode().isWhitespaceKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+        
     }
 
     @FXML

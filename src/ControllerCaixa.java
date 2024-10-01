@@ -40,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -95,6 +96,7 @@ public class ControllerCaixa implements Initializable {
     @FXML
     private TableColumn<Item_venda, Void> tbclnAcoes = new TableColumn<>("Ações");
     
+    private final StringBuilder typedText = new StringBuilder();
     
     private ArrayList<Item_venda> itensDaVenda = new ArrayList<>();
     private Double valor_venda = 0.0;
@@ -139,7 +141,9 @@ public class ControllerCaixa implements Initializable {
         
         controllerCadastrarItem.setItemCallBack(() -> {
         // Atualizar a ComboBox
-        atualizaComboBoxItem();
+        ItemDAO itemDAO = new ItemDAO();
+        ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
+        cmbboxItem.setItems(itens);
         });
 
         // Definir a cena atual como a anterior no controller da nova tela
@@ -298,7 +302,9 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         
         controllerCadastrarCliente.setItemCallBack(() -> {
         // Atualizar a ComboBox
-        atualizaComboBoxCliente();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
+        cmbboxCliente.setItems(clientes);
         });
 
         // Definir a cena atual como a anterior no controller da nova tela
@@ -368,7 +374,9 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         alinharTextoNaColuna(tbclnQuantidade, "CENTER-RIGHT");
         
         //Povoando os ComboBox
-        atualizaComboBoxItem();
+        ItemDAO itemDAO = new ItemDAO();
+        ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
+        cmbboxItem.setItems(itens);
         cmbboxItem.valueProperty().addListener((ObservableValue<? extends Item> observable, Item oldValue, Item newValue) -> {
             txtfldValorUnitario.setText(newValue.getValor_item().toString());
             Double preco_calculado = spnrQuantidade.getValue() * newValue.getValor_item();
@@ -381,7 +389,9 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
             txtfldPreco.setText(preco_calculado.toString());
         });
         
-        atualizaComboBoxCliente();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
+        cmbboxCliente.setItems(clientes);
         cmbboxItem.setCellFactory(cell -> new ListCell<Item>() {
             @Override
             protected void updateItem(Item item, boolean empty) {
@@ -430,9 +440,51 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         adicionarColunaAcoes();
 
         // Atualiza combo boxes e outros campos
-        atualizaComboBoxItem();
-        atualizaComboBoxCliente();
         
+        
+        cmbboxCliente.setItems(clientes);
+        
+        cmbboxCliente.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().isLetterKey()) {
+                typedText.append(event.getText().toLowerCase());
+                String filter = typedText.toString();
+                for (Cliente cliente : clientes) {
+                    if (cliente.getNome_cliente().toLowerCase().startsWith(filter)) {
+                        cmbboxCliente.getSelectionModel().select(cliente);
+                        break;
+                    }
+                }
+            } else if (event.getCode().isWhitespaceKey() || event.getCode().isDigitKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+
+        cmbboxItem.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode().isWhitespaceKey() || event.getCode().isDigitKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+        
+        cmbboxItem.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().isLetterKey()) {
+                typedText.append(event.getText().toLowerCase());
+                String filter = typedText.toString();
+                for (Item item : itens) {
+                    if (item.getNome_item().toLowerCase().startsWith(filter)) {
+                        cmbboxItem.getSelectionModel().select(item);
+                        break;
+                    }
+                }
+            } else if (event.getCode().isWhitespaceKey() || event.getCode().isDigitKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
+
+        cmbboxItem.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode().isWhitespaceKey() || event.getCode().isDigitKey()) {
+                typedText.setLength(0); // Reset typed text on non-letter keys
+            }
+        });
     }    
     
     public void criaSpinnerValueFactory() {
@@ -449,18 +501,6 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         Item item = cmbboxItem.getSelectionModel().getSelectedItem();
         Item_venda item_venda = new Item_venda(quantidade, valor_item_venda, item);
         return item_venda;
-    }
-
-    public void atualizaComboBoxItem() {
-        ItemDAO itemDAO = new ItemDAO();
-        ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
-        cmbboxItem.setItems(itens);
-    }
-    
-    public void atualizaComboBoxCliente() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
-        cmbboxCliente.setItems(clientes);
     }
 
     private void limparCampos() {
