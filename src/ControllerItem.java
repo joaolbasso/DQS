@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -173,19 +175,10 @@ public class ControllerItem implements Initializable {
 
                     btnEditar.setOnAction(event -> {
                         Item itemSelecionado = getTableView().getItems().get(getIndex());
-
-                        // Confirmação para edição
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmação de Edição");
-                        alert.setHeaderText("Tem certeza que deseja editar este item?");
-                        alert.setContentText(itemSelecionado.getNome_item());
-
-                        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                            try {
-                                editarItem(event, itemSelecionado);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            editarItem(event, itemSelecionado);
+                        } catch (IOException ex) {
+                            Logger.getLogger(ControllerItem.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
                 }

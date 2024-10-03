@@ -107,6 +107,8 @@ public class ControllerCaixa implements Initializable {
     private ArrayList<Item_venda> itensDaVenda = new ArrayList<>();
     private Double valor_venda = 0.0;
 
+    private boolean temDados = false;
+    
     public ArrayList<Item_venda> getItensDaVenda() {
         return itensDaVenda;
     }
@@ -125,15 +127,39 @@ public class ControllerCaixa implements Initializable {
     
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        String nomeDaView = "MenuPrincipal.fxml";
+        if (temDados) {
+           String message = "Tem certeza que deseja voltar? Todos os dados já preenchidos serão perdidos!";
+           String title = "Confirmação";
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
-        Parent view = loader.load();
+        // Opções de botões
+        int optionType = JOptionPane.YES_NO_OPTION;
+        int messageType = JOptionPane.WARNING_MESSAGE;
 
-        Scene cena = new Scene(view);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(cena);
-        window.show();
+        // Exibe o diálogo de confirmação
+        int response = JOptionPane.showConfirmDialog(null, message, title, optionType, messageType);
+        if (response == JOptionPane.YES_OPTION) {
+            String nomeDaView = "MenuPrincipal.fxml";
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+            Parent view = loader.load();
+
+            Scene cena = new Scene(view);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cena);
+            window.show();
+        }  
+        } else {
+            String nomeDaView = "MenuPrincipal.fxml";
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+            Parent view = loader.load();
+
+            Scene cena = new Scene(view);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cena);
+            window.show();
+        }
+        
     }
     
     @FXML
@@ -259,6 +285,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         // Atualiza o valor total somando os itens já presentes na venda
         valor_venda += novo_item_venda.getValor_unitario();
         itensDaVenda.add(novo_item_venda);
+        setTemDados(true);
 
         // Atualiza a tabela e o total
         atualizaTabelaItens();
@@ -594,6 +621,14 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         atualizaTabelaItens();  // Recalcula o valor total e atualiza a tabela
     }
 
+    public boolean TemDados() {
+        return temDados;
+    }
+
+    public void setTemDados(boolean temDados) {
+        this.temDados = temDados;
+    }
+    
     // Método para editar o item selecionado
     private void editarItem(Item_venda item) {
         // Preencher os campos com os valores do item selecionado

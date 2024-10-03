@@ -185,20 +185,11 @@ public class ControllerDespesa implements Initializable {
 
                     btnEditar.setOnAction(event -> {
                         Despesa despesaSelecionada = getTableView().getItems().get(getIndex());
-
-                        // Confirmação para edição
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmação de Edição");
-                        alert.setHeaderText("Tem certeza que deseja editar esta despesa?");
-                        alert.setContentText(despesaSelecionada.getNome_despesa());
-
-                        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
                             try {
                                 editarDespesa(event, despesaSelecionada);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }
                     });
                 }
 
