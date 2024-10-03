@@ -287,17 +287,34 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + getCenaAnterior()));
-        //Parent view = loader.load();
+        if (!txtfldNome.getText().trim().isEmpty() || !txtfldCPF.getText().trim().isEmpty()) {
+           String message = "Tem certeza que deseja voltar? Todos os dados já preenchidos serão perdidos!";
+           String title = "Confirmação";
 
-        //Scene cena = new Scene(view);
-        if (itemCallBack != null) {
+        // Opções de botões
+        int optionType = JOptionPane.YES_NO_OPTION;
+        int messageType = JOptionPane.WARNING_MESSAGE;
+
+        // Exibe o diálogo de confirmação
+        int response = JOptionPane.showConfirmDialog(null, message, title, optionType, messageType);
+        if (response == JOptionPane.YES_OPTION) {
+            if (itemCallBack != null) {
+            itemCallBack.onItemUpdated();
+            }
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(this.cenaAnterior);
+            window.show();
+        }  
+        } else {
+            if (itemCallBack != null) {
             itemCallBack.onItemUpdated();
         }
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(this.cenaAnterior);
+            window.show();
+        }
+
         
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(this.cenaAnterior);
-        window.show();
     }
 
     public void setCliente(Cliente cliente) {

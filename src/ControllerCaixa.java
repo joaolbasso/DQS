@@ -127,7 +127,7 @@ public class ControllerCaixa implements Initializable {
     
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        if (temDados) {
+        if (temDados || !txtfldPreco.getText().trim().isEmpty() || !cmbboxItem.getSelectionModel().isEmpty()) {
            String message = "Tem certeza que deseja voltar? Todos os dados já preenchidos serão perdidos!";
            String title = "Confirmação";
 

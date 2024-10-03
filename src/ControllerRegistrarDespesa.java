@@ -172,15 +172,39 @@ public class ControllerRegistrarDespesa implements Initializable {
 
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        String nomeDaView = "Despesa.fxml";
+        if (!txtfldNomeDespesa.getText().trim().isEmpty() || !txtfldValor.getText().trim().isEmpty() || !cmbboxBeneficiario.getSelectionModel().isEmpty()) {
+           String message = "Tem certeza que deseja voltar? Todos os dados já preenchidos serão perdidos!";
+           String title = "Confirmação";
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
-        Parent view = loader.load();
+        // Opções de botões
+        int optionType = JOptionPane.YES_NO_OPTION;
+        int messageType = JOptionPane.WARNING_MESSAGE;
 
-        Scene cena = new Scene(view);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(cena);
-        window.show();
+        // Exibe o diálogo de confirmação
+        int response = JOptionPane.showConfirmDialog(null, message, title, optionType, messageType);
+        if (response == JOptionPane.YES_OPTION) {
+            String nomeDaView = "Despesa.fxml";
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+            Parent view = loader.load();
+
+            Scene cena = new Scene(view);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cena);
+            window.show();
+        }  
+
+        } else {
+            String nomeDaView = "Despesa.fxml";
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/" + nomeDaView));
+            Parent view = loader.load();
+
+            Scene cena = new Scene(view);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(cena);
+            window.show();
+        }
     }
 
     public void limparCampos(ActionEvent event) {

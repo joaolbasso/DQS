@@ -145,13 +145,13 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ComboBox fx:id="cmbboxCliente" layoutX="375.0" layoutY="135.0" opacity="0.0" prefHeight="43.0" prefWidth="233.0" promptText="Selecione um cliente (opcional)" />
-      <Label layoutX="375.0" layoutY="100.0" opacity="0.0" prefHeight="35.0" prefWidth="164.0" text="Cliente">
+      <ComboBox fx:id="cmbboxCliente" disable="true" layoutX="375.0" layoutY="135.0" opacity="0.0" prefHeight="43.0" prefWidth="233.0" promptText="Selecione um cliente (opcional)" />
+      <Label disable="true" layoutX="375.0" layoutY="100.0" opacity="0.0" prefHeight="35.0" prefWidth="164.0" text="Cliente">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnCadastrarCliente" layoutX="628.0" layoutY="135.0" mnemonicParsing="false" onAction="#cadastrarCliente" opacity="0.0" prefHeight="43.0" prefWidth="117.0" text="Novo Cliente">
+      <Button fx:id="btnCadastrarCliente" disable="true" layoutX="628.0" layoutY="135.0" mnemonicParsing="false" onAction="#cadastrarCliente" opacity="0.0" prefHeight="43.0" prefWidth="117.0" text="Novo Cliente">
          <font>
             <Font size="10.0" />
          </font>

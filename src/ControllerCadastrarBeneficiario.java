@@ -32,12 +32,33 @@ public class ControllerCadastrarBeneficiario implements Initializable {
     
     @FXML
     public void voltar(ActionEvent event) throws IOException {
-        if (itemCallBack != null) {
+        if (!txtfldNomeBeneficiario.getText().trim().isEmpty()) {
+           String message = "Tem certeza que deseja voltar? Todos os dados já preenchidos serão perdidos!";
+           String title = "Confirmação";
+
+        // Opções de botões
+        int optionType = JOptionPane.YES_NO_OPTION;
+        int messageType = JOptionPane.WARNING_MESSAGE;
+
+        // Exibe o diálogo de confirmação
+        int response = JOptionPane.showConfirmDialog(null, message, title, optionType, messageType);
+        if (response == JOptionPane.YES_OPTION) {
+            if (itemCallBack != null) {
             itemCallBack.onItemUpdated();
         }
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(this.cenaAnterior);
-        window.show();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(this.cenaAnterior);
+            window.show();
+        }  
+
+        } else {
+            if (itemCallBack != null) {
+            itemCallBack.onItemUpdated();
+        }
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(this.cenaAnterior);
+            window.show();
+        }
     }
     
     public void limparCampos(ActionEvent event) {
