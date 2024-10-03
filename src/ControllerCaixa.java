@@ -40,6 +40,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -518,17 +520,28 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
             public TableCell<Item_venda, Void> call(final TableColumn<Item_venda, Void> param) {
                 final TableCell<Item_venda, Void> cell = new TableCell<Item_venda, Void>() {
 
-                    private final Button btnEditar = new Button("Editar");
-                    private final Button btnRemover = new Button("Remover");
+                    private final Button btnEditar = new Button();
+                    private final ImageView ivEditar = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/editar.png")));
+                    private final Button btnRemover = new Button();
+                    private final ImageView ivDeletar = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/deletar.png")));
 
                     {
-                        // Configurar o botão "Remover"
+                        // Configurar o botão "Deletar"
+                        ivDeletar.setFitHeight(15);
+                        ivDeletar.setFitWidth(15);
+                        btnRemover.setGraphic(ivDeletar);
+                        btnRemover.setStyle("-fx-background-color: transparent;");
+                        
                         btnRemover.setOnAction((ActionEvent event) -> {
                             Item_venda item = getTableView().getItems().get(getIndex());
                             removerItem(item);
                         });
-
                         // Configurar o botão "Editar"
+                        ivEditar.setFitHeight(15);
+                        ivEditar.setFitWidth(15);
+                        btnEditar.setGraphic(ivEditar);
+                        btnEditar.setStyle("-fx-background-color: transparent;");
+                        
                         btnEditar.setOnAction((ActionEvent event) -> {
                             Item_venda item = getTableView().getItems().get(getIndex());
                             editarItem(item);
