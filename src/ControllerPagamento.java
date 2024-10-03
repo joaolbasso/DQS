@@ -463,7 +463,7 @@ public class ControllerPagamento implements Initializable {
                 spnrNumeroParcelas.setDisable(true);
                 paneAPrazo.setVisible(false);
             } else {
-                cmbboxCliente.getSelectionModel().select(getIndex_cliente());
+                //cmbboxCliente.getSelectionModel().select(getIndex_cliente());
                 spnrNumeroParcelas.setOpacity(1);
                 spnrNumeroParcelas.setDisable(false);
                 lblValorRecebidoOuEntrada.setText("Valor de entrada:");
