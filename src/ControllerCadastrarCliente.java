@@ -5,6 +5,7 @@ import DAO.EstadoDAO;
 import Model.Cidade;
 import Model.Cliente;
 import Model.Estado;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +34,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class ControllerCadastrarCliente implements Initializable {
 
@@ -263,12 +266,12 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (clienteEdicao == null) {
                     // Nova cliente
                     clienteDAO.insert(clienteSalvar);
-                    JOptionPane.showMessageDialog(null, "Cliente registrada com sucesso!");
+                    popupConfirmacao("Cliente registrada com sucesso!");
                 } else {
                     // Editar cliente existente
                     clienteSalvar.setId_cliente(clienteEdicao.getId_cliente());
                     clienteDAO.update(clienteSalvar);
-                    JOptionPane.showMessageDialog(null, "Cliente editada com sucesso!");
+                    popupConfirmacao("Cliente editada com sucesso!");
                     voltar(event);
                 }
                 limparCampos(event);
@@ -397,6 +400,21 @@ txtfldTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
         });
     }
 */
+    private void popupConfirmacao(String mensagem_confirmacao) {
+        final JOptionPane optionPane = new JOptionPane(mensagem_confirmacao, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = optionPane.createDialog("Mensagem");
+        Timer timer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
+    }
+    
     public Scene getCenaAnterior() {
         return cenaAnterior;
     }

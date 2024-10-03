@@ -12,6 +12,7 @@ import Model.Pagamento;
 import Model.Parcela;
 import Model.Usuario;
 import Model.Venda;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -35,7 +36,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  * FXML Controller class
@@ -133,7 +136,7 @@ public class ControllerPagamentoParcelado implements Initializable {
             parcelaDAO.update(this.parcela);
             pagamentoDAO.insert(pagamento);
             
-            JOptionPane.showMessageDialog(null, "Parcela paga com sucesso!");
+            popupConfirmacao("Parcela paga com sucesso!");
             
         } else {
             pagamento = new Pagamento('c', metodo_pagamento, LocalDate.now(), valor_parcela, this.parcela);
@@ -245,6 +248,21 @@ public class ControllerPagamentoParcelado implements Initializable {
 
     public void setItemCallBack(ItemCallback itemCallBack) {
         this.itemCallBack = itemCallBack;
+    }
+    
+        private void popupConfirmacao(String mensagem_confirmacao) {
+        final JOptionPane optionPane = new JOptionPane(mensagem_confirmacao, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = optionPane.createDialog("Mensagem");
+        Timer timer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
     }
     
     

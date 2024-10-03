@@ -15,6 +15,7 @@ import Model.Pagamento;
 import Model.Parcela;
 import Model.Usuario;
 import Model.Venda;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -60,6 +61,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.Timer;
 
 public class ControllerPagamento implements Initializable {
 
@@ -351,7 +354,7 @@ public class ControllerPagamento implements Initializable {
                 item_caixaDAO.insert(item_caixa);
                 caixaDAO.update(caixaAtual);
                 
-                JOptionPane.showMessageDialog(null, "Venda a vista registrada com sucesso!", "Venda a vista com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                popupConfirmacao("Venda a vista registrada com sucesso!");
                 voltarConcluido(event);
             } 
         } else { // A prazo
@@ -396,7 +399,7 @@ public class ControllerPagamento implements Initializable {
                     System.out.println("Insert parcela: " + parcela.getNumero_parcela());
                 }
                 
-                JOptionPane.showMessageDialog(null, "Venda a prazo registrada com sucesso!", "Venda a prazo com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                popupConfirmacao("Venda a prazo registrada com sucesso!");
                 voltarConcluido(event);
         }
     }
@@ -580,6 +583,21 @@ public class ControllerPagamento implements Initializable {
             };
         }
     });
+    }
+    
+     private void popupConfirmacao(String mensagem_confirmacao) {
+        final JOptionPane optionPane = new JOptionPane(mensagem_confirmacao, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = optionPane.createDialog("Mensagem");
+        Timer timer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
     }
     
 }

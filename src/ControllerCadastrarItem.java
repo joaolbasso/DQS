@@ -1,5 +1,6 @@
 import DAO.ItemDAO;
 import Model.Item;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -19,7 +20,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class ControllerCadastrarItem implements Initializable {
 
@@ -170,12 +173,12 @@ public class ControllerCadastrarItem implements Initializable {
                 if (itemEdicao == null) {
                     // Novo item
                     itemDAO.insert(itemSalvar);
-                    JOptionPane.showMessageDialog(null, "Item cadastrado com sucesso!");
+                    popupConfirmacao("Item cadastrado com sucesso!");
                 } else {
                     // Editar item existente
                     itemSalvar.setId_item(itemEdicao.getId_item());
                     itemDAO.update(itemSalvar);
-                    JOptionPane.showMessageDialog(null, "Item editado com sucesso!");
+                    popupConfirmacao("Item editado com sucesso!");
                     voltar(event);
                 }
                 limparCampos(event);
@@ -214,5 +217,20 @@ public class ControllerCadastrarItem implements Initializable {
         e.printStackTrace();
         return null;
         }
+    }
+    
+    private void popupConfirmacao(String mensagem_confirmacao) {
+        final JOptionPane optionPane = new JOptionPane(mensagem_confirmacao, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = optionPane.createDialog("Mensagem");
+        Timer timer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
     }
 }

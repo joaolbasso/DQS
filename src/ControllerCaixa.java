@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -97,6 +99,8 @@ public class ControllerCaixa implements Initializable {
     private TableColumn<Item_venda, Double> tbclnValor = new TableColumn<>("Valor");
     @FXML
     private TableColumn<Item_venda, Void> tbclnAcoes = new TableColumn<>("Ações");
+    @FXML
+    private CheckBox ckBxDesconto;
     
     private final StringBuilder typedText = new StringBuilder();
     
@@ -359,6 +363,23 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
+        
+        txtfldDesconto.setDisable(true);
+        txtfldPreco.setDisable(true);
+        
+        
+        ckBxDesconto.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    txtfldDesconto.setDisable(false);
+                } else {
+                    txtfldDesconto.setText("");
+                    txtfldDesconto.setDisable(true);
+                }
+            }
+        });
+        
         //Data do sistema no DataPicker
         dtpkrDataVenda.setValue(LocalDate.now());
         

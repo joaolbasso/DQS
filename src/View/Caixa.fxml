@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCaixa">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCaixa">
     <stylesheets>
         <URL value="@View/CSS/caixa.css" />
     </stylesheets>
@@ -29,7 +30,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <DatePicker fx:id="dtpkrDataVenda" layoutX="222.0" layoutY="135.0" prefHeight="43.0" prefWidth="164.0">
+      <DatePicker fx:id="dtpkrDataVenda" layoutX="222.0" layoutY="135.0" prefHeight="43.0" prefWidth="136.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -44,8 +45,8 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbboxItem" layoutX="224.0" layoutY="213.0" prefHeight="43.0" prefWidth="280.0" promptText="Selecione um item (obrigatório)" />
-      <Button fx:id="btnCadastrarItem" layoutX="515.0" layoutY="213.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="117.0" text="Cadastrar Item">
+      <ComboBox fx:id="cmbboxItem" layoutX="224.0" layoutY="213.0" prefHeight="43.0" prefWidth="248.0" promptText="Selecione um item (obrigatório)" />
+      <Button fx:id="btnCadastrarItem" layoutX="627.0" layoutY="211.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="117.0" text="Novo Item">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -53,12 +54,12 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Label layoutX="655.0" layoutY="179.0" prefHeight="35.0" prefWidth="90.0" text="Quantidade:" wrapText="true">
+      <Label layoutX="491.0" layoutY="177.0" prefHeight="35.0" prefWidth="90.0" text="Quantidade:" wrapText="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="654.0" layoutY="214.0" prefHeight="43.0" prefWidth="90.0">
+      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="490.0" layoutY="212.0" prefHeight="43.0" prefWidth="90.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
@@ -78,7 +79,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="txtfldValorUnitario" editable="false" layoutX="223.0" layoutY="291.0" opacity="0.5" prefHeight="43.0" prefWidth="136.0">
+      <TextField fx:id="txtfldValorUnitario" editable="false" layoutX="223.0" layoutY="294.0" opacity="0.5" prefHeight="43.0" prefWidth="136.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -86,12 +87,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="223.0" layoutY="256.0" prefHeight="35.0" prefWidth="136.0" text="Valor Unitário*">
+      <Label layoutX="223.0" layoutY="259.0" prefHeight="35.0" prefWidth="136.0" text="Valor Unitário*">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldPreco" layoutX="405.0" layoutY="292.0" prefHeight="43.0" prefWidth="127.0">
+      <TextField fx:id="txtfldPreco" layoutX="375.0" layoutY="295.0" prefHeight="43.0" prefWidth="127.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -99,7 +100,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="405.0" layoutY="257.0" prefHeight="35.0" prefWidth="127.0" text="Total do item*">
+      <Label layoutX="375.0" layoutY="260.0" prefHeight="35.0" prefWidth="127.0" text="Total do item*">
          <font>
             <Font size="20.0" />
          </font>
@@ -144,23 +145,23 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ComboBox fx:id="cmbboxCliente" layoutX="398.0" layoutY="135.0" prefHeight="43.0" prefWidth="233.0" promptText="Selecione um cliente (opcional)" />
-      <Label layoutX="398.0" layoutY="100.0" prefHeight="35.0" prefWidth="164.0" text="Cliente">
+      <ComboBox fx:id="cmbboxCliente" layoutX="375.0" layoutY="135.0" prefHeight="43.0" prefWidth="233.0" promptText="Selecione um cliente (opcional)" />
+      <Label layoutX="375.0" layoutY="100.0" prefHeight="35.0" prefWidth="164.0" text="Cliente">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnCadastrarCliente" layoutX="654.0" layoutY="135.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="43.0" prefWidth="90.0" text="Cadastrar Cliente">
+      <Button fx:id="btnCadastrarCliente" layoutX="628.0" layoutY="135.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="43.0" prefWidth="117.0" text="Novo Cliente">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Label layoutX="580.0" layoutY="257.0" prefHeight="35.0" prefWidth="127.0" text="Desconto:">
+      <Label layoutX="521.0" layoutY="261.0" prefHeight="35.0" prefWidth="127.0" text="Desconto:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldDesconto" layoutX="580.0" layoutY="291.0" prefHeight="43.0" prefWidth="127.0">
+      <TextField fx:id="txtfldDesconto" layoutX="521.0" layoutY="295.0" prefHeight="43.0" prefWidth="127.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -168,5 +169,6 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
+      <CheckBox fx:id="ckBxDesconto" layoutX="660.0" layoutY="308.0" mnemonicParsing="false" text="Aplicar Desconto" />
    </children>
 </AnchorPane>

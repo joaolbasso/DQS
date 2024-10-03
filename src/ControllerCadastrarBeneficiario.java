@@ -5,9 +5,11 @@
 
 import DAO.BeneficiarioDAO;
 import Model.Beneficiario;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javax.swing.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class ControllerCadastrarBeneficiario implements Initializable {
@@ -53,6 +56,21 @@ public class ControllerCadastrarBeneficiario implements Initializable {
     public void setCenaAnterior(Scene cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
     }
+
+    private void popupConfirmacao(String mensagem_confirmacao) {
+        final JOptionPane optionPane = new JOptionPane(mensagem_confirmacao, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = optionPane.createDialog("Mensagem");
+        Timer timer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
+    }
     
     public interface ItemCallback {
         void onItemUpdated();
@@ -66,7 +84,7 @@ public class ControllerCadastrarBeneficiario implements Initializable {
         Beneficiario beneficiario = new Beneficiario(txtfldNomeBeneficiario.getText());
         BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
         beneficiarioDAO.insert(beneficiario);
-        JOptionPane.showMessageDialog(null, "Beneficiario registrado com sucesso!");
+        popupConfirmacao("Beneficiário registrado com sucesso!");
         limparCampos(event);
     }  
 }

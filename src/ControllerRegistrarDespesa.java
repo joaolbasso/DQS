@@ -10,6 +10,7 @@ import Model.Despesa;
 import Model.Item;
 import Model.Item_caixa;
 import Model.Usuario;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -39,7 +40,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class ControllerRegistrarDespesa implements Initializable {
 
@@ -220,12 +223,12 @@ public class ControllerRegistrarDespesa implements Initializable {
                 if (despesaEdicao == null) {
                     // Nova despesa
                     despesaDAO.insert(despesaSalvar);
-                    JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
+                    popupConfirmacao("Despesa registrada com sucesso!");
                 } else {
                     // Editar despesa existente
                     despesaSalvar.setId_despesa(despesaEdicao.getId_despesa());
                     despesaDAO.update(despesaSalvar);
-                    JOptionPane.showMessageDialog(null, "Despesa editada com sucesso!");
+                    popupConfirmacao("Despesa editada com sucesso!");
                     voltar(event);
                 }
                 limparCampos(event);
@@ -361,4 +364,19 @@ public class ControllerRegistrarDespesa implements Initializable {
         ObservableList<Beneficiario> beneficiarios = FXCollections.observableArrayList(beneficiarioDAO.todosOsBeneficiarios());
         cmbboxBeneficiario.setItems(beneficiarios);
     }
+    
+        private void popupConfirmacao(String mensagem_confirmacao) {
+            final JOptionPane optionPane = new JOptionPane(mensagem_confirmacao, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+            final JDialog dialog = optionPane.createDialog("Mensagem");
+            Timer timer = new Timer(1500, new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    dialog.dispose();
+                }
+            });
+        
+            timer.setRepeats(false);
+            timer.start();
+            dialog.setVisible(true);
+        }
 }
