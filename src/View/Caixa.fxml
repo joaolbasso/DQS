@@ -46,7 +46,7 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbboxItem" layoutX="224.0" layoutY="213.0" prefHeight="43.0" prefWidth="248.0" promptText="Selecione um item (obrigatório)" />
-      <Button fx:id="btnCadastrarItem" layoutX="627.0" layoutY="211.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="117.0" text="Novo Item">
+      <Button fx:id="btnCadastrarItem" layoutX="627.0" layoutY="214.0" mnemonicParsing="false" onAction="#cadastrarItem" prefHeight="43.0" prefWidth="117.0" text="Novo Item">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -54,17 +54,17 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Label layoutX="491.0" layoutY="177.0" prefHeight="35.0" prefWidth="90.0" text="Quantidade:" wrapText="true">
+      <Label layoutX="497.0" layoutY="179.0" prefHeight="35.0" prefWidth="90.0" text="Quantidade" wrapText="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="490.0" layoutY="212.0" prefHeight="43.0" prefWidth="90.0">
+      <Spinner fx:id="spnrQuantidade" editable="true" layoutX="507.0" layoutY="214.0" prefHeight="43.0" prefWidth="70.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </Spinner>
-      <Button fx:id="btnAdicionar" layoutX="223.0" layoutY="346.0" mnemonicParsing="false" onAction="#adicionarItemAVenda" prefHeight="43.0" prefWidth="226.0" text="Adicionar Item à Venda">
+      <Button fx:id="btnAdicionar" layoutX="385.0" layoutY="379.0" mnemonicParsing="false" onAction="#adicionarItemAVenda" prefHeight="43.0" prefWidth="359.0" text="Adicionar Item à Venda">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -72,14 +72,14 @@
             <Font size="16.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Imagens/Icons/mais.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="txtfldValorUnitario" editable="false" layoutX="223.0" layoutY="294.0" opacity="0.5" prefHeight="43.0" prefWidth="136.0">
+      <TextField fx:id="txtfldValorUnitario" editable="false" layoutX="223.0" layoutY="299.0" opacity="0.5" prefHeight="43.0" prefWidth="136.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -87,12 +87,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="223.0" layoutY="259.0" prefHeight="35.0" prefWidth="136.0" text="Valor Unitário*">
+      <Label layoutX="223.0" layoutY="264.0" prefHeight="35.0" prefWidth="136.0" text="Valor Unitário*">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldPreco" layoutX="375.0" layoutY="295.0" prefHeight="43.0" prefWidth="127.0">
+      <TextField fx:id="txtfldPreco" editable="false" layoutX="224.0" layoutY="379.0" prefHeight="43.0" prefWidth="136.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -100,7 +100,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label layoutX="375.0" layoutY="260.0" prefHeight="35.0" prefWidth="127.0" text="Total do item*">
+      <Label layoutX="224.0" layoutY="344.0" prefHeight="35.0" prefWidth="127.0" text="Total do item*">
          <font>
             <Font size="20.0" />
          </font>
@@ -135,7 +135,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvwItensVenda" layoutX="223.0" layoutY="405.0" prefHeight="287.0" prefWidth="522.0">
+      <TableView fx:id="tbvwItensVenda" layoutX="223.0" layoutY="435.0" prefHeight="257.0" prefWidth="522.0">
         <columns>
           <TableColumn fx:id="tbclnProdutoServico" prefWidth="316.0" text="Produto/Serviço" />
           <TableColumn fx:id="tbclnQuantidade" minWidth="0.0" prefWidth="79.0" text="Quantidade" />
@@ -145,23 +145,23 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ComboBox fx:id="cmbboxCliente" layoutX="375.0" layoutY="135.0" prefHeight="43.0" prefWidth="233.0" promptText="Selecione um cliente (opcional)" />
-      <Label layoutX="375.0" layoutY="100.0" prefHeight="35.0" prefWidth="164.0" text="Cliente">
+      <ComboBox fx:id="cmbboxCliente" layoutX="375.0" layoutY="135.0" opacity="0.0" prefHeight="43.0" prefWidth="233.0" promptText="Selecione um cliente (opcional)" />
+      <Label layoutX="375.0" layoutY="100.0" opacity="0.0" prefHeight="35.0" prefWidth="164.0" text="Cliente">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnCadastrarCliente" layoutX="628.0" layoutY="135.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="43.0" prefWidth="117.0" text="Novo Cliente">
+      <Button fx:id="btnCadastrarCliente" layoutX="628.0" layoutY="135.0" mnemonicParsing="false" onAction="#cadastrarCliente" opacity="0.0" prefHeight="43.0" prefWidth="117.0" text="Novo Cliente">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Label layoutX="521.0" layoutY="261.0" prefHeight="35.0" prefWidth="127.0" text="Desconto:">
+      <Label layoutX="385.0" layoutY="264.0" prefHeight="35.0" prefWidth="136.0" text="Desconto (em R$)">
          <font>
-            <Font size="20.0" />
+            <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfldDesconto" layoutX="521.0" layoutY="295.0" prefHeight="43.0" prefWidth="127.0">
+      <TextField fx:id="txtfldDesconto" layoutX="385.0" layoutY="298.0" prefHeight="43.0" prefWidth="127.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -169,6 +169,6 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <CheckBox fx:id="ckBxDesconto" layoutX="660.0" layoutY="308.0" mnemonicParsing="false" text="Aplicar Desconto" />
+      <CheckBox fx:id="ckBxDesconto" layoutX="524.0" layoutY="311.0" mnemonicParsing="false" text="Aplicar Desconto" />
    </children>
 </AnchorPane>
