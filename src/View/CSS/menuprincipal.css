@@ -22,5 +22,10 @@
     -fx-alignment: CENTER_LEFT;
 }
 
+.tbclnNome .column-header .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: black;
+}
+
 
 

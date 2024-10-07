@@ -38,11 +38,6 @@ import javafx.util.Callback;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author VIDEO
- */
 public class ControllerMenuPrincipal implements Initializable {
 
     @FXML
@@ -271,6 +266,23 @@ public class ControllerMenuPrincipal implements Initializable {
     }
     
     @FXML
+    public void entrarRelatorio(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Relatorio.fxml"));
+        Parent itemView = loader.load();
+        
+        // Obter o controlador da nova tela
+        ControllerRelatorio controller = loader.getController();
+        
+        // Passar a cena atual (Menu Principal) para o controlador da nova tela
+        //controller.setCenaAnterior(((Node) event.getSource()).getScene());
+
+        Scene itemScene = new Scene(itemView);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(itemScene);
+        window.show();
+    }
+    
+    @FXML
     public void sangriaCaixa(ActionEvent event) throws IOException {
         //So entra quando caixa aberto
         String input;
@@ -340,6 +352,9 @@ public class ControllerMenuPrincipal implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        tbvwItensCaixa.getStylesheets().add(getClass().getResource("View/CSS/menuprincipal.css").toExternalForm());
+        tbvwDespesas.getStylesheets().add(getClass().getResource("View/CSS/menuprincipal.css").toExternalForm());
         this.caixa = caixaDAO.buscarCaixaAberto();
         
         configurarTabela();
