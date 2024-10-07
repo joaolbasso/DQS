@@ -1,5 +1,5 @@
 package Model;
-
+//Ok DIAGs
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.CascadeType;
@@ -24,7 +24,7 @@ public class Despesa implements Serializable {
     private Double valor_despesa;
     
     private String descricao_despesa;
-    private int recorrencia_despesa;
+    private int dia_pagamento_despesa;
     
     private LocalDate data_vencimento_despesa;
     
@@ -41,11 +41,11 @@ public class Despesa implements Serializable {
     public Despesa() {
     }
 
-    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int recorrencia_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa) {
+    public Despesa(String nome_despesa, Double valor_despesa, String descricao_despesa, int dia_pagamento_despesa, LocalDate data_vencimento_despesa, LocalDate data_pagamento_despesa) {
         this.nome_despesa = nome_despesa;
         this.valor_despesa = valor_despesa;
         this.descricao_despesa = descricao_despesa;
-        this.recorrencia_despesa = recorrencia_despesa;
+        this.dia_pagamento_despesa = dia_pagamento_despesa;
         this.data_vencimento_despesa = data_vencimento_despesa;
         this.data_pagamento_despesa = data_pagamento_despesa;
     }
@@ -92,12 +92,12 @@ public class Despesa implements Serializable {
         this.descricao_despesa = descricao_despesa;
     }
 
-    public int getRecorrencia_despesa() {
-        return recorrencia_despesa;
+    public int getDia_pagamento_despesa() {
+        return dia_pagamento_despesa;
     }
 
-    public void setRecorrencia_despesa(int recorrencia_despesa) {
-        this.recorrencia_despesa = recorrencia_despesa;
+    public void setDia_pagamento_despesa(int dia_pagamento_despesa) {
+        this.dia_pagamento_despesa = dia_pagamento_despesa;
     }
 
     public LocalDate getData_vencimento_despesa() {

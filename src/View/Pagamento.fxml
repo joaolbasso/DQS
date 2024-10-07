@@ -38,7 +38,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="303.0" layoutY="96.0" prefHeight="67.0" prefWidth="152.0" text="Valor Venda:">
+      <Label layoutX="126.0" layoutY="92.0" prefHeight="67.0" prefWidth="152.0" text="Valor Venda:">
          <font>
             <Font size="26.0" />
          </font>
@@ -64,7 +64,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Label fx:id="lblValorVenda" layoutX="471.0" layoutY="103.0" text="R$00,00">
+      <Label fx:id="lblValorVenda" layoutX="294.0" layoutY="99.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
@@ -82,11 +82,11 @@
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <VBox layoutX="513.0" layoutY="156.0" prefHeight="369.0" prefWidth="305.0">
+      <VBox layoutX="512.0" layoutY="225.0" prefHeight="288.0" prefWidth="305.0">
          <children>
-            <AnchorPane fx:id="paneAPrazo" prefHeight="372.0" prefWidth="305.0">
+            <AnchorPane fx:id="paneAPrazo" prefHeight="294.0" prefWidth="305.0">
                <children>
-                  <TableView fx:id="tbvwParcelas" layoutX="19.0" layoutY="185.0" prefHeight="181.0" prefWidth="267.0">
+                  <TableView fx:id="tbvwParcelas" layoutX="19.0" layoutY="94.0" prefHeight="181.0" prefWidth="267.0">
                     <columns>
                       <TableColumn fx:id="tbclnParcelaN" prefWidth="77.0" text="Parcela nº" />
                       <TableColumn fx:id="tbclnValor" minWidth="0.0" prefWidth="99.0" text="Valor" />
@@ -96,33 +96,18 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Spinner fx:id="spnrNumeroParcelas" layoutX="224.0" layoutY="141.0" prefHeight="35.0" prefWidth="62.0" />
-                  <Label fx:id="lblNumeroParcelas" layoutX="19.0" layoutY="141.0" prefHeight="35.0" prefWidth="190.0" text="Número de parcelas:">
+                  <Spinner fx:id="spnrNumeroParcelas" layoutX="224.0" layoutY="50.0" prefHeight="35.0" prefWidth="62.0" />
+                  <Label fx:id="lblNumeroParcelas" layoutX="19.0" layoutY="50.0" prefHeight="35.0" prefWidth="190.0" text="Número de parcelas:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblSelecionarCliente" layoutX="19.0" layoutY="14.0" prefHeight="35.0" prefWidth="87.0" text="Cliente *">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="cmbboxCliente" layoutX="19.0" layoutY="57.0" prefHeight="43.0" prefWidth="267.0" promptText="Selecione um cliente...">
-                     <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
-                     </cursor>
-                  </ComboBox>
-                  <Button fx:id="btnCadastrarCliente" layoutX="176.0" layoutY="14.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="35.0" prefWidth="110.0" text="Cadastrar Cliente">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Label fx:id="lblValorRestante" alignment="CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="106.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
+                  <Label fx:id="lblValorRestante" alignment="CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="15.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblValorRestanteTexto" layoutX="21.0" layoutY="103.0" prefHeight="35.0" prefWidth="136.0" text="Valor restante:">
+                  <Label fx:id="lblValorRestanteTexto" layoutX="21.0" layoutY="12.0" prefHeight="35.0" prefWidth="136.0" text="Valor restante:">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -131,6 +116,21 @@
             </AnchorPane>
          </children>
       </VBox>
+      <Label fx:id="lblSelecionarCliente" layoutX="479.0" layoutY="108.0" prefHeight="35.0" prefWidth="87.0" text="Cliente *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbboxCliente" layoutX="566.0" layoutY="104.0" prefHeight="43.0" prefWidth="173.0" promptText="Selecione um cliente...">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </ComboBox>
+      <Button fx:id="btnCadastrarCliente" layoutX="753.0" layoutY="112.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="27.0" prefWidth="87.0" text="Novo Cliente">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

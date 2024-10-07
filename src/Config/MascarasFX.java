@@ -2,6 +2,8 @@ package Config;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
@@ -22,6 +24,22 @@ public class MascarasFX {
 
     }
 
+    public <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+        coluna.setCellFactory(column -> new TableCell<T, U>() {
+        @Override
+        protected void updateItem(U item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+                setText(null);
+                setStyle("");
+            } else {
+                setText(item.toString());
+                setStyle("-fx-alignment: CENTER;");
+            }
+        }
+    });
+}
+    
     public static void mascaraNumero(TextField textField){
 
         textField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {

@@ -35,7 +35,7 @@ public class ItemDAO extends AbstractDAO {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            String jpql = "SELECT i FROM Item i";
+            String jpql = "SELECT i FROM Item i ORDER BY i.nome_item ASC";
             TypedQuery<Item> query = em.createQuery(jpql, Item.class);
             todosOsItens = query.getResultList();
             
@@ -53,14 +53,14 @@ public class ItemDAO extends AbstractDAO {
         return todosOsItens != null ? todosOsItens : new ArrayList<>();
     }
     
-    public void update(Item item) {
-        EntityManager em = null;
+    public Item update(Item item) {
+        Item itemNovo = null;
         try {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
             // Atualizar a item existente
-            em.merge(item);
+            itemNovo = em.merge(item);
             
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -73,6 +73,7 @@ public class ItemDAO extends AbstractDAO {
                 em.close();
             }
         }
+        return itemNovo;
     }
 
     public void delete(Item item) {

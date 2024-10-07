@@ -11,7 +11,7 @@ public class EntityManagerFactorySingleton {
     
     public static synchronized EntityManagerFactory getInstance() {
         if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory("DQSPU");
+           entityManagerFactory = Persistence.createEntityManagerFactory("DQSPU");
         }
         return entityManagerFactory;
     }

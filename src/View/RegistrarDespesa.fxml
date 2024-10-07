@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRegistrarDespesa">
     <stylesheets>
         <URL value="@/View/CSS/registrardespesa.css" />
     </stylesheets>
    <children>
-      <Label layoutX="138.0" layoutY="41.0" prefHeight="53.0" prefWidth="325.0" text="Registro de Despesa">
+      <Label fx:id="txtTitulo" layoutX="138.0" layoutY="41.0" prefHeight="53.0" prefWidth="325.0" text="Registro de Despesa">
          <font>
             <Font size="36.0" />
          </font>
@@ -36,7 +36,7 @@
          </cursor></Button>
       <AnchorPane layoutX="9.0" layoutY="116.0" prefHeight="674.0" prefWidth="584.0">
          <children>
-            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Registrar ">
+            <Button fx:id="btnRegistrarDespesa" layoutX="114.0" layoutY="590.0" mnemonicParsing="false" onAction="#registrarDespesa" prefHeight="54.0" prefWidth="164.0" text="Concluir">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -72,13 +72,13 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="251.0" layoutY="109.0" prefHeight="17.0" prefWidth="116.0" text="Recorrente (em dias)" wrapText="true" />
+            <Label layoutX="257.0" layoutY="109.0" prefHeight="17.0" prefWidth="106.0" text="Em que dia é pago?" wrapText="true" />
             <Spinner fx:id="spnrRecorrente" editable="true" layoutX="269.0" layoutY="130.0" prefHeight="43.0" prefWidth="72.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </Spinner>
-            <RadioButton fx:id="rbtnPago" layoutX="409.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="Pago">
+            <RadioButton fx:id="rbtnPago" layoutX="409.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="Paga">
                <font>
                   <Font size="16.0" />
                </font>
@@ -89,7 +89,7 @@
                   <ToggleGroup fx:id="situacao" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbtnASerPago" layoutX="409.0" layoutY="154.0" mnemonicParsing="false" text="A ser pago" toggleGroup="$situacao">
+            <RadioButton fx:id="rbtnASerPago" layoutX="409.0" layoutY="154.0" mnemonicParsing="false" text="A ser paga" toggleGroup="$situacao">
                <font>
                   <Font size="16.0" />
                </font>

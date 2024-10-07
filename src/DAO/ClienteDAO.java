@@ -8,6 +8,31 @@ import javax.persistence.TypedQuery;
 
 public class ClienteDAO extends AbstractDAO {
 
+    public Cliente getCliente(int id_cliente) {
+        Cliente todosOsClientes = new Cliente();
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            String jpql = "SELECT c FROM Cliente c WHERE c.id_cliente = :id_cliente";
+            TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
+            query.setParameter("id_cliente", id_cliente);
+            todosOsClientes = query.getSingleResult();
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return todosOsClientes;
+    }
+    
     public void insert(Cliente cliente) {
         EntityManager em = null;
         try {
@@ -29,12 +54,11 @@ public class ClienteDAO extends AbstractDAO {
 
     public List<Cliente> todosOsClientes() {
         List<Cliente> todosOsClientes = new ArrayList<>();
-        EntityManager em = null;
         try {
             em = EntityManagerFactorySingleton.getInstance().createEntityManager();
             em.getTransaction().begin();
             
-            String jpql = "SELECT c FROM Cliente c";
+            String jpql = "SELECT c FROM Cliente c ORDER BY c.nome_cliente ASC";
             TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
             todosOsClientes = query.getResultList();
             
@@ -97,6 +121,31 @@ public class ClienteDAO extends AbstractDAO {
                 em.close();
             }
         }
+    }
+    
+    public boolean cpfExiste(String cpf) {
+        List<Cliente> cliente = new ArrayList<>();
+        try {
+            em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+            em.getTransaction().begin();
+            
+            String jpql = "SELECT c FROM Cliente c WHERE c.cpf = :cpf";
+            TypedQuery<Cliente> query = em.createQuery(jpql, Cliente.class);
+            query.setParameter("cpf", cpf);
+            cliente = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return !cliente.isEmpty();
     }
     
 }

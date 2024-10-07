@@ -2,7 +2,15 @@ import DAO.ItemDAO;
 import Model.Item;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,30 +34,31 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerItem implements Initializable {
 
     @FXML
     private TableView<Item> tbvwItens;
-    
+
     @FXML
     private TableColumn<Item, String> nome_item = new TableColumn<>("Nome");
-    
+
     @FXML
     private TableColumn<Item, Double> valor_item = new TableColumn<>("Valor");
-    
-    @FXML
-    private TableColumn<Item, Integer> quantidade = new TableColumn<>("Quantidade");
-    
+
+    //@FXML
+    //private TableColumn<Item, Integer> quantidade = new TableColumn<>("Quantidade");
+
     @FXML
     private TableColumn<Item, Character> tipo_item = new TableColumn<>("Tipo");
-    
+
     @FXML
     private TableColumn<Item, Void> editarColuna = new TableColumn<>("");
 
     @FXML
     private TableColumn<Item, Void> deletarColuna = new TableColumn<>("");
-    
+
     @FXML
     private SplitMenuButton spmbFiltro;
 
@@ -58,10 +67,10 @@ public class ControllerItem implements Initializable {
 
     @FXML
     private Button btnConsultar;
-    
+
     @FXML
     private Button btnLimparFiltro;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Configura as opções do SplitMenuButton
@@ -72,27 +81,30 @@ public class ControllerItem implements Initializable {
 
         // Ação do botão Consultar
         btnConsultar.setOnAction(event -> aplicarFiltro());
-        
+
         nome_item.setCellValueFactory(new PropertyValueFactory<>("nome_item"));
         valor_item.setCellValueFactory(new PropertyValueFactory<>("valor_item"));
-        quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        //quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tipo_item.setCellValueFactory(new PropertyValueFactory<>("tipo_item"));
-        
+
         // Define o tamanho das colunas
         nome_item.setPrefWidth(325);
         valor_item.setPrefWidth(200);
-        quantidade.setPrefWidth(100);
+        //quantidade.setPrefWidth(100);
         tipo_item.setPrefWidth(100);
+
+        alinharTextoNaColuna(nome_item, "CENTER-LEFT");
+        alinharTextoNaColuna(valor_item, "CENTER-RIGHT");
+        //alinharTextoNaColuna(quantidade);
+        alinharTextoNaColuna(tipo_item, "CENTER");
         
-        centralizarTextoNaColuna(nome_item);
-        centralizarTextoNaColuna(valor_item);
-        centralizarTextoNaColuna(quantidade);
-        centralizarTextoNaColuna(tipo_item);
-        
+        formatarMoedaNaColuna(valor_item);
+
         adicionarBotoesTabela();
+        ajustarLarguraTabela();
         atualizarListaItens();
-    }  
-    
+    }
+
     private void configurarOpcoesFiltro() {
         MenuItem filtrarPorNome = new MenuItem("Nome");
         MenuItem filtrarPorTipo = new MenuItem("Tipo");
@@ -100,12 +112,15 @@ public class ControllerItem implements Initializable {
         // Adiciona as opções ao SplitMenuButton
         spmbFiltro.getItems().addAll(filtrarPorNome, filtrarPorTipo);
 
-        // Define a opção selecionada no SplitMenuButton
+        // Define a opção "Nome" como padrão
+        spmbFiltro.setText("Nome");
+
+        // Define a ação para as opções do SplitMenuButton
         for (MenuItem item : spmbFiltro.getItems()) {
             item.setOnAction(event -> spmbFiltro.setText(item.getText()));
         }
     }
-    
+
     private void aplicarFiltro() {
         String filtro = txtFiltro.getText().toUpperCase(); // Converter para maiúsculo para consistência
         String criterio = spmbFiltro.getText();
@@ -138,16 +153,13 @@ public class ControllerItem implements Initializable {
         tbvwItens.setItems(itensFiltrados);
     }
 
-
-    
     @FXML
     private void limparFiltro() {
-        txtFiltro.clear(); 
-        spmbFiltro.setText(""); 
-
+        txtFiltro.clear();
+        spmbFiltro.setText("Nome"); // Retorna para "Nome" como padrão
         atualizarListaItens();
     }
-    
+
     private void adicionarBotoesTabela() {
         // Coluna Editar
         editarColuna.setCellFactory(coluna -> {
@@ -163,19 +175,10 @@ public class ControllerItem implements Initializable {
 
                     btnEditar.setOnAction(event -> {
                         Item itemSelecionado = getTableView().getItems().get(getIndex());
-
-                        // Confirmação para edição
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmação de Edição");
-                        alert.setHeaderText("Tem certeza que deseja editar este item?");
-                        alert.setContentText(itemSelecionado.getNome_item());
-
-                        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                            try {
-                                editarItem(event, itemSelecionado);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            editarItem(event, itemSelecionado);
+                        } catch (IOException ex) {
+                            Logger.getLogger(ControllerItem.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
                 }
@@ -243,6 +246,11 @@ public class ControllerItem implements Initializable {
 
             ControllerCadastrarItem controllerCadastrarItem = loader.getController();
             controllerCadastrarItem.setItem(itemSelecionado);
+            controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+            
+            controllerCadastrarItem.setItemCallBack(() -> {
+                atualizarListaItens();
+            });
 
             Scene cadastrarItemScene = new Scene(cadastrarItemView);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -258,8 +266,8 @@ public class ControllerItem implements Initializable {
             atualizarListaItens();  // Atualiza a lista de items após a exclusão
         }
     }
-    
-    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
             @Override
             protected void updateItem(U item, boolean empty) {
@@ -269,16 +277,67 @@ public class ControllerItem implements Initializable {
                     setStyle("");
                 } else {
                     setText(item.toString());
-                    setStyle("-fx-alignment: CENTER;");
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
                 }
             }
         });
     }
     
-    public void atualizarListaItens() {
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
+        }
+    });
+}
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
+    }
+
+    private void atualizarListaItens() {
         ItemDAO itemDAO = new ItemDAO();
         ObservableList<Item> itens = FXCollections.observableArrayList(itemDAO.todosOsItens());
         tbvwItens.setItems(itens);
+    }
+
+    private void ajustarLarguraTabela() {
+        tbvwItens.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
     @FXML
@@ -299,9 +358,18 @@ public class ControllerItem implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarItem.fxml"));
         Parent cadastrarItemView = loader.load();      
 
+        ControllerCadastrarItem controllerCadastrarItem = loader.getController();
+        controllerCadastrarItem.setCenaAnterior(((Node) event.getSource()).getScene());
+        
+        controllerCadastrarItem.setItemCallBack(() -> {
+        // Atualizar a ComboBox
+        atualizarListaItens();
+        });
+        
         Scene cadastrarItemScene = new Scene(cadastrarItemView);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(cadastrarItemScene);
         window.show();
     }
+
 }

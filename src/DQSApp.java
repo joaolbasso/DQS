@@ -1,5 +1,3 @@
-
-
 import DAO.EntityManagerFactorySingleton;
 import javafx.scene.image.Image;
 import javafx.application.Application;
@@ -8,10 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- * @author VIDEO
- */
 public class DQSApp extends Application {
     
     public static void main(String[] args) {
@@ -27,8 +21,9 @@ public class DQSApp extends Application {
         stage.getIcons().add(icon);
         stage.setScene(scene);
         
+        
+        stage.setResizable(false);
         /*
-        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Aperte q");
         stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
         */

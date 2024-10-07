@@ -25,6 +25,8 @@ public class Item_venda implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_item")
     private Item item; //Serviço ou Produto
+    
+    private Double valor_unitario_com_desconto;
 
     public Item_venda() {
     }
@@ -59,12 +61,24 @@ public class Item_venda implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public Double getValor_unitario() {
-        return this.getQuantidade() * this.item.getValor_item();
-    }
+//    public Double getValor_unitario() {
+//        return this.getQuantidade() * this.item.getValor_item();
+//    }
 
     public void setValor_unitario(Double valor_unitario) {
         this.valor_unitario = valor_unitario;
+    }
+    
+    public void setValor_unitario_com_desconto(Double valor_unitario_com_desconto) {
+    this.valor_unitario_com_desconto = valor_unitario_com_desconto;
+    }
+    
+
+    public Double getValor_unitario() {
+        if (valor_unitario_com_desconto != null) {
+            return valor_unitario_com_desconto * this.getQuantidade();
+        }
+        return this.getQuantidade() * this.item.getValor_item();
     }
     
 }

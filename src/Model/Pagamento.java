@@ -40,6 +40,8 @@ public class Pagamento implements Serializable {
         this.valor_pagamento = valor_pagamento;
         this.parcela = parcela;
     }
+    
+    
 
     public Parcela getParcela() {
         return parcela;

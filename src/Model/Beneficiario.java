@@ -22,6 +22,11 @@ public class Beneficiario implements Serializable {
     public Beneficiario(String nome_beneficiario) {
         this.nome_beneficiario = nome_beneficiario;
     }
+    
+    @Override
+    public String toString() {
+        return this.nome_beneficiario; // Retorna o nome do beneficiário
+    }
 
     public int getId_beneficiario() {
         return id_beneficiario;

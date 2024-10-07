@@ -35,7 +35,7 @@ public class CidadeDAO extends AbstractDAO {
             
             Estado estado = em.find(Estado.class, estadoId);
             if (estado != null) {
-                String jpql = "SELECT c FROM Cidade c WHERE c.estado = :estado";
+                String jpql = "SELECT c FROM Cidade c WHERE c.estado = :estado ORDER BY c.nome_cidade ASC";
                 TypedQuery<Cidade> query = em.createQuery(jpql, Cidade.class);
                 query.setParameter("estado", estado);
                 cidades = query.getResultList();

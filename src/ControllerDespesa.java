@@ -2,8 +2,12 @@ import DAO.DespesaDAO;
 import Model.Despesa;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -29,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerDespesa implements Initializable {
 
@@ -73,6 +78,9 @@ public class ControllerDespesa implements Initializable {
         // Configura as opções do SplitMenuButton
         configurarOpcoesFiltro();
 
+        // Define "Nome" como filtro padrão
+        spmbFiltro.setText("Nome");
+
         // Configura a ação do botão Limpar Filtro
         btnLimparFiltro.setOnAction(event -> limparFiltro());
 
@@ -81,14 +89,23 @@ public class ControllerDespesa implements Initializable {
 
         nome_despesa.setCellValueFactory(new PropertyValueFactory<>("nome_despesa"));
         valor_despesa.setCellValueFactory(new PropertyValueFactory<>("valor_despesa"));
-        
         beneficiario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBeneficiario().getNome_beneficiario()));
 
-        centralizarTextoNaColuna(nome_despesa);
-        centralizarTextoNaColuna(valor_despesa);
-        centralizarTextoNaColuna(data_pagamento_despesa);
-        centralizarTextoNaColuna(data_vencimento_despesa);
-        centralizarTextoNaColuna(beneficiario);
+        // Configurar colunas de data
+        data_pagamento_despesa.setCellValueFactory(new PropertyValueFactory<>("data_pagamento_despesa"));
+        data_vencimento_despesa.setCellValueFactory(new PropertyValueFactory<>("data_vencimento_despesa"));
+
+        alinharTextoNaColuna(nome_despesa, "CENTER-LEFT");
+        alinharTextoNaColuna(valor_despesa, "CENTER-RIGHT");
+        alinharTextoNaColuna(data_pagamento_despesa, "CENTER-RIGHT");
+        alinharTextoNaColuna(data_vencimento_despesa, "CENTER-RIGHT");
+        alinharTextoNaColuna(beneficiario, "CENTER-LEFT");
+        
+        formatarMoedaNaColuna(valor_despesa);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formatarDataNaColuna(data_pagamento_despesa, formatter);
+        formatarDataNaColuna(data_vencimento_despesa, formatter);
 
         adicionarBotoesTabela();
         atualizarListaDespesas();
@@ -147,7 +164,7 @@ public class ControllerDespesa implements Initializable {
     @FXML
     private void limparFiltro() {
         txtFiltro.clear(); 
-        spmbFiltro.setText(""); 
+        spmbFiltro.setText("Nome"); 
 
         atualizarListaDespesas();
     }
@@ -168,20 +185,11 @@ public class ControllerDespesa implements Initializable {
 
                     btnEditar.setOnAction(event -> {
                         Despesa despesaSelecionada = getTableView().getItems().get(getIndex());
-
-                        // Confirmação para edição
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmação de Edição");
-                        alert.setHeaderText("Tem certeza que deseja editar esta despesa?");
-                        alert.setContentText(despesaSelecionada.getNome_despesa());
-
-                        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
                             try {
                                 editarDespesa(event, despesaSelecionada);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }
                     });
                 }
 
@@ -254,6 +262,9 @@ public class ControllerDespesa implements Initializable {
             window.setScene(registrarDespesaScene);
             window.show();
         }
+        else{
+            System.out.println("Passou");
+        }
     }
 
     public void deletarDespesa(Despesa despesaSelecionada) {
@@ -264,7 +275,7 @@ public class ControllerDespesa implements Initializable {
         }
     }
 
-    private <T, U> void centralizarTextoNaColuna(TableColumn<T, U> coluna) {
+    private <T, U> void alinharTextoNaColuna(TableColumn<T, U> coluna, String posicao) {
         coluna.setCellFactory(column -> new TableCell<T, U>() {
             @Override
             protected void updateItem(U item, boolean empty) {
@@ -274,11 +285,58 @@ public class ControllerDespesa implements Initializable {
                     setStyle("");
                 } else {
                     setText(item.toString());
-                    setStyle("-fx-alignment: CENTER;");
+                    setStyle("-fx-alignment:" +  posicao + ";"); // Centraliza o texto
                 }
             }
         });
     }
+    
+    private <T> void formatarMoedaNaColuna(TableColumn<T, Double> coluna) {
+    coluna.setCellFactory(new Callback<TableColumn<T, Double>, TableCell<T, Double>>() {
+        @Override
+        public TableCell<T, Double> call(TableColumn<T, Double> param) {
+            return new TableCell<T, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                        setText(currencyFormat.format(item));
+                        setStyle("-fx-alignment: CENTER-RIGHT;");
+                    }
+                }
+            };
+        }
+    });
+}
+    
+    private <T, U> void formatarDataNaColuna(TableColumn<T, U> coluna, DateTimeFormatter formatter) {
+    coluna.setCellFactory(new Callback<TableColumn<T, U>, TableCell<T, U>>() {
+        @Override
+        public TableCell<T, U> call(TableColumn<T, U> param) {
+            return new TableCell<T, U>() {
+                @Override
+                protected void updateItem(U item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        if (item instanceof LocalDateTime || item instanceof LocalDate) {
+                            setText(formatter.format((TemporalAccessor) item));
+                        } else {
+                            setText(item.toString());
+                        }
+                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                    }
+                }
+            };
+        }
+    });
+}
 
     public void atualizarListaDespesas() {
         DespesaDAO despesaDAO = new DespesaDAO();
