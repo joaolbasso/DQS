@@ -96,7 +96,7 @@ public class ControllerItem implements Initializable {
         alinharTextoNaColuna(nome_item, "CENTER-LEFT");
         alinharTextoNaColuna(valor_item, "CENTER-RIGHT");
         //alinharTextoNaColuna(quantidade);
-        alinharTextoNaColuna(tipo_item, "CENTER-LEFT");
+        alinharTextoNaColuna(tipo_item, "CENTER");
         
         formatarMoedaNaColuna(valor_item);
 

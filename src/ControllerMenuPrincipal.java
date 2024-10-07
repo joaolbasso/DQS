@@ -382,7 +382,7 @@ public class ControllerMenuPrincipal implements Initializable {
             alinharTextoNaColuna(tbclnData, "CENTER-RIGHT");
             alinharTextoNaColuna(tbclnDescricao, "CENTER-LEFT");
             alinharTextoNaColuna(tbclnValor, "CENTER-RIGHT");
-            alinharTextoNaColuna(tbclnOperacao, "CENTER-LEFT");
+            alinharTextoNaColuna(tbclnOperacao, "CENTER");
             
             formatarMoedaNaColuna(tbclnValor);
             
