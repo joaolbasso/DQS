@@ -304,7 +304,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
 
         // Recalcula o valor total
         valor_venda = itensDaVenda.stream().mapToDouble(Item_venda::getValor_unitario).sum();
-        lblValorTotal.setText("R$ " + String.valueOf(valor_venda) + "0");
+        lblValorTotal.setText(String.format("R$ %.2f", getValor_venda()));
     }
 
     // Método para garantir que o campo de preço aceite apenas números
