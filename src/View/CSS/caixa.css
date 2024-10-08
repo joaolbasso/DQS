@@ -5,3 +5,10 @@
 .mainFxmlClass {
 
 }
+
+.pane-custom {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-background-color: lightgray;
+    -fx-padding: 10px;
+}

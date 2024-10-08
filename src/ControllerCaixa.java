@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -41,11 +42,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
@@ -81,26 +84,36 @@ public class ControllerCaixa implements Initializable {
     private TextField txtfldValorUnitario;
     @FXML
     private TextField txtfldPreco;
+   
+    //@FXML
+    //private TextField txtfldDesconto;
+
     @FXML
-    private TextField txtfldDesconto;
+    private Button btnCadastrarCliente;
+    
     @FXML
-    private Button btnFecharCaixa;
-    @FXML
-    private Button btnAbrirCaixa;
+    private Button btnCadastrarItem;
     @FXML
     private Label lblValorTotal;
     @FXML
     private TableView<Item_venda> tbvwItensVenda;
+    //@FXML
+    //private final TableColumn<Integer, Integer> tbclnNItem = new TableColumn<>("Item");
+    
+    //private int nItem = 1;
+    
     @FXML
     private TableColumn<Item_venda, String> tbclnProdutoServico = new TableColumn<>("Produto/Serviço");
     @FXML
     private TableColumn<Item_venda, Integer> tbclnQuantidade = new TableColumn<>("Quantidade");
     @FXML
-    private TableColumn<Item_venda, Double> tbclnValor = new TableColumn<>("Valor");
+    private TableColumn<Item_venda, Double> tbclnValor = new TableColumn<>("Total do Item");
+    @FXML
+    private TableColumn<Item_venda, Double> tbclnValorUnitario = new TableColumn<>("Valor Unitário");
+    
+    
     @FXML
     private TableColumn<Item_venda, Void> tbclnAcoes = new TableColumn<>("Ações");
-    @FXML
-    private CheckBox ckBxDesconto;
     
     private final StringBuilder typedText = new StringBuilder();
     
@@ -251,37 +264,6 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
     if (cmbboxItem.getValue() != null) {
 
         Item_venda novo_item_venda = criarItemVenda();  // Cria uma instância de Item_venda
-
-        // Validação para garantir que o campo de preço tenha um valor válido
-        if (!txtfldPreco.getText().isEmpty()) {
-            try {
-                Double preco_alterado = Double.valueOf(txtfldPreco.getText());
-
-                // Verificação e aplicação do desconto
-                if (!txtfldDesconto.getText().isEmpty()) {
-                    try {
-                        Double desconto = Double.valueOf(txtfldDesconto.getText());
-                        // Certifique-se de que o desconto não exceda o preço
-                        if (desconto > preco_alterado) {
-                            JOptionPane.showMessageDialog(null, "O desconto não pode ser maior que o preço!", "Erro", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        preco_alterado -= desconto;  // Aplica o desconto ao preço
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Insira um valor de desconto válido!", "Erro", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }
-
-                // Define o valor unitário ajustado com desconto
-                novo_item_venda.setValor_unitario_com_desconto(preco_alterado / novo_item_venda.getQuantidade());
-
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
         // Atualiza o valor total somando os itens já presentes na venda
         valor_venda += novo_item_venda.getValor_unitario();
         itensDaVenda.add(novo_item_venda);
@@ -317,6 +299,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
     }
     
     // Método para garantir que o campo de preço aceite apenas números
+    /*
     private void configurarCampoDesconto() {
         txtfldDesconto.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {  // Permite números e ponto decimal
@@ -324,7 +307,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
             }
         });
     }
-    
+    */
     @FXML
     public void cadastrarCliente(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CadastrarCliente.fxml"));
@@ -390,37 +373,30 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
+        Tooltip hintCadastrarCliente = new Tooltip("Cadastrar Novo Cliente");
+        btnCadastrarCliente.setTooltip(hintCadastrarCliente);
         
-        txtfldDesconto.setDisable(true);
+        Tooltip hintCadastrarItem = new Tooltip("Cadastrar Novo Item");
+        btnCadastrarItem.setTooltip(hintCadastrarItem);
+        
+        //txtfldDesconto.setDisable(true);
         txtfldPreco.setDisable(true);
-        
-        
-        ckBxDesconto.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    txtfldDesconto.setDisable(false);
-                } else {
-                    txtfldDesconto.setText("");
-                    txtfldDesconto.setDisable(true);
-                }
-            }
-        });
-        
         //Data do sistema no DataPicker
         dtpkrDataVenda.setValue(LocalDate.now());
         
         //Inicialização das TableColumn
+        //tbclnNItem.setCellValueFactory(new PropertyValueFactory<>("nItem"));
         tbclnProdutoServico.setCellValueFactory(cellData -> 
         {
             return new SimpleStringProperty(cellData.getValue().getItem().getNome_item());
         });
         tbclnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tbclnValor.setCellValueFactory((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
-        
+        tbclnValorUnitario.setCellValueFactory(((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> new SimpleDoubleProperty(cellData.getValue().getItem().getValor_item()).asObject())); 
         //Centralizar
         alinharTextoNaColuna(tbclnProdutoServico, "CENTER-LEFT");
         formatarMoedaNaColuna(tbclnValor);
+        formatarMoedaNaColuna(tbclnValorUnitario);
         alinharTextoNaColuna(tbclnQuantidade, "CENTER-RIGHT");
         
         //Povoando os ComboBox
@@ -471,20 +447,6 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
         configurarCampoPreco();
-        configurarCampoDesconto();
-        
-        tbclnProdutoServico.setCellValueFactory(cellData -> 
-        {
-            return new SimpleStringProperty(cellData.getValue().getItem().getNome_item());
-        });
-        tbclnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        tbclnValor.setCellValueFactory((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> 
-            new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
-
-        // Centralizar as colunas
-        alinharTextoNaColuna(tbclnProdutoServico, "CENTER-LEFT");
-        formatarMoedaNaColuna(tbclnValor);
-        alinharTextoNaColuna(tbclnQuantidade, "CENTER-RIGHT");
 
         // Configurar os botões de editar e remover
         adicionarColunaAcoes();
@@ -535,6 +497,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
                 typedText.setLength(0); // Reset typed text on non-letter keys
             }
         });
+        
     }    
     
     public void criaSpinnerValueFactory() {
@@ -557,7 +520,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
         cmbboxItem.getSelectionModel().clearSelection();
         txtfldValorUnitario.setText("");
         txtfldPreco.setText("");
-        txtfldDesconto.setText("");
+        //txtfldDesconto.setText("");
         criaSpinnerValueFactory();
     }
     
