@@ -59,6 +59,7 @@ import javax.swing.JOptionPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -70,10 +71,6 @@ public class ControllerPagamento implements Initializable {
     private Venda venda;
     private int index_cliente;
     
-    
-    @FXML
-    private Label lblValorVenda;
-    
     @FXML
     private RadioButton rdbtnAVista;
     
@@ -84,25 +81,16 @@ public class ControllerPagamento implements Initializable {
     private ToggleGroup tipo_venda;
     
     @FXML
-    private Label lblValorRecebidoOuEntrada;
+    private TextField txtfldValorRecebido;
     
     @FXML
-    private TextField txtfldValorRecebido;
+    private TextField txtfldValorEntrada;
     
     @FXML
     private ComboBox<String> cmbboxMetodoPagamento;
 
     @FXML
-    private Label lblSelecionarCliente;
-    
-    @FXML
     private ComboBox<Cliente> cmbboxCliente;
-    
-    @FXML
-    private Button btnCadastrarCliente;
-    
-    @FXML
-    private Label lblNumeroParcelas;
     
     @FXML
     private Spinner<Integer> spnrNumeroParcelas;
@@ -118,18 +106,33 @@ public class ControllerPagamento implements Initializable {
     
     @FXML
     private TableColumn<Parcela, LocalDate> tbclnVencimento = new TableColumn<>("Vencimento");
+    
+    @FXML
+    private TableColumn<Parcela, LocalDate> tbclnProdutoServico = new TableColumn<>("Produto/Serviço");
+    
+    @FXML
+    private TableColumn<Parcela, LocalDate> tbclnTotalDoItem = new TableColumn<>("Total do Item");
 
     @FXML
-    private Button btnConcluir;
+    private Pane paneAPrazo;
     
     @FXML
-    private AnchorPane paneAPrazo;
-    
-    @FXML
-    private Label lblValorRestanteTexto;
+    private Pane paneAVista;
     
     @FXML
     private Label lblValorRestante;
+    
+    @FXML
+    private Label lblValorVenda_dentro_Avista;
+    
+    @FXML
+    private Label lblValorVenda_dentro_Aprazo;
+    
+    @FXML
+    private Label lblValorVenda;
+    
+    @FXML
+    private Label lblDesconto;
     
     
     private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
@@ -168,6 +171,10 @@ public class ControllerPagamento implements Initializable {
         this.venda = venda;
         atualizarValorVenda();
         txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
+        
+        lblValorVenda_dentro_Avista.setText(String.format("R$ %.2f", this.venda.getValor_venda()));
+        lblValorVenda_dentro_Aprazo.setText(String.format("R$ %.2f", this.venda.getValor_venda()));
+        
         Parcela parcela = new Parcela(this.venda.getValor_venda() / 2, LocalDate.now().plusDays(28 * 1), this.venda, 1, "Pago");
         lista_parcelas_observable.add(parcela);
         tbvwParcelas.setItems(lista_parcelas_observable);
@@ -315,7 +322,7 @@ public class ControllerPagamento implements Initializable {
             return;
         }
         
-        if (Double.valueOf(txtfldValorRecebido.getText()) >= this.venda.getValor_venda() && tipo_venda.getSelectedToggle() != rdbtnAVista)  {
+        if (Double.valueOf(txtfldValorEntrada.getText()) >= this.venda.getValor_venda() && tipo_venda.getSelectedToggle() != rdbtnAVista)  {
             JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior ou igual que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -363,9 +370,19 @@ public class ControllerPagamento implements Initializable {
                 return;
                 }
                 
+                if(Double.valueOf(txtfldValorEntrada.getText()) > this.venda.getValor_venda()) {
+                    JOptionPane.showMessageDialog(null, "Valor de entrada maior que o valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                if (Double.parseDouble(txtfldValorEntrada.getText()) <= 0.0) {
+                    JOptionPane.showMessageDialog(null, "Valor de entrada é negativo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
                 this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 vendaDAO.insert(this.venda);
-                Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda, "Pago");
+                Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorEntrada.getText()), this.venda, "Pago");
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), parcelaEntrada.getValor_parcela(), parcelaEntrada);
                 
                 StringBuilder lista_nome_itens_builder = new StringBuilder();
@@ -424,9 +441,17 @@ public class ControllerPagamento implements Initializable {
                 atualizaParcelas();
         });
         
+        txtfldValorEntrada.textProperty().addListener((observable, oldValue, newValue) -> {
+                atualizaParcelas();
+        });
+        
         txtfldValorRecebido.textProperty().addListener((observable, oldValue, newValue) -> {
-            atualizaParcelas();
-    });
+            Double desconto = this.venda.getValor_venda() - Double.valueOf(txtfldValorRecebido.getText());
+            if (desconto >= 0.0)
+                lblDesconto.setText(String.format("R$ %.2f", desconto));
+            else
+                lblDesconto.setText(String.format("R$ %.2f", 0.0));
+        });
         
         paneAPrazo.setVisible(false);
         
@@ -447,7 +472,7 @@ public class ControllerPagamento implements Initializable {
         
         cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
         
-        lblValorRecebidoOuEntrada.setText("Valor recebido:");
+        //lblValorRecebidoOuEntrada.setText("Valor recebido:");
         spnrNumeroParcelas.setOpacity(0.5);
         spnrNumeroParcelas.setDisable(true);
         
@@ -458,18 +483,22 @@ public class ControllerPagamento implements Initializable {
             RadioButton selectedRadioButton = (RadioButton) newValue;
             if(selectedRadioButton == rdbtnAVista) {
                 txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
-                lblValorRecebidoOuEntrada.setText("Valor recebido:");
+                //lblValorRecebidoOuEntrada.setText("Valor recebido:");
                 spnrNumeroParcelas.setOpacity(0.5);
                 spnrNumeroParcelas.setDisable(true);
                 paneAPrazo.setVisible(false);
+                paneAVista.setVisible(true);
+                paneAVista.setDisable(false);
             } else {
                 //cmbboxCliente.getSelectionModel().select(getIndex_cliente());
                 spnrNumeroParcelas.setOpacity(1);
                 spnrNumeroParcelas.setDisable(false);
-                lblValorRecebidoOuEntrada.setText("Valor de entrada:");
+                //lblValorRecebidoOuEntrada.setText("Valor de entrada:");
                 paneAPrazo.setVisible(true);
+                paneAPrazo.setDisable(false);
+                paneAVista.setVisible(false);
                 Double valorMetade = this.venda.getValor_venda() / 2;
-                txtfldValorRecebido.setText(valorMetade.toString());
+                txtfldValorEntrada.setText(valorMetade.toString());
             }                
         });
         
@@ -498,7 +527,13 @@ public class ControllerPagamento implements Initializable {
 
     private void atualizaParcelas() {
         Integer numero_parcelas = spnrNumeroParcelas.getValue();
-                Double valor_restante = this.venda.getValor_venda() - Double.valueOf(txtfldValorRecebido.getText());
+        Double valor_restante;
+                if (txtfldValorEntrada.getText().isEmpty()) {
+                    valor_restante = this.venda.getValor_venda() - 0.0;
+                } else {
+                    valor_restante = this.venda.getValor_venda() - Double.valueOf(txtfldValorEntrada.getText());
+                }
+                    
                 
                 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
                 lblValorRestante.setText(currencyFormat.format(valor_restante));
@@ -518,6 +553,14 @@ public class ControllerPagamento implements Initializable {
         txtfldValorRecebido.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) { 
                 txtfldValorRecebido.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
+        });
+    }
+    
+    private void configurarValorEntrada() {
+        txtfldValorEntrada.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) { 
+                txtfldValorEntrada.setText(newValue.replaceAll("[^\\d.]", ""));
             }
         });
     }
@@ -599,5 +642,9 @@ public class ControllerPagamento implements Initializable {
         timer.start();
         dialog.setVisible(true);
     }
+     
+     public void pesquisarCliente(ActionEvent event) throws IOException {
+         System.out.println("PESQUISA");
+     }
     
 }
