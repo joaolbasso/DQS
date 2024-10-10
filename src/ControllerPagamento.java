@@ -42,7 +42,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -52,13 +51,11 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import javax.swing.ImageIcon;
@@ -322,17 +319,28 @@ public class ControllerPagamento implements Initializable {
             return;
         }
         
-        if (Double.valueOf(txtfldValorEntrada.getText()) >= this.venda.getValor_venda() && tipo_venda.getSelectedToggle() != rdbtnAVista)  {
-            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior ou igual que valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+        if(Double.valueOf(txtfldValorRecebido.getText()) > this.venda.getValor_venda()) {
+            JOptionPane.showMessageDialog(null, "Valor recebido não pode ser maior que o valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        
-        if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista
-            if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda())) {
-                this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
-                Parcela parcelaUnica = new Parcela(this.venda.getValor_venda(), this.venda, "Pago");
-                Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), this.venda.getValor_venda(), parcelaUnica);
+        boolean confirmado = false;
+        if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista~
+            
+            if (Double.valueOf(txtfldValorRecebido.getText()) < this.venda.getValor_venda()) {
+                int resposta = JOptionPane.showConfirmDialog(null, "A venda está sendo confirmada com desconto de " + lblDesconto.getText() + ". Confirmar?", "Confirmar Desconto", JOptionPane.YES_NO_OPTION);
+                if (resposta == 0) {
+                    confirmado = true;
+                    this.venda.setDesconto_venda(this.venda.getValor_venda() - Double.valueOf(txtfldValorRecebido.getText()));
+                } else {
+                    return;
+                }
+            }
+            
+            if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda()) || confirmado) {
+                //this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
+                Parcela parcelaUnica = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda, "Pago");
+                Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), Double.valueOf(txtfldValorRecebido.getText()), parcelaUnica);
                 
                 StringBuilder lista_nome_itens_builder = new StringBuilder();
                 
@@ -363,7 +371,16 @@ public class ControllerPagamento implements Initializable {
                 
                 popupConfirmacao("Venda a vista registrada com sucesso!");
                 voltarConcluido(event);
-            } 
+            }
+            
+            
+                
+            
+            
+            
+            
+            
+            
         } else { // A prazo
                 if (cmbboxCliente.getValue() == null) {
                     JOptionPane.showMessageDialog(null, "Selecione um cliente para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
@@ -499,6 +516,7 @@ public class ControllerPagamento implements Initializable {
                 paneAVista.setVisible(false);
                 Double valorMetade = this.venda.getValor_venda() / 2;
                 txtfldValorEntrada.setText(valorMetade.toString());
+                lblDesconto.setText("R$0,00");
             }                
         });
         

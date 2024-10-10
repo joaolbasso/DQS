@@ -25,6 +25,8 @@ public class Venda implements Serializable {
     @Column(nullable = false)
     private Double valor_venda;
     
+    private Double desconto_venda;
+    
     private LocalDate data_venda;
     
     @OneToOne(cascade = CascadeType.MERGE)
@@ -88,6 +90,14 @@ public class Venda implements Serializable {
 
     public void setData_venda(LocalDate data_venda) {
         this.data_venda = data_venda;
+    }
+
+    public Double getDesconto_venda() {
+        return desconto_venda;
+    }
+
+    public void setDesconto_venda(Double desconto_venda) {
+        this.desconto_venda = desconto_venda;
     }
     
 }
