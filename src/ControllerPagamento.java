@@ -387,15 +387,21 @@ public class ControllerPagamento implements Initializable {
                 return;
                 }
                 
+                if (txtfldValorEntrada.getText().isEmpty()) {
+                    txtfldValorEntrada.setText("0.0");
+                }
+                
                 if(Double.valueOf(txtfldValorEntrada.getText()) > this.venda.getValor_venda()) {
                     JOptionPane.showMessageDialog(null, "Valor de entrada maior que o valor da venda!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 
-                if (Double.parseDouble(txtfldValorEntrada.getText()) <= 0.0) {
+                if (Double.parseDouble(txtfldValorEntrada.getText()) < 0.0) {
                     JOptionPane.showMessageDialog(null, "Valor de entrada é negativo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
+                
+                
                 
                 this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 vendaDAO.insert(this.venda);
