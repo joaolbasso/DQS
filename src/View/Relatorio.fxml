@@ -29,5 +29,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button layoutX="208.0" layoutY="189.0" mnemonicParsing="false" onAction="#relatorioTeste" prefHeight="57.0" prefWidth="103.0" text="Abrir relatorio" />
    </children>
 </AnchorPane>
