@@ -1,0 +1,163 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="Vendas" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8d081ab-ea53-448e-ac86-8d47b7891474">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="263"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="730"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="781"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="208"/>
+        <property name="net.sf.jasperreports.default.pdf.encoding" value="UTF-8"/>
+        <property name="net.sf.jasperreports.default.pdf.embedded" value="true"/>
+	<parameter name="startDate" class="java.util.Date">
+		<description><![CDATA[startDate]]></description>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy-MM-dd").format($P{startDate})]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.util.Date">
+		<description><![CDATA[endDate]]></description>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy-MM-dd").format($P{endDate})]]></defaultValueExpression>
+	</parameter>
+	<query language="sql"><![CDATA[SELECT pagamento.data_pagamento,
+	item_caixa.valor_item_caixa,
+	pagamento.metodo_pagamento,
+	item_venda.valor_unitario,
+	item_venda.quantidade,
+	venda.valor_venda,
+	item_caixa.descricao_item_caixa,
+	venda.id_venda
+FROM item_caixa
+	INNER JOIN pagamento ON 
+	 item_caixa.id_pagamento = pagamento.id_pagamento 
+	LEFT JOIN parcela ON 
+	 pagamento.id_parcela = parcela.id_parcela 
+	INNER JOIN venda ON 
+	 parcela.id_venda = venda.id_venda 
+	INNER JOIN itens_venda ON 
+	 itens_venda.id_venda = venda.id_venda 
+	INNER JOIN item_venda ON 
+	 itens_venda.id_item_venda = item_venda.id_item_venda 
+	 WHERE 
+	 pagamento.data_pagamento BETWEEN '$P!{startDate}' AND '$P!{endDate}'
+]]></query>
+	<field name="data_pagamento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data_pagamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_pagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pagamento"/>
+	</field>
+	<field name="valor_item_caixa" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="valor_item_caixa"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_item_caixa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_caixa"/>
+	</field>
+	<field name="metodo_pagamento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="metodo_pagamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="metodo_pagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pagamento"/>
+	</field>
+	<field name="valor_unitario" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="valor_unitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_unitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="valor_venda" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="valor_venda"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_venda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="descricao_item_caixa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descricao_item_caixa"/>
+		<property name="com.jaspersoft.studio.field.label" value="descricao_item_caixa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_caixa"/>
+	</field>
+	<field name="id_venda" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_venda"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_venda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<variable name="valor_item_caixa1" resetType="Page" calculation="Sum" class="java.lang.Double">
+		<expression><![CDATA[$F{valor_item_caixa}]]></expression>
+	</variable>
+	<group name="id_venda">
+		<expression><![CDATA[$F{id_venda}]]></expression>
+		<groupHeader>
+			<band height="37">
+				<element kind="textField" uuid="b7cb54df-c2f4-4bf0-bdda-46f3b0d7d6cb" x="1" y="0" width="70" height="21">
+					<expression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{data_pagamento})]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03b35254-eb1d-4fb3-ac8a-c2e0a2e4744f"/>
+				</element>
+				<element kind="textField" uuid="48c08cb7-aea3-4d9c-86a4-ee07b1c6f432" x="71" y="0" width="70" height="21">
+					<expression><![CDATA[$F{metodo_pagamento}.equals("D") ? "Débito" :
+$F{metodo_pagamento}.equals("C") ? "Crédito" :
+$F{metodo_pagamento}.equals("E") ? "Espécie" :
+$F{metodo_pagamento}.equals("P") ? "PIX" : "OUTRO"
+
+]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e61bc567-9851-440b-87b4-52524327c82d"/>
+				</element>
+				<element kind="textField" uuid="5d661f83-6ee5-40a9-a2e8-49874b4aa0c2" x="454" y="0" width="100" height="21" hTextAlign="Right">
+					<expression><![CDATA[String.format("R$ %.2f", $F{valor_item_caixa})]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01fa1c56-7d4e-455d-a3c7-fc6c6b00a7ca"/>
+				</element>
+				<element kind="textField" uuid="ec92b019-af42-4bd7-8253-5085f840f7de" x="140" y="1" width="312" height="19">
+					<expression><![CDATA[$F{descricao_item_caixa}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="252fef32-d60c-4543-8f68-5c2c7a31a3e3"/>
+				</element>
+				<element kind="line" uuid="d6cd24cd-91ed-45f3-b36e-bc21d5b3bfaa" x="0" y="21" width="552" height="1"/>
+			</band>
+		</groupHeader>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="76" splitType="Stretch">
+		<element kind="image" uuid="75702183-f0f4-4553-bbf3-809b52053e07" x="0" y="0" width="70" height="60">
+			<expression><![CDATA["Relatorio/Logo Farofoto.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="2637a80f-24bd-4c34-a6ac-10be1ec52ea1" x="121" y="10" width="338" height="30" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[Relatório de Vendas Farofoto]]></text>
+		</element>
+		<element kind="textField" uuid="6bf02fcc-72cb-4d15-8177-2a0712c501da" x="430" y="46" width="122" height="30" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA["Gerado em: " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></expression>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="31" splitType="Stretch">
+		<element kind="staticText" uuid="19acf600-34bd-43c7-981b-e04894e55639" x="0" y="0" width="70" height="30">
+			<text><![CDATA[Data
+]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03b35254-eb1d-4fb3-ac8a-c2e0a2e4744f"/>
+		</element>
+		<element kind="staticText" uuid="6cc433b7-86fd-4718-b0a6-7f89294925a1" x="70" y="1" width="70" height="30">
+			<text><![CDATA[Método de Pagamento]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e61bc567-9851-440b-87b4-52524327c82d"/>
+		</element>
+		<element kind="staticText" uuid="7f45990b-cbd3-446d-a593-20157ba95c28" x="140" y="2" width="312" height="28">
+			<text><![CDATA[Item/Itens]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="252fef32-d60c-4543-8f68-5c2c7a31a3e3"/>
+		</element>
+		<element kind="staticText" uuid="381e5625-c866-449b-969c-d30659f53129" x="453" y="1" width="100" height="30" hTextAlign="Right">
+			<text><![CDATA[Valor da Venda]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01fa1c56-7d4e-455d-a3c7-fc6c6b00a7ca"/>
+		</element>
+		<element kind="line" uuid="ac53027f-3084-4d69-805c-a7a2198684a6" x="0" y="30" width="552" height="1"/>
+	</columnHeader>
+	<pageFooter height="45" splitType="Stretch">
+		<element kind="textField" uuid="d5d5d565-6de5-4e05-a7a1-d9150f4f7591" x="454" y="31" width="100" height="14" fontSize="8.0" italic="true" hTextAlign="Right">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_COUNT}]]></expression>
+		</element>
+		<element kind="textField" uuid="28efdcb5-8451-499f-b4df-9fca970e9027" x="454" y="0" width="100" height="20" fontName="Bahnschrift" fontSize="12.0" bold="true" hTextAlign="Right">
+			<expression><![CDATA[String.format("R$ %.2f",$V{valor_item_caixa1})]]></expression>
+		</element>
+	</pageFooter>
+</jasperReport>

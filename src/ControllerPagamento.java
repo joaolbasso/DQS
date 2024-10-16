@@ -354,7 +354,10 @@ public class ControllerPagamento implements Initializable {
                         // Evite criar uma nova instância se já existe no contexto
                     // Utilize merge se necessário
                     if (id_ultimo != item.getItem().getId_item())
-                        lista_nome_itens_builder.append(managedItem.getNome_item());
+                        lista_nome_itens_builder.append("(")
+                            .append(item.getQuantidade())  // quantidade do item
+                            .append(") ")
+                            .append(managedItem.getNome_item());
                     }
 
                 String lista_nome_itens = lista_nome_itens_builder.toString();
