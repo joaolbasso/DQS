@@ -83,7 +83,7 @@ public class ClienteDAO extends AbstractDAO {
     
     try {
         // Consulta dinâmica com parâmetro LIKE para buscar clientes
-        String query = "SELECT c FROM Cliente c WHERE c.nome_cliente LIKE :nome";
+        String query = "SELECT c FROM Cliente c WHERE LOWER(c.nome_cliente) LIKE LOWER(:nome)";
         clientes = em.createQuery(query, Cliente.class)
                      .setParameter("nome", "%" + filtro + "%") // Filtra pelo nome
                      .setMaxResults(10) // Limita o número de resultados retornados
@@ -95,6 +95,28 @@ public class ClienteDAO extends AbstractDAO {
     }
     
     return clientes;
+}
+    
+   public Cliente getClientePorNome(String filtro) {
+       //Utilizar função quando ter certeza que o cliente existe
+    EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+    
+    Cliente cliente = new Cliente();
+    
+    try {
+        // Consulta dinâmica com parâmetro LIKE para buscar clientes
+        String query = "SELECT c FROM Cliente c WHERE LOWER(c.nome_cliente) LIKE LOWER(:nome)";
+        cliente = em.createQuery(query, Cliente.class)
+                     .setParameter("nome", "%" + filtro + "%") // Filtra pelo nome
+                     .setMaxResults(1) // Limita o número de resultados retornados
+                     .getSingleResult();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        em.close(); // Fecha o EntityManager após a consulta
+    }
+    
+    return cliente;
 }
     
     public void update(Cliente cliente) {

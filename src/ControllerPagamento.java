@@ -36,12 +36,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -56,7 +58,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import javax.swing.ImageIcon;
@@ -87,9 +92,6 @@ public class ControllerPagamento implements Initializable {
     @FXML
     private ComboBox<String> cmbboxMetodoPagamento;
 
-    @FXML
-    private ComboBox<Cliente> cmbboxCliente;
-    
     @FXML
     private Spinner<Integer> spnrNumeroParcelas;
     
@@ -137,6 +139,9 @@ public class ControllerPagamento implements Initializable {
     
     @FXML
     private ListView<Cliente> listViewClientes;
+    
+    @FXML
+    private Button btnCadastrarCliente;
     
     
     private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
@@ -329,7 +334,14 @@ public class ControllerPagamento implements Initializable {
             return;
         }
         
+        
+        if (Objects.equals(this.venda.getValor_venda(), Double.valueOf(txtfldValorEntrada.getText()))) {
+            JOptionPane.showMessageDialog(null, "Valor de entrada é igual ao valor da venda, realizando venda a vista!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            tipo_venda.selectToggle(rdbtnAVista);
+        }
+        
         boolean confirmado = false;
+        
         if (tipo_venda.getSelectedToggle() == rdbtnAVista) { //A vista~
             
             if (Double.valueOf(txtfldValorRecebido.getText()) < this.venda.getValor_venda()) {
@@ -343,7 +355,6 @@ public class ControllerPagamento implements Initializable {
             }
             
             if(Objects.equals(Double.valueOf(txtfldValorRecebido.getText()), this.venda.getValor_venda()) || confirmado) {
-                //this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 Parcela parcelaUnica = new Parcela(Double.valueOf(txtfldValorRecebido.getText()), this.venda, "Pago");
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), Double.valueOf(txtfldValorRecebido.getText()), parcelaUnica);
                 
@@ -380,24 +391,19 @@ public class ControllerPagamento implements Initializable {
                 popupConfirmacao("Venda a vista registrada com sucesso!");
                 voltarConcluido(event);
             }
+
+
             
-            
-                
-            
-            
-            
-            
-            
-            
-        } else { // A prazo
-                //if (cmbboxCliente.getValue() == null) {
-                //    JOptionPane.showMessageDialog(null, "Selecione um cliente para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
-                //return;
-                //}
-                
-                if (!clienteSelecionado.getNome_cliente().equals(txtfldBuscarCliente.getText())) {
-                    JOptionPane.showMessageDialog(null, "Selecione um cliente para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
-                    return;
+            // A prazo
+        } else { 
+                if (clienteSelecionado == null) {
+                   if (listViewClientes.isVisible()) {
+                       JOptionPane.showMessageDialog(null, "Selecione um cliente da lista para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                   } else {
+                       JOptionPane.showMessageDialog(null, "Busque e selecione um cliente da lista para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                   }
+                   return; 
+                   
                 }
                 
                 if (txtfldValorEntrada.getText().isEmpty()) {
@@ -414,9 +420,6 @@ public class ControllerPagamento implements Initializable {
                     return;
                 }
                 
-                
-                
-                //this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
                 this.venda.setCliente(clienteSelecionado);
                 
                 vendaDAO.insert(this.venda);
@@ -464,6 +467,9 @@ public class ControllerPagamento implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        Tooltip hintCadastrarCliente = new Tooltip("Cadastrar Novo Cliente");
+        btnCadastrarCliente.setTooltip(hintCadastrarCliente);
+        
         criaSpinnerValueFactory();
         tbclnParcelaN.setCellValueFactory(new PropertyValueFactory<>("numero_parcela"));
         tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_parcela"));
@@ -508,6 +514,46 @@ public class ControllerPagamento implements Initializable {
             }
         });
         
+        txtfldBuscarCliente.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (null != event.getCode()) switch (event.getCode()) {
+                    case DOWN:
+                        // Se a lista estiver visível, move a seleção para baixo
+                        if (listViewClientes.isVisible()) {
+                            int index = listViewClientes.getSelectionModel().getSelectedIndex();
+                            if (index < clienteObservableList.size() - 1) {
+                                listViewClientes.getSelectionModel().selectNext();
+                                listViewClientes.scrollTo(index + 1); // Rolagem para o item selecionado
+                            }
+                            event.consume(); // Impede que o evento se propague
+                        }   break;
+                    case ENTER:
+                        // Se a lista estiver visível, seleciona o item
+                        if (listViewClientes.isVisible() && !listViewClientes.getItems().isEmpty()) {
+                            Cliente selectedClient = listViewClientes.getSelectionModel().getSelectedItem();
+                            if (selectedClient != null) {
+                                txtfldBuscarCliente.setText(selectedClient.getNome_cliente());
+                                listViewClientes.setVisible(false); // Esconder a lista após a seleção
+                            }
+                            event.consume(); // Impede que o evento se propague
+                        }   break;
+                    case UP:
+                        // Se a lista estiver visível, move a seleção para cima
+                        if (listViewClientes.isVisible()) {
+                            int index = listViewClientes.getSelectionModel().getSelectedIndex();
+                            if (index > 0) {
+                                listViewClientes.getSelectionModel().selectPrevious();
+                                listViewClientes.scrollTo(index - 1); // Rolagem para o item selecionado
+                            }
+                            event.consume(); // Impede que o evento se propague
+                        }   break;
+                    default:
+                        break;
+                }
+            }
+        });
+        
         txtfldBuscarCliente.textProperty().addListener((obs, oldValue, newValue) -> {
             if (!newValue.trim().isEmpty()) {
                 // Carrega os clientes que correspondem ao texto digitado
@@ -515,13 +561,8 @@ public class ControllerPagamento implements Initializable {
                 clienteObservableList.setAll(filteredClients);
                 listViewClientes.setItems(clienteObservableList);
                 listViewClientes.setVisible(true);
-            
-            
-                cmbboxCliente.setItems(FXCollections.observableArrayList(filteredClients)); // Vai sair
                 } else {
-                // Se o campo de busca estiver vazio, limpa a ComboBox
-                cmbboxCliente.getItems().clear();
-                listViewClientes.setVisible(false);
+                    listViewClientes.setVisible(false);
                 }
         });
         
@@ -533,22 +574,7 @@ public class ControllerPagamento implements Initializable {
             }
         });
         
-        cmbboxCliente.setCellFactory(cell -> new ListCell<Cliente>() {
-            @Override
-            protected void updateItem(Cliente cliente, boolean empty) {
-                super.updateItem(cliente, empty);
-                if (empty || cliente == null) {
-                    setText(null);
-                } else {
-                    setText(cliente.getNome_cliente());
-                }
-            }
-        });
-        
         configurarValorRecebido();
-        
-        cmbboxCliente.setButtonCell(cmbboxCliente.getCellFactory().call(null));
-        
         //lblValorRecebidoOuEntrada.setText("Valor recebido:");
         spnrNumeroParcelas.setOpacity(0.5);
         spnrNumeroParcelas.setDisable(true);
@@ -567,10 +593,8 @@ public class ControllerPagamento implements Initializable {
                 paneAVista.setVisible(true);
                 paneAVista.setDisable(false);
             } else {
-                //cmbboxCliente.getSelectionModel().select(getIndex_cliente());
                 spnrNumeroParcelas.setOpacity(1);
                 spnrNumeroParcelas.setDisable(false);
-                //lblValorRecebidoOuEntrada.setText("Valor de entrada:");
                 paneAPrazo.setVisible(true);
                 paneAPrazo.setDisable(false);
                 paneAVista.setVisible(false);
