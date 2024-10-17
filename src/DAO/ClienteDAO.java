@@ -76,6 +76,27 @@ public class ClienteDAO extends AbstractDAO {
         return todosOsClientes != null ? todosOsClientes : new ArrayList<>();
     }
     
+    public List<Cliente> buscarClientesLazy(String filtro) {
+    EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+    
+    List<Cliente> clientes = new ArrayList<>();
+    
+    try {
+        // Consulta dinâmica com parâmetro LIKE para buscar clientes
+        String query = "SELECT c FROM Cliente c WHERE c.nome_cliente LIKE :nome";
+        clientes = em.createQuery(query, Cliente.class)
+                     .setParameter("nome", "%" + filtro + "%") // Filtra pelo nome
+                     .setMaxResults(10) // Limita o número de resultados retornados
+                     .getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        em.close(); // Fecha o EntityManager após a consulta
+    }
+    
+    return clientes;
+}
+    
     public void update(Cliente cliente) {
         EntityManager em = null;
         try {

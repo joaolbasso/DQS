@@ -45,6 +45,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -131,9 +132,18 @@ public class ControllerPagamento implements Initializable {
     @FXML
     private Label lblDesconto;
     
+    @FXML
+    private TextField txtfldBuscarCliente;
+    
+    @FXML
+    private ListView<Cliente> listViewClientes;
+    
     
     private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
-
+    private ObservableList<Cliente> clienteObservableList = FXCollections.observableArrayList();
+    private Cliente clienteSelecionado;
+    
+    
     public ObservableList<Parcela> getLista_parcelas_observable() {
         return lista_parcelas_observable;
     }
@@ -206,11 +216,6 @@ public class ControllerPagamento implements Initializable {
         // Obter o controller da nova tela
         ControllerCadastrarCliente controllerCadastrarCliente = loader.getController();
         
-        controllerCadastrarCliente.setItemCallBack(() -> {
-        // Atualizar a ComboBox
-        atualizaComboBoxCliente();
-        });
-
         // Definir a cena atual como a anterior no controller da nova tela
         controllerCadastrarCliente.setCenaAnterior(((Node) event.getSource()).getScene());
 
@@ -385,9 +390,14 @@ public class ControllerPagamento implements Initializable {
             
             
         } else { // A prazo
-                if (cmbboxCliente.getValue() == null) {
+                //if (cmbboxCliente.getValue() == null) {
+                //    JOptionPane.showMessageDialog(null, "Selecione um cliente para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+                //return;
+                //}
+                
+                if (!clienteSelecionado.getNome_cliente().equals(txtfldBuscarCliente.getText())) {
                     JOptionPane.showMessageDialog(null, "Selecione um cliente para venda a prazo!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
-                return;
+                    return;
                 }
                 
                 if (txtfldValorEntrada.getText().isEmpty()) {
@@ -406,7 +416,9 @@ public class ControllerPagamento implements Initializable {
                 
                 
                 
-                this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
+                //this.venda.setCliente(cmbboxCliente.getSelectionModel().getSelectedItem());
+                this.venda.setCliente(clienteSelecionado);
+                
                 vendaDAO.insert(this.venda);
                 Parcela parcelaEntrada = new Parcela(Double.valueOf(txtfldValorEntrada.getText()), this.venda, "Pago");
                 Pagamento pagamento = new Pagamento('C', metodo_pagamento, this.venda.getData_venda(), parcelaEntrada.getValor_parcela(), parcelaEntrada);
@@ -481,7 +493,46 @@ public class ControllerPagamento implements Initializable {
         
         paneAPrazo.setVisible(false);
         
-        atualizaComboBoxCliente();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        
+        listViewClientes.setVisible(false);
+        listViewClientes.setCellFactory(cell -> new ListCell<Cliente>() {
+            @Override
+            protected void updateItem(Cliente cliente, boolean empty) {
+                super.updateItem(cliente, empty);
+                if (cliente != null) {
+                    setText(cliente.getNome_cliente()); // Exibir o nome do cliente
+                } else {
+                    setText(null);
+                }
+            }
+        });
+        
+        txtfldBuscarCliente.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.trim().isEmpty()) {
+                // Carrega os clientes que correspondem ao texto digitado
+                List<Cliente> filteredClients = clienteDAO.buscarClientesLazy(newValue.trim());
+                clienteObservableList.setAll(filteredClients);
+                listViewClientes.setItems(clienteObservableList);
+                listViewClientes.setVisible(true);
+            
+            
+                cmbboxCliente.setItems(FXCollections.observableArrayList(filteredClients)); // Vai sair
+                } else {
+                // Se o campo de busca estiver vazio, limpa a ComboBox
+                cmbboxCliente.getItems().clear();
+                listViewClientes.setVisible(false);
+                }
+        });
+        
+        listViewClientes.setOnMouseClicked(event -> {
+            clienteSelecionado = listViewClientes.getSelectionModel().getSelectedItem();
+            if (clienteSelecionado != null) {
+                txtfldBuscarCliente.setText(clienteSelecionado.getNome_cliente());
+                listViewClientes.setVisible(false);
+            }
+        });
+        
         cmbboxCliente.setCellFactory(cell -> new ListCell<Cliente>() {
             @Override
             protected void updateItem(Cliente cliente, boolean empty) {
@@ -531,7 +582,7 @@ public class ControllerPagamento implements Initializable {
         
         
     }    
-
+    
     private void atualizarValorVenda() {
         if (venda != null) {
             lblValorVenda.setText(String.format("R$ %.2f", venda.getValor_venda()));
@@ -546,12 +597,6 @@ public class ControllerPagamento implements Initializable {
         spnrNumeroParcelas.setValueFactory(valueFactory);
     }
     
-    public void atualizaComboBoxCliente() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
-        cmbboxCliente.setItems(clientes);
-    }
-
     private void atualizaParcelas() {
         Integer numero_parcelas = spnrNumeroParcelas.getValue();
         Double valor_restante;
