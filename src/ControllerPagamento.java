@@ -147,7 +147,7 @@ public class ControllerPagamento implements Initializable {
     private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
     private ObservableList<Cliente> clienteObservableList = FXCollections.observableArrayList();
     private Cliente clienteSelecionado;
-    
+    private ClienteDAO clienteDAO = new ClienteDAO();
     
     public ObservableList<Parcela> getLista_parcelas_observable() {
         return lista_parcelas_observable;
@@ -420,6 +420,13 @@ public class ControllerPagamento implements Initializable {
                     return;
                 }
                 
+                if (clienteDAO.clientePorNomeTemParcelasEmAberto(clienteSelecionado.getNome_cliente())) {
+                    int resultado = JOptionPane.showConfirmDialog(null, "O cliente " + clienteSelecionado.getNome_cliente() + " tem parcelas a pagar no sistema. Tem certeza que deseja concluir a venda?", "Cliente tem parcelas em aberto", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (resultado == 1) {
+                        return;
+                    }
+                }
+                
                 this.venda.setCliente(clienteSelecionado);
                 
                 vendaDAO.insert(this.venda);
@@ -499,7 +506,7 @@ public class ControllerPagamento implements Initializable {
         
         paneAPrazo.setVisible(false);
         
-        ClienteDAO clienteDAO = new ClienteDAO();
+        
         
         listViewClientes.setVisible(false);
         listViewClientes.setCellFactory(cell -> new ListCell<Cliente>() {
@@ -531,9 +538,9 @@ public class ControllerPagamento implements Initializable {
                     case ENTER:
                         // Se a lista estiver visível, seleciona o item
                         if (listViewClientes.isVisible() && !listViewClientes.getItems().isEmpty()) {
-                            Cliente selectedClient = listViewClientes.getSelectionModel().getSelectedItem();
-                            if (selectedClient != null) {
-                                txtfldBuscarCliente.setText(selectedClient.getNome_cliente());
+                            clienteSelecionado = listViewClientes.getSelectionModel().getSelectedItem();
+                            if (clienteSelecionado != null) {
+                                txtfldBuscarCliente.setText(clienteSelecionado.getNome_cliente());
                                 listViewClientes.setVisible(false); // Esconder a lista após a seleção
                             }
                             event.consume(); // Impede que o evento se propague

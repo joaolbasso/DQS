@@ -64,6 +64,11 @@
       </RadioButton>
       <Pane fx:id="paneAVista" layoutX="131.0" layoutY="176.0" prefHeight="163.0" prefWidth="360.0">
          <children>
+            <TextField fx:id="txtfldValorRecebido" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="103.0" prefHeight="35.0" prefWidth="117.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
             <Label layoutX="89.0" layoutY="-1.0" prefHeight="30.0" prefWidth="183.0" text="Pagamento a Vista">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -84,15 +89,19 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="txtfldValorRecebido" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="103.0" prefHeight="35.0" prefWidth="117.0">
+         </children>
+      </Pane>
+      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="343.0" layoutY="397.0" prefHeight="35.0" prefWidth="143.0" />
+      <Pane fx:id="paneAPrazo" layoutX="491.0" layoutY="162.0" prefHeight="466.0" prefWidth="406.0">
+         <children>
+            <TextField fx:id="txtfldBuscarCliente" layoutX="143.0" layoutY="51.0" prefHeight="25.0" prefWidth="230.0" promptText="Buscar Cliente..." />
+            <ListView fx:id="listViewClientes" layoutX="143.0" layoutY="75.0" prefHeight="51.0" prefWidth="230.0" />
+            <TextField fx:id="txtfldValorEntrada" alignment="CENTER_RIGHT" layoutX="258.0" layoutY="131.0" prefHeight="35.0" prefWidth="117.0">
                <font>
                   <Font size="16.0" />
                </font>
             </TextField>
-         </children>
-      </Pane>
-      <Pane fx:id="paneAPrazo" layoutX="491.0" layoutY="162.0" prefHeight="466.0" prefWidth="406.0">
-         <children>
+            <Spinner fx:id="spnrNumeroParcelas" layoutX="313.0" layoutY="211.0" prefHeight="35.0" prefWidth="62.0" />
             <TableView fx:id="tbvwParcelas" layoutX="75.0" layoutY="252.0" prefHeight="181.0" prefWidth="267.0">
               <columns>
                 <TableColumn fx:id="tbclnParcelaN" prefWidth="77.0" text="Parcela nº" />
@@ -103,7 +112,6 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Spinner fx:id="spnrNumeroParcelas" layoutX="313.0" layoutY="211.0" prefHeight="35.0" prefWidth="62.0" />
             <Label layoutX="66.0" layoutY="211.0" prefHeight="35.0" prefWidth="190.0" text="Número de parcelas:">
                <font>
                   <Font size="20.0" />
@@ -144,11 +152,6 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtfldValorEntrada" alignment="CENTER_RIGHT" layoutX="258.0" layoutY="131.0" prefHeight="35.0" prefWidth="117.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </TextField>
             <Button fx:id="btnCadastrarCliente" layoutX="26.0" layoutY="51.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="27.0" prefWidth="15.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -164,8 +167,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <TextField fx:id="txtfldBuscarCliente" layoutX="143.0" layoutY="51.0" prefHeight="25.0" prefWidth="230.0" promptText="Buscar Cliente..." />
-            <ListView fx:id="listViewClientes" layoutX="143.0" layoutY="75.0" prefHeight="51.0" prefWidth="230.0" />
          </children>
       </Pane>
       <TableView layoutX="911.0" layoutY="177.0" prefHeight="339.0" prefWidth="360.0">
@@ -174,6 +175,11 @@
           <TableColumn fx:id="tbclnTotalDoItem" prefWidth="111.0" text="Total do Item" />
         </columns>
       </TableView>
+      <Button layoutX="250.0" layoutY="527.0" mnemonicParsing="false" onAction="#concluirVenda" prefHeight="51.0" prefWidth="143.0" text="Confirmar">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
       <Label layoutX="911.0" layoutY="137.0" prefHeight="35.0" prefWidth="360.0" text="Resumo da Venda">
          <font>
             <Font name="System Italic" size="20.0" />
@@ -184,17 +190,11 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="250.0" layoutY="527.0" mnemonicParsing="false" onAction="#concluirVenda" prefHeight="51.0" prefWidth="143.0" text="Confirmar">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
       <Label layoutX="149.0" layoutY="397.0" prefHeight="35.0" prefWidth="190.0" text="Método Pagamento:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="343.0" layoutY="397.0" prefHeight="35.0" prefWidth="143.0" />
       <Label layoutX="149.0" layoutY="446.0" prefHeight="35.0" prefWidth="190.0" text="Desconto (em R$):">
          <font>
             <Font size="20.0" />
