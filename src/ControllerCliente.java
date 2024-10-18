@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,6 +51,9 @@ public class ControllerCliente implements Initializable {
     
     @FXML
     private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("Financeiro");
+    
+    @FXML
+    private TableColumn<Cliente,Boolean> situacaoColuna = new TableColumn<>("Situação");
 
     @FXML
     private SplitMenuButton spmbFiltro;
@@ -63,6 +67,8 @@ public class ControllerCliente implements Initializable {
     @FXML
     private Button btnLimparFiltro;
 
+    private ClienteDAO clienteDAO = new ClienteDAO();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarOpcoesFiltro();
@@ -118,6 +124,7 @@ public class ControllerCliente implements Initializable {
     }
 
     private void adicionarBotoesTabela() {
+        
         // Botão Editar
         editarColuna.setCellFactory(coluna -> {
             return new TableCell<Cliente, Void>() {
@@ -186,8 +193,40 @@ public class ControllerCliente implements Initializable {
                 }
             };
         });
+        
+        situacaoColuna.setCellValueFactory(param -> {
+        Cliente cliente = param.getValue();
+        // Verifica se o cliente tem parcelas em aberto
+        boolean hasParcelasEmAberto = clienteDAO.clientePorNomeTemParcelasEmAberto(cliente.getNome_cliente());
+        return new SimpleBooleanProperty(hasParcelasEmAberto);
+        });
 
-        tbvwClientes.getColumns().addAll(editarColuna, financaColuna);
+        situacaoColuna.setCellFactory(col -> new TableCell<Cliente, Boolean>() {
+            private final ImageView ivOK = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/ok.png")));
+            private final ImageView ivNOTOK = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/notok.png")));
+
+        @Override
+        protected void updateItem(Boolean hasParcelasEmAberto, boolean empty) {
+            super.updateItem(hasParcelasEmAberto, empty);
+            if (empty || hasParcelasEmAberto == null) {
+                setGraphic(null);
+            } else {
+                if (hasParcelasEmAberto) {
+                    ivNOTOK.setFitHeight(16);
+                    ivNOTOK.setFitWidth(16);
+                    setGraphic(ivNOTOK);
+                } else {
+                    ivOK.setFitHeight(16);
+                    ivOK.setFitWidth(16);
+                    setGraphic(ivOK);
+                }
+                setStyle("-fx-alignment: CENTER;");
+            }
+        }
+        });
+
+        situacaoColuna.setComparator(Boolean::compareTo);
+        tbvwClientes.getColumns().addAll(editarColuna, financaColuna, situacaoColuna);
     }
 
     public void editarCliente(ActionEvent event, Cliente clienteSelecionada) throws IOException {
@@ -292,7 +331,6 @@ public class ControllerCliente implements Initializable {
     }
 
     public void atualizarListaClientes() {
-        ClienteDAO clienteDAO = new ClienteDAO();
         ObservableList<Cliente> clientes = FXCollections.observableArrayList(clienteDAO.todosOsClientes());
         tbvwClientes.setItems(clientes);
     }
