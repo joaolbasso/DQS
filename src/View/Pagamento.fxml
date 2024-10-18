@@ -94,6 +94,16 @@
       <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="343.0" layoutY="397.0" prefHeight="35.0" prefWidth="143.0" />
       <Pane fx:id="paneAPrazo" layoutX="491.0" layoutY="162.0" prefHeight="466.0" prefWidth="406.0">
          <children>
+            <Label fx:id="lblValorVenda_dentro_Aprazo" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="265.0" layoutY="93.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="66.0" layoutY="90.0" prefHeight="35.0" prefWidth="183.0" text="Valor da venda:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
             <TextField fx:id="txtfldBuscarCliente" layoutX="143.0" layoutY="51.0" prefHeight="25.0" prefWidth="230.0" promptText="Buscar Cliente..." />
             <ListView fx:id="listViewClientes" layoutX="143.0" layoutY="75.0" prefHeight="51.0" prefWidth="230.0" />
             <TextField fx:id="txtfldValorEntrada" alignment="CENTER_RIGHT" layoutX="258.0" layoutY="131.0" prefHeight="35.0" prefWidth="117.0">
@@ -133,16 +143,6 @@
                </font>
             </Label>
             <Label layoutX="105.0" layoutY="6.0" prefHeight="30.0" prefWidth="183.0" text="Pagamento a Prazo">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="66.0" layoutY="90.0" prefHeight="35.0" prefWidth="183.0" text="Valor da venda:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblValorVenda_dentro_Aprazo" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="265.0" layoutY="93.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

@@ -56,10 +56,10 @@ public class ControllerDespesa implements Initializable {
     private TableColumn<Despesa, String> beneficiario = new TableColumn<>("Beneficiario");
 
     @FXML
-    private TableColumn<Despesa, Void> editarColuna = new TableColumn<>("");
+    private TableColumn<Despesa, Void> editarColuna = new TableColumn<>("Editar");
 
     @FXML
-    private TableColumn<Despesa, Void> deletarColuna = new TableColumn<>("");
+    private TableColumn<Despesa, Void> deletarColuna = new TableColumn<>("Deletar");
     
     @FXML
     private SplitMenuButton spmbFiltro;
@@ -97,8 +97,7 @@ public class ControllerDespesa implements Initializable {
 
         alinharTextoNaColuna(nome_despesa, "CENTER-LEFT");
         alinharTextoNaColuna(valor_despesa, "CENTER-RIGHT");
-        alinharTextoNaColuna(data_pagamento_despesa, "CENTER-RIGHT");
-        alinharTextoNaColuna(data_vencimento_despesa, "CENTER-RIGHT");
+        
         alinharTextoNaColuna(beneficiario, "CENTER-LEFT");
         
         formatarMoedaNaColuna(valor_despesa);
@@ -106,7 +105,6 @@ public class ControllerDespesa implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formatarDataNaColuna(data_pagamento_despesa, formatter);
         formatarDataNaColuna(data_vencimento_despesa, formatter);
-
         adicionarBotoesTabela();
         atualizarListaDespesas();
     }
@@ -330,7 +328,7 @@ public class ControllerDespesa implements Initializable {
                         } else {
                             setText(item.toString());
                         }
-                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                        setStyle("-fx-alignment: CENTER;"); // Alinha o texto à direita
                     }
                 }
             };

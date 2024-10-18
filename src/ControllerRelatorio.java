@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -23,6 +24,7 @@ import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -39,7 +41,7 @@ public class ControllerRelatorio implements Initializable {
     @FXML
     private DatePicker dtpkrDataFinal;
 
-    ObservableList<String> filtros = FXCollections.observableArrayList("Vendas", "Clientes", "Itens", "Despesas");
+    ObservableList<String> filtros = FXCollections.observableArrayList("Vendas", "clientes", "Itens", "Despesas");
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,6 +61,16 @@ public class ControllerRelatorio implements Initializable {
     
 
     public void gerarRelatorio(LocalDate dataInicio, LocalDate dataFim) {
+        if(dataInicio.isAfter(dataFim)) {
+            JOptionPane.showMessageDialog(null, "Data inicial é maior que data final... Selecione uma data válida");
+            return;
+        }
+        
+        if(dataInicio.isAfter(LocalDate.now())) {
+            JOptionPane.showMessageDialog(null, "Data inicial é maior que data do dia de hoje... Selecione uma data válida");
+            return;
+        }
+        
         String caminho = cmbboxFiltroRelatorio.getSelectionModel().getSelectedItem().toString();
         
         EntityManagerFactory emf = EntityManagerFactorySingleton.getInstance();
@@ -67,28 +79,29 @@ public class ControllerRelatorio implements Initializable {
         System.out.println(caminho);
         try {
             em = emf.createEntityManager();
-            Connection connection = DAO.DBConnection.getConnection();
-            
             // Use o caminho relativo para o arquivo .jrxml
-            InputStream caminhoRelatorio = getClass().getClassLoader().getResourceAsStream("Relatorio/" + caminho + ".jrxml");
-            if (caminhoRelatorio == null) {
-                throw new IllegalArgumentException("Arquivo de relatório não encontrado");
+            try (Connection connection = DAO.DBConnection.getConnection()) {
+                // Use o caminho relativo para o arquivo .jrxml
+                InputStream caminhoRelatorio = getClass().getClassLoader().getResourceAsStream("Relatorio/" + caminho + ".jrxml");
+                if (caminhoRelatorio == null) {
+                    throw new IllegalArgumentException("Arquivo de relatório não encontrado");
+                }
+                JasperReport jasperReport = JasperCompileManager.compileReport(caminhoRelatorio);
+                
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("startDate", Date.from(dataInicio.atStartOfDay(ZoneId.systemDefault()).toInstant()));  // Conversão correta
+                parameters.put("endDate", Date.from(dataFim.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+                
+                JasperViewer.viewReport(jasperPrint, false);
             }
-            JasperReport jasperReport = JasperCompileManager.compileReport(caminhoRelatorio);
-            
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("startDate", Date.from(dataInicio.atStartOfDay(ZoneId.systemDefault()).toInstant()));  // Conversão correta
-            parameters.put("endDate", Date.from(dataFim.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
-            
-            JasperViewer.viewReport(jasperPrint, false);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IllegalArgumentException | SQLException | JRException e) {
         } finally {
             if (em != null) {
                 em.close();
+                
             }
         }
     }

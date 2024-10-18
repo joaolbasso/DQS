@@ -247,7 +247,11 @@ public class ControllerRegistrarDespesa implements Initializable {
                 if (despesaEdicao == null) {
                     // Nova despesa
                     despesaDAO.insert(despesaSalvar);
-                    popupConfirmacao("Despesa registrada com sucesso!");
+                    
+                    if (despesaSalvar.getDia_pagamento_despesa() > 1) {
+                        registrarRecorrencia(despesaSalvar);
+                    }
+                        popupConfirmacao("Despesa registrada com sucesso!");
                 } else {
                     // Editar despesa existente
                     despesaSalvar.setId_despesa(despesaEdicao.getId_despesa());
@@ -263,6 +267,16 @@ public class ControllerRegistrarDespesa implements Initializable {
         }
     }
 
+    private void registrarRecorrencia(Despesa despesa) {
+        DespesaDAO despesaDAO = new DespesaDAO();
+        
+        //Dá para fazer uma implementação de trocar o 7 por variável e perguntar ao usuário quantas recorrências quer, quantos meses, tem um problema aqui se for semanal, quinzenal, assim está com mensal
+        for (int i = 1; i<7; i++) {
+            Despesa despesaRecorrente = new Despesa(despesa.getNome_despesa() + " (gerada por recorrência)", despesa.getValor_despesa(), despesa.getDescricao_despesa(), despesa.getDia_pagamento_despesa(), despesa.getData_vencimento_despesa().plusMonths(i), despesa.getBeneficiario());
+            despesaDAO.insert(despesaRecorrente);
+        }
+    }
+    
     private Despesa criarDespesa() {
     try {
         CaixaDAO caixaDAO = new CaixaDAO();
@@ -333,7 +347,7 @@ public class ControllerRegistrarDespesa implements Initializable {
 
         String nome_despesa = txtfldNomeDespesa.getText();
         Double valor_despesa = Double.valueOf(txtfldValor.getText().replace(",", "."));
-        int recorrencia_despesa = spnrRecorrente.getValue();
+        int dia_que_e_pago = spnrRecorrente.getValue();
         LocalDate data_pagamento_despesa = dtpkrDataPagamento.getValue();
         LocalDate data_vencimento_despesa = dtpkrDataVencimento.getValue();
         String descricao_despesa = txtfldDescricao.getText();
@@ -349,10 +363,10 @@ public class ControllerRegistrarDespesa implements Initializable {
             Item_caixa item_caixa = new Item_caixa(valor_despesa, LocalDate.now(), Item_caixa.TipoOperacao.D, caixaAtual, '-', nome_despesa);
             item_caixaDAO.insert(item_caixa);
             caixaDAO.update(caixaAtual);
-            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
+            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, dia_que_e_pago, data_vencimento_despesa, data_pagamento_despesa, beneficiario, item_caixa);
         } else {
             // Se a despesa não foi paga, não criar um Item_caixa
-            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, recorrencia_despesa, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
+            return new Despesa(nome_despesa, valor_despesa, descricao_despesa, dia_que_e_pago, data_vencimento_despesa, data_pagamento_despesa, beneficiario);
         }
         
         

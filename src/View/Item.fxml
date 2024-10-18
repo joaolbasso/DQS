@@ -36,9 +36,9 @@
          </cursor></Button>
       <TableView fx:id="tbvwItens" layoutX="198.0" layoutY="307.0" prefHeight="479.0" prefWidth="925.0">
          <columns>
-            <TableColumn fx:id="nome_item" prefWidth="457.0" text="Nome" />
-            <TableColumn fx:id="valor_item" minWidth="0.0" prefWidth="139.0" text="Valor" />
-            <TableColumn fx:id="tipo_item" prefWidth="149.0" text="Tipo" />
+            <TableColumn fx:id="nome_item" prefWidth="450.0" text="Nome" />
+            <TableColumn fx:id="valor_item" minWidth="0.0" prefWidth="150.0" text="Valor" />
+            <TableColumn fx:id="tipo_item" prefWidth="50.0" text="Tipo" />
          </columns>
       </TableView>
       <SplitMenuButton fx:id="spmbFiltro" layoutX="141.0" layoutY="250.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0">
@@ -71,12 +71,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="lblTitulo11" alignment="CENTER" contentDisplay="CENTER" layoutX="1123.0" layoutY="679.0" prefHeight="27.0" prefWidth="107.0" text="P = Produto">
+      <Label fx:id="lblTitulo11" alignment="CENTER" contentDisplay="CENTER" layoutX="1131.0" layoutY="679.0" prefHeight="27.0" prefWidth="107.0" text="P = Produto">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblTitulo111" alignment="CENTER" contentDisplay="CENTER" layoutX="1119.0" layoutY="695.0" prefHeight="27.0" prefWidth="107.0" text="S = Serviço">
+      <Label fx:id="lblTitulo111" alignment="CENTER" contentDisplay="CENTER" layoutX="1128.0" layoutY="695.0" prefHeight="27.0" prefWidth="107.0" text="S = Serviço">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
