@@ -19,37 +19,27 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="680.0" prefWidth="1300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamento">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="844.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerPagamento">
     <stylesheets>
         <URL value="@/View/CSS/venda.css" />
     </stylesheets>
    <children>
-      <Label layoutX="570.0" layoutY="26.0" prefHeight="67.0" prefWidth="199.0" text="Pagamento">
+      <Label layoutX="333.0" layoutY="25.0" prefHeight="67.0" prefWidth="199.0" text="Pagamento">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="58.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="69.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button layoutX="58.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button layoutX="69.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="911.0" layoutY="519.0" prefHeight="67.0" prefWidth="143.0" text="Valor da Venda:">
-         <font>
-            <Font name="System Italic" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblValorVenda" layoutX="1172.0" layoutY="533.0" text="R$00,00">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="rdbtnAVista" layoutX="660.0" layoutY="103.0" mnemonicParsing="false" selected="true" text="A Vista">
+      <RadioButton fx:id="rdbtnAVista" layoutX="423.0" layoutY="102.0" mnemonicParsing="false" selected="true" text="A Vista">
          <toggleGroup>
             <ToggleGroup fx:id="tipo_venda" />
          </toggleGroup>
@@ -57,12 +47,12 @@
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="rdbtnAPrazo" layoutX="767.0" layoutY="103.0" mnemonicParsing="false" text="A Prazo" toggleGroup="$tipo_venda">
+      <RadioButton fx:id="rdbtnAPrazo" layoutX="530.0" layoutY="102.0" mnemonicParsing="false" text="A Prazo" toggleGroup="$tipo_venda">
          <font>
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <Pane fx:id="paneAVista" layoutX="131.0" layoutY="176.0" prefHeight="163.0" prefWidth="360.0">
+      <Pane fx:id="paneAVista" layoutX="294.0" layoutY="171.0" prefHeight="163.0" prefWidth="360.0">
          <children>
             <TextField fx:id="txtfldValorRecebido" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="103.0" prefHeight="35.0" prefWidth="117.0">
                <font>
@@ -91,8 +81,8 @@
             </Label>
          </children>
       </Pane>
-      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="343.0" layoutY="397.0" prefHeight="35.0" prefWidth="143.0" />
-      <Pane fx:id="paneAPrazo" layoutX="491.0" layoutY="162.0" prefHeight="466.0" prefWidth="406.0">
+      <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="500.0" layoutY="601.0" prefHeight="35.0" prefWidth="143.0" />
+      <Pane fx:id="paneAPrazo" layoutX="254.0" layoutY="161.0" prefHeight="438.0" prefWidth="406.0">
          <children>
             <Label fx:id="lblValorVenda_dentro_Aprazo" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="265.0" layoutY="93.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
                <font>
@@ -169,38 +159,27 @@
             </Button>
          </children>
       </Pane>
-      <TableView fx:id="tbvwResumo" layoutX="911.0" layoutY="177.0" prefHeight="339.0" prefWidth="360.0">
-        <columns>
-          <TableColumn fx:id="tbclnProdutoServico" prefWidth="248.0" text="Produto/Serviço" />
-          <TableColumn fx:id="tbclnTotalDoItem" prefWidth="111.0" text="Total do Item" />
-        </columns>
-      </TableView>
-      <Button layoutX="250.0" layoutY="527.0" mnemonicParsing="false" onAction="#concluirVenda" prefHeight="51.0" prefWidth="143.0" text="Confirmar">
+      <Button layoutX="395.0" layoutY="704.0" mnemonicParsing="false" onAction="#concluirVenda" prefHeight="51.0" prefWidth="143.0" text="Confirmar">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Label layoutX="911.0" layoutY="137.0" prefHeight="35.0" prefWidth="360.0" text="Resumo da Venda">
-         <font>
-            <Font name="System Italic" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="440.0" layoutY="99.0" prefHeight="35.0" prefWidth="199.0" text="Forma de pagamento:">
+      <Label layoutX="203.0" layoutY="98.0" prefHeight="35.0" prefWidth="199.0" text="Forma de pagamento:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="149.0" layoutY="397.0" prefHeight="35.0" prefWidth="190.0" text="Método Pagamento:">
+      <Label layoutX="289.0" layoutY="601.0" prefHeight="35.0" prefWidth="199.0" text="Modo de Pagamento:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="149.0" layoutY="446.0" prefHeight="35.0" prefWidth="190.0" text="Desconto (em R$):">
+      <Label layoutX="289.0" layoutY="650.0" prefHeight="35.0" prefWidth="190.0" text="Desconto (em R$):">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblDesconto" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="360.0" layoutY="449.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
+      <Label fx:id="lblDesconto" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="533.0" layoutY="652.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

@@ -66,7 +66,7 @@
       </Button>
       <TableView fx:id="tbvwClientes" layoutX="49.0" layoutY="299.0" prefHeight="476.0" prefWidth="1200.0">
          <columns>
-            <TableColumn fx:id="nome_cliente" prefWidth="600.0" text="Nome" />
+            <TableColumn fx:id="nome_cliente" prefWidth="550.0" text="Nome" />
             <TableColumn fx:id="cpf" prefWidth="200.0" text="CPF" />
             <TableColumn fx:id="telefone" minWidth="0.0" prefWidth="200.0" text="Telefone" />
          </columns>

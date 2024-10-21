@@ -76,6 +76,9 @@ public class ControllerPagamento implements Initializable {
     private Venda venda;
     private int index_cliente;
     
+   // @FXML
+    //private Pane pnResumo;
+    
     @FXML
     private RadioButton rdbtnAVista;
     
@@ -109,11 +112,11 @@ public class ControllerPagamento implements Initializable {
     @FXML
     private TableColumn<Parcela, LocalDate> tbclnVencimento = new TableColumn<>("Vencimento");
     
-    @FXML
-    private TableColumn<Item_venda, String> tbclnProdutoServico = new TableColumn<>("Produto/Serviço");
+    //@FXML
+    //private TableColumn<Item_venda, String> tbclnProdutoServico = new TableColumn<>("Produto/Serviço");
     
-    @FXML
-    private TableColumn<Item_venda, Double> tbclnTotalDoItem = new TableColumn<>("Total do Item");
+   // @FXML
+   // private TableColumn<Item_venda, Double> tbclnTotalDoItem = new TableColumn<>("Total do Item");
 
     @FXML
     private Pane paneAPrazo;
@@ -131,9 +134,6 @@ public class ControllerPagamento implements Initializable {
     private Label lblValorVenda_dentro_Aprazo;
     
     @FXML
-    private Label lblValorVenda;
-    
-    @FXML
     private Label lblDesconto;
     
     @FXML
@@ -145,8 +145,8 @@ public class ControllerPagamento implements Initializable {
     @FXML
     private Button btnCadastrarCliente;
     
-    @FXML
-    private TableView<Item_venda> tbvwResumo;
+    //@FXML
+    //private TableView<Item_venda> tbvwResumo;
     
     private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
     private ObservableList<Cliente> clienteObservableList = FXCollections.observableArrayList();
@@ -185,19 +185,6 @@ public class ControllerPagamento implements Initializable {
     
     public void setVenda(Venda venda) {
         this.venda = venda;
-        atualizarValorVenda();
-        
-        ObservableList<Item_venda> itensDaVenda =  FXCollections.observableArrayList(venda.getItens_venda());
-        
-        tbvwResumo.setItems(itensDaVenda);
-        tbclnProdutoServico.setCellValueFactory(cellData -> 
-        {
-            return new SimpleStringProperty(cellData.getValue().getItem().getNome_item());
-        });
-        
-        tbclnTotalDoItem.setCellValueFactory((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
-        
-        formatarMoedaNaColuna(tbclnTotalDoItem);
         
         txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
         
@@ -490,7 +477,6 @@ public class ControllerPagamento implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         Tooltip hintCadastrarCliente = new Tooltip("Cadastrar Novo Cliente");
         btnCadastrarCliente.setTooltip(hintCadastrarCliente);
         
@@ -630,12 +616,6 @@ public class ControllerPagamento implements Initializable {
         
         
     }    
-    
-    private void atualizarValorVenda() {
-        if (venda != null) {
-            lblValorVenda.setText(String.format("R$ %.2f", venda.getValor_venda()));
-        }
-    }
     
     public void criaSpinnerValueFactory() {
         SpinnerValueFactory<Integer> valueFactory = 

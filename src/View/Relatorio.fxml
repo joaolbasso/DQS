@@ -31,24 +31,24 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ComboBox fx:id="cmbboxFiltroRelatorio" layoutX="229.0" layoutY="136.0" prefHeight="43.0" prefWidth="223.0" />
-      <Label layoutX="143.0" layoutY="145.0" text="Filtrar por:">
+      <ComboBox fx:id="cmbboxFiltroRelatorio" layoutX="161.0" layoutY="136.0" prefHeight="43.0" prefWidth="223.0" />
+      <Label layoutX="75.0" layoutY="145.0" text="Filtrar por:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dtpkrDataInicial" layoutX="732.0" layoutY="136.0" prefHeight="43.0" prefWidth="174.0" />
-      <Label layoutX="645.0" layoutY="145.0" text="Data inicial:">
+      <DatePicker fx:id="dtpkrDataInicial" layoutX="651.0" layoutY="136.0" prefHeight="43.0" prefWidth="174.0" />
+      <Label layoutX="473.0" layoutY="145.0" text="Data inicial do relatório:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="930.0" layoutY="145.0" text="Data final:">
+      <Label layoutX="840.0" layoutY="145.0" text="Data final do relatório:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dtpkrDataFinal" layoutX="1010.0" layoutY="136.0" prefHeight="43.0" prefWidth="174.0" />
+      <DatePicker fx:id="dtpkrDataFinal" layoutX="1005.0" layoutY="136.0" prefHeight="43.0" prefWidth="174.0" />
       <Button layoutX="604.0" layoutY="680.0" mnemonicParsing="false" onAction="#geraRelatorio" prefHeight="54.0" prefWidth="93.0" text="Gerar" />
    </children>
 </AnchorPane>
