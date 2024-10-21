@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -108,10 +110,10 @@ public class ControllerPagamento implements Initializable {
     private TableColumn<Parcela, LocalDate> tbclnVencimento = new TableColumn<>("Vencimento");
     
     @FXML
-    private TableColumn<Parcela, LocalDate> tbclnProdutoServico = new TableColumn<>("Produto/Serviço");
+    private TableColumn<Item_venda, String> tbclnProdutoServico = new TableColumn<>("Produto/Serviço");
     
     @FXML
-    private TableColumn<Parcela, LocalDate> tbclnTotalDoItem = new TableColumn<>("Total do Item");
+    private TableColumn<Item_venda, Double> tbclnTotalDoItem = new TableColumn<>("Total do Item");
 
     @FXML
     private Pane paneAPrazo;
@@ -143,6 +145,8 @@ public class ControllerPagamento implements Initializable {
     @FXML
     private Button btnCadastrarCliente;
     
+    @FXML
+    private TableView<Item_venda> tbvwResumo;
     
     private ObservableList<Parcela> lista_parcelas_observable = FXCollections.observableArrayList();
     private ObservableList<Cliente> clienteObservableList = FXCollections.observableArrayList();
@@ -182,6 +186,19 @@ public class ControllerPagamento implements Initializable {
     public void setVenda(Venda venda) {
         this.venda = venda;
         atualizarValorVenda();
+        
+        ObservableList<Item_venda> itensDaVenda =  FXCollections.observableArrayList(venda.getItens_venda());
+        
+        tbvwResumo.setItems(itensDaVenda);
+        tbclnProdutoServico.setCellValueFactory(cellData -> 
+        {
+            return new SimpleStringProperty(cellData.getValue().getItem().getNome_item());
+        });
+        
+        tbclnTotalDoItem.setCellValueFactory((TableColumn.CellDataFeatures<Item_venda, Double> cellData) -> new SimpleDoubleProperty(cellData.getValue().getValor_unitario()).asObject());
+        
+        formatarMoedaNaColuna(tbclnTotalDoItem);
+        
         txtfldValorRecebido.setText(this.venda.getValor_venda().toString());
         
         lblValorVenda_dentro_Avista.setText(String.format("R$ %.2f", this.venda.getValor_venda()));

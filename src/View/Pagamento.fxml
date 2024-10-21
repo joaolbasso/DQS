@@ -169,7 +169,7 @@
             </Button>
          </children>
       </Pane>
-      <TableView layoutX="911.0" layoutY="177.0" prefHeight="339.0" prefWidth="360.0">
+      <TableView fx:id="tbvwResumo" layoutX="911.0" layoutY="177.0" prefHeight="339.0" prefWidth="360.0">
         <columns>
           <TableColumn fx:id="tbclnProdutoServico" prefWidth="248.0" text="Produto/Serviço" />
           <TableColumn fx:id="tbclnTotalDoItem" prefWidth="111.0" text="Total do Item" />
