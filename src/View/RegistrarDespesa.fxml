@@ -107,22 +107,22 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <DatePicker fx:id="dtpkrDataPagamento" layoutX="39.0" layoutY="316.0" prefHeight="43.0" prefWidth="233.0">
+            <DatePicker fx:id="dtpkrDataPagamento" layoutX="305.0" layoutY="315.0" prefHeight="43.0" prefWidth="233.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </DatePicker>
-            <DatePicker fx:id="dtpkrDataVencimento" layoutX="312.0" layoutY="316.0" prefHeight="43.0" prefWidth="233.0">
+            <DatePicker fx:id="dtpkrDataVencimento" layoutX="39.0" layoutY="315.0" prefHeight="43.0" prefWidth="233.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </DatePicker>
-            <Label layoutX="39.0" layoutY="281.0" prefHeight="35.0" prefWidth="233.0" text="Data de Pagamento:">
+            <Label layoutX="305.0" layoutY="280.0" prefHeight="35.0" prefWidth="233.0" text="Data de Pagamento:">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="312.0" layoutY="281.0" prefHeight="35.0" prefWidth="233.0" text="Data de Vencimento:">
+            <Label layoutX="39.0" layoutY="280.0" prefHeight="35.0" prefWidth="233.0" text="Data de Vencimento:">
                <font>
                   <Font size="24.0" />
                </font>

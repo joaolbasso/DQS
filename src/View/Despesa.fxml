@@ -38,9 +38,9 @@
         <columns>
           <TableColumn fx:id="nome_despesa" prefWidth="250.0" text="Nome" />
           <TableColumn fx:id="valor_despesa" prefWidth="150.0" text="Valor" />
-            <TableColumn fx:id="data_pagamento_despesa" prefWidth="150.0" text="Data de Pagamento" />
             <TableColumn fx:id="data_vencimento_despesa" minWidth="0.0" prefWidth="150.0" text="Data de Vencimento" />
-            <TableColumn fx:id="beneficiario" minWidth="0.0" prefWidth="250.0" text="Beneficiario" />
+            <TableColumn fx:id="data_pagamento_despesa" prefWidth="150.0" text="Data de Pagamento" />
+            <TableColumn fx:id="beneficiario" minWidth="0.0" prefWidth="250.0" text="Beneficiário" />
         </columns>
       </TableView>
       <SplitMenuButton fx:id="spmbFiltro" layoutX="131.0" layoutY="240.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="149.0">

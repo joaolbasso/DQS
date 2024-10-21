@@ -56,10 +56,10 @@ public class ControllerDespesa implements Initializable {
     private TableColumn<Despesa, String> beneficiario = new TableColumn<>("Beneficiario");
 
     @FXML
-    private TableColumn<Despesa, Void> editarColuna = new TableColumn<>("Editar");
+    private TableColumn<Despesa, Void> editarColuna = new TableColumn<>("");
 
     @FXML
-    private TableColumn<Despesa, Void> deletarColuna = new TableColumn<>("Deletar");
+    private TableColumn<Despesa, Void> deletarColuna = new TableColumn<>("");
     
     @FXML
     private SplitMenuButton spmbFiltro;
