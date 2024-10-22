@@ -1,0 +1,24 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="Clientes Devedores (grupo)" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3be1e827-f5c4-431e-9547-6bb232c6ed67">
+	<query language="sql"><![CDATA[]]></query>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="image" uuid="f9ea42d6-926d-44d5-985f-295de71b12e5" x="0" y="0" width="70" height="60">
+			<expression><![CDATA["Relatorio/Logo Farofoto.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="6de41e30-87de-43b0-a5ab-8c80b826ddc5" x="90" y="5" width="409" height="30" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[Relatório de Clientes Devedores (grupo)]]></text>
+		</element>
+		<element kind="textField" uuid="c72d3db6-6462-4651-b4e2-6f77fef08b87" x="430" y="46" width="122" height="30" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA["Gerado em: " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></expression>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch"/>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

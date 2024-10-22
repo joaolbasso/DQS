@@ -1,0 +1,24 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="Entradas e saidas (balanço)" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ad20cb1-2836-4601-bc58-d4bb918999b8">
+	<query language="sql"><![CDATA[]]></query>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="image" uuid="a8cb90d5-9915-43e8-9166-f49c3bbf61ce" x="0" y="0" width="70" height="60">
+			<expression><![CDATA["Relatorio/Logo Farofoto.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="e6f422cf-1fae-4be7-8a35-c147784ef3a1" x="121" y="10" width="338" height="30" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[Relatório de Entradas e Saídas]]></text>
+		</element>
+		<element kind="textField" uuid="909e96d8-252f-4108-839a-fcfd537071a7" x="430" y="46" width="122" height="30" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA["Gerado em: " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></expression>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch"/>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

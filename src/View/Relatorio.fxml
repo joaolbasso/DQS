@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -50,5 +52,12 @@
       </Label>
       <DatePicker fx:id="dtpkrDataFinal" layoutX="1005.0" layoutY="136.0" prefHeight="43.0" prefWidth="174.0" />
       <Button layoutX="604.0" layoutY="680.0" mnemonicParsing="false" onAction="#geraRelatorio" prefHeight="54.0" prefWidth="93.0" text="Gerar" />
+      <TextField fx:id="txtfldBuscarCliente" layoutX="161.0" layoutY="213.0" prefHeight="25.0" prefWidth="313.0" promptText="Pesquise o cliente..." />
+      <Label layoutX="75.0" layoutY="213.0" text="Cliente:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ListView fx:id="listViewClientes" layoutX="161.0" layoutY="238.0" prefHeight="121.0" prefWidth="313.0" />
    </children>
 </AnchorPane>

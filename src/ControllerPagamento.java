@@ -339,7 +339,7 @@ public class ControllerPagamento implements Initializable {
         }
         
         
-        if (Objects.equals(this.venda.getValor_venda(), Double.valueOf(txtfldValorEntrada.getText()))) {
+        if (tipo_venda.getSelectedToggle() == rdbtnAPrazo && Objects.equals(this.venda.getValor_venda(), Double.valueOf(txtfldValorEntrada.getText()))) {
             JOptionPane.showMessageDialog(null, "Valor de entrada é igual ao valor da venda, realizando venda a vista!!", "Aviso!", JOptionPane.WARNING_MESSAGE);
             tipo_venda.selectToggle(rdbtnAVista);
         }
@@ -448,8 +448,12 @@ public class ControllerPagamento implements Initializable {
                         }
                         // Evite criar uma nova instância se já existe no contexto
                     // Utilize merge se necessário
-                    if (id_ultimo != item.getItem().getId_item())
-                        lista_nome_itens_builder.append(managedItem.getNome_item());
+                    if (id_ultimo != item.getItem().getId_item()) {
+                        lista_nome_itens_builder.append("(")
+                            .append(item.getQuantidade())  // quantidade do item
+                            .append(") ")
+                            .append(managedItem.getNome_item());
+                    }
                     }
 
                 String lista_nome_itens = lista_nome_itens_builder.toString();
