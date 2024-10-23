@@ -76,12 +76,12 @@
       <Line endX="336.5498962402344" endY="85.40210723876953" layoutX="1000.0" layoutY="600.0" rotate="-31.0" startX="109.29475402832031" startY="145.49191284179688" />
       <Button fx:id="btnAbrirCaixa" layoutX="553.0" layoutY="50.0" mnemonicParsing="false" onAction="#abrirCaixa" prefHeight="30.0" prefWidth="126.0" text="Abrir Caixa" />
       <Button fx:id="btnFecharCaixa" layoutX="706.0" layoutY="50.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
-      <TableView fx:id="tbvwItensCaixa" layoutX="488.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="222.0" prefWidth="539.0">
+      <TableView id="tbvwCaixa" fx:id="tbvwItensCaixa" layoutX="488.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="222.0" prefWidth="539.0">
          <columns>
-            <TableColumn fx:id="tbclnDescricao" prefWidth="220.0" text="Item/Itens" />
-            <TableColumn fx:id="tbclnValor" prefWidth="106.0" text="Valor do Item" />
-            <TableColumn fx:id="tbclnOperacao" minWidth="0.0" prefWidth="99.0" text="Operação" />
-            <TableColumn fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" text="Data do Item" />
+            <TableColumn id="tbclnItem" fx:id="tbclnDescricao" prefWidth="220.0" text="Item/Itens" />
+            <TableColumn id="tbclnValorItem" fx:id="tbclnValor" prefWidth="106.0" text="Valor do Item" />
+            <TableColumn id="tbclnOperacao" fx:id="tbclnOperacao" minWidth="0.0" prefWidth="99.0" text="Operação" />
+            <TableColumn id="tbclnDatadoItem" fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" text="Data do Item" />
          </columns>
          <cursor>
             <Cursor fx:constant="DEFAULT" />

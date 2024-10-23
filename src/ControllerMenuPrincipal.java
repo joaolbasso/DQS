@@ -353,8 +353,11 @@ public class ControllerMenuPrincipal implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        tbvwItensCaixa.getStylesheets().add(getClass().getResource("View/CSS/menuprincipal.css").toExternalForm());
-        tbvwDespesas.getStylesheets().add(getClass().getResource("View/CSS/menuprincipal.css").toExternalForm());
+        Scene scene = btnDespesas.getScene();
+        if (scene != null) {
+            scene.getStylesheets().add(getClass().getResource("/View/CSS/caixa.css").toExternalForm());
+        }
+        
         this.caixa = caixaDAO.buscarCaixaAberto();
         
         configurarTabela();
