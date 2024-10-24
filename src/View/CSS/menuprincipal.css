@@ -1,5 +1,33 @@
-.table-view .column-header#tbclnItem {
-    -fx-background-color: yellow; /* Cor de fundo do rótulo no cabeçalho */
-    -fx-border-color: black; /* Cor da borda do rótulo */
+#tbvwCaixa .column-header#tbclnItem .label {
     -fx-alignment: CENTER_LEFT; /* Alinhamento do texto */
 }
+
+#tbvwCaixa .column-header#tbclnValorItem .label {
+    -fx-alignment: CENTER_RIGHT; /* Alinhamento do texto */
+}
+
+#tbvwCaixa .column-header#tbclnOperacao .label {
+    -fx-alignment: CENTER; /* Alinhamento do texto */
+}
+
+#tbvwCaixa .column-header#tbclnDatadoItem .label {
+    -fx-alignment: CENTER; /* Alinhamento do texto */
+}
+
+#tbvwDespesas .column-header#tbclnNome .label {
+    -fx-alignment: CENTER_LEFT;
+}
+
+#tbvwDespesas .column-header#tbclnBene .label {
+    -fx-alignment: CENTER_LEFT;
+}
+
+#tbvwDespesas .column-header#tbclnValorDespesa .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+#tbvwDespesas .column-header#tbclnDataVenc .label {
+    -fx-alignment: CENTER;
+}
+
+

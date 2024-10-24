@@ -1,14 +1,15 @@
-/*
- * Empty Stylesheet file.
- */
-
-.mainFxmlClass {
-
+#tableItem .column-header#clnProd .label {
+    -fx-alignment: CENTER_LEFT;
 }
 
-.pane-custom {
-    -fx-border-color: black;
-    -fx-border-width: 2px;
-    -fx-background-color: lightgray;
-    -fx-padding: 10px;
+#tableItem .column-header#clnQtd .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+#tableItem .column-header#clnValorUnit .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+#tableItem .column-header#clnTotalItem .label {
+    -fx-alignment: CENTER_RIGHT;
 }

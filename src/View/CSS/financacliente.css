@@ -1,7 +1,15 @@
-/*
- * Empty Stylesheet file.
- */
+#tbvwFinanca .column-header#clnNParc .label {
+    -fx-alignment: CENTER;
+}
 
-.mainFxmlClass {
+#tbvwFinanca .column-header#clnData .label {
+    -fx-alignment: CENTER;
+}
 
+#tbvwFinanca .column-header#clnValorParc .label {
+    -fx-alignment: center-right;
+}
+
+#tbvwFinanca .column-header#clnCond .label {
+    -fx-alignment: center-left;
 }

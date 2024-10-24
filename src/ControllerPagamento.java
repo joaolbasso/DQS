@@ -724,7 +724,7 @@ public class ControllerPagamento implements Initializable {
                         } else {
                             setText(item.toString());
                         }
-                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                        setStyle("-fx-alignment: CENTER;"); // Alinha o texto à direita
                     }
                 }
             };

@@ -1,7 +1,7 @@
-/*
- * Empty Stylesheet file.
- */
+#tbvwParcela .column-header#clnNParcela .label {
+    -fx-alignment: CENTER_RIGHT;
+}
 
-.mainFxmlClass {
-
+#tbvwParcela .column-header#clnValor .label {
+    -fx-alignment: CENTER_RIGHT;
 }

@@ -34,13 +34,13 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TableView fx:id="tbvwDespesas" layoutX="50.0" layoutY="301.0" prefHeight="476.0" prefWidth="1200.0">
+      <TableView id="tbvwDespesas" fx:id="tbvwDespesas" layoutX="50.0" layoutY="301.0" prefHeight="476.0" prefWidth="1200.0">
         <columns>
-          <TableColumn fx:id="nome_despesa" prefWidth="250.0" text="Nome" />
-          <TableColumn fx:id="valor_despesa" prefWidth="150.0" text="Valor" />
-            <TableColumn fx:id="data_vencimento_despesa" minWidth="0.0" prefWidth="150.0" text="Data de Vencimento" />
-            <TableColumn fx:id="data_pagamento_despesa" prefWidth="150.0" text="Data de Pagamento" />
-            <TableColumn fx:id="beneficiario" minWidth="0.0" prefWidth="250.0" text="Beneficiário" />
+          <TableColumn id="tbclnNome" fx:id="nome_despesa" prefWidth="250.0" text="Nome" />
+          <TableColumn id="tbclnValor" fx:id="valor_despesa" prefWidth="150.0" text="Valor" />
+            <TableColumn id="tbclnDataVenc" fx:id="data_vencimento_despesa" minWidth="0.0" prefWidth="150.0" text="Data de Vencimento" />
+            <TableColumn id="tbclnDataPag" fx:id="data_pagamento_despesa" prefWidth="150.0" text="Data de Pagamento" />
+            <TableColumn id="tbclnBene" fx:id="beneficiario" minWidth="0.0" prefWidth="250.0" text="Beneficiário" />
         </columns>
       </TableView>
       <SplitMenuButton fx:id="spmbFiltro" layoutX="131.0" layoutY="240.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="149.0">

@@ -352,12 +352,6 @@ public class ControllerMenuPrincipal implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        Scene scene = btnDespesas.getScene();
-        if (scene != null) {
-            scene.getStylesheets().add(getClass().getResource("/View/CSS/caixa.css").toExternalForm());
-        }
-        
         this.caixa = caixaDAO.buscarCaixaAberto();
         
         configurarTabela();
@@ -382,7 +376,7 @@ public class ControllerMenuPrincipal implements Initializable {
             tbclnValor.setCellValueFactory(new PropertyValueFactory<>("valor_item_caixa"));
             tbclnOperacao.setCellValueFactory(new PropertyValueFactory<>("tipo_operacao"));
         
-            alinharTextoNaColuna(tbclnData, "CENTER-RIGHT");
+            alinharTextoNaColuna(tbclnData, "CENTER");
             alinharTextoNaColuna(tbclnDescricao, "CENTER-LEFT");
             alinharTextoNaColuna(tbclnValor, "CENTER-RIGHT");
             alinharTextoNaColuna(tbclnOperacao, "CENTER");
@@ -436,7 +430,7 @@ public class ControllerMenuPrincipal implements Initializable {
         alinharTextoNaColuna(tbclnBeneficiario, "CENTER-LEFT");
         alinharTextoNaColuna(tbclnNome, "CENTER-LEFT");
         alinharTextoNaColuna(tbclnValorDespesa, "CENTER-RIGHT");
-        alinharTextoNaColuna(tbclnVencimento, "CENTER-RIGHT");
+        alinharTextoNaColuna(tbclnVencimento, "CENTER");
         
         formatarMoedaNaColuna(tbclnValorDespesa);
         
@@ -504,7 +498,7 @@ public class ControllerMenuPrincipal implements Initializable {
                         } else {
                             setText(item.toString());
                         }
-                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                        setStyle("-fx-alignment: CENTER;"); // Alinha o texto à direita
                     }
                 }
             };

@@ -26,6 +26,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,13 +48,13 @@ public class ControllerCliente implements Initializable {
     private TableColumn<Cliente, String> telefone = new TableColumn<>("Telefone");
 
     @FXML
-    private TableColumn<Cliente, Void> editarColuna = new TableColumn<>("Editar");
+    private TableColumn<Cliente, Void> editarColuna = new TableColumn<>("");
     
     @FXML
-    private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("Financeiro");
+    private TableColumn<Cliente, Void> financaColuna = new TableColumn<>("");
     
     @FXML
-    private TableColumn<Cliente,Boolean> situacaoColuna = new TableColumn<>("Situação");
+    private TableColumn<Cliente,Boolean> situacaoColuna = new TableColumn<>("");
 
     @FXML
     private SplitMenuButton spmbFiltro;
@@ -81,8 +82,8 @@ public class ControllerCliente implements Initializable {
         telefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 
         alinharTextoNaColuna(nome_cliente, "CENTER-LEFT");
-        alinharTextoNaColuna(cpf, "CENTER-RIGHT");
-        alinharTextoNaColuna(telefone, "CENTER-RIGHT");
+        alinharTextoNaColuna(cpf, "CENTER-LEFT");
+        alinharTextoNaColuna(telefone, "CENTER-LEFT");
 
         adicionarBotoesTabela();
         atualizarListaClientes();
@@ -200,7 +201,7 @@ public class ControllerCliente implements Initializable {
         boolean hasParcelasEmAberto = clienteDAO.clientePorNomeTemParcelasEmAberto(cliente.getNome_cliente());
         return new SimpleBooleanProperty(hasParcelasEmAberto);
         });
-
+        
         situacaoColuna.setCellFactory(col -> new TableCell<Cliente, Boolean>() {
             private final ImageView ivOK = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/ok.png")));
             private final ImageView ivNOTOK = new ImageView(new Image(getClass().getResourceAsStream("/View/Imagens/Icons/notok.png")));
@@ -214,6 +215,7 @@ public class ControllerCliente implements Initializable {
                 if (hasParcelasEmAberto) {
                     ivNOTOK.setFitHeight(16);
                     ivNOTOK.setFitWidth(16);
+                    
                     setGraphic(ivNOTOK);
                 } else {
                     ivOK.setFitHeight(16);

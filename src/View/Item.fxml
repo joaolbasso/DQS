@@ -34,11 +34,11 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TableView fx:id="tbvwItens" layoutX="198.0" layoutY="307.0" prefHeight="479.0" prefWidth="925.0">
+      <TableView id="tbvwItens" fx:id="tbvwItens" layoutX="198.0" layoutY="307.0" prefHeight="479.0" prefWidth="925.0">
          <columns>
-            <TableColumn fx:id="nome_item" prefWidth="450.0" text="Nome" />
-            <TableColumn fx:id="valor_item" minWidth="0.0" prefWidth="150.0" text="Valor" />
-            <TableColumn fx:id="tipo_item" prefWidth="50.0" text="Tipo" />
+            <TableColumn id="clnNome" fx:id="nome_item" prefWidth="450.0" text="Nome" />
+            <TableColumn id="clnValor" fx:id="valor_item" minWidth="0.0" prefWidth="150.0" text="Valor" />
+            <TableColumn id="clnTipo" fx:id="tipo_item" prefWidth="50.0" text="Tipo" />
          </columns>
       </TableView>
       <SplitMenuButton fx:id="spmbFiltro" layoutX="141.0" layoutY="250.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="120.0">

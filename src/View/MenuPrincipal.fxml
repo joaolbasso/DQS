@@ -78,10 +78,10 @@
       <Button fx:id="btnFecharCaixa" layoutX="706.0" layoutY="50.0" mnemonicParsing="false" onAction="#fecharCaixa" prefHeight="30.0" prefWidth="126.0" text="Fechar Caixa" />
       <TableView id="tbvwCaixa" fx:id="tbvwItensCaixa" layoutX="488.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="222.0" prefWidth="539.0">
          <columns>
-            <TableColumn id="tbclnItem" fx:id="tbclnDescricao" prefWidth="220.0" text="Item/Itens" />
-            <TableColumn id="tbclnValorItem" fx:id="tbclnValor" prefWidth="106.0" text="Valor do Item" />
-            <TableColumn id="tbclnOperacao" fx:id="tbclnOperacao" minWidth="0.0" prefWidth="99.0" text="Operação" />
-            <TableColumn id="tbclnDatadoItem" fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" text="Data do Item" />
+            <TableColumn id="tbclnItem" fx:id="tbclnDescricao" prefWidth="220.0" styleClass="esquerda" text="Item/Itens" />
+            <TableColumn id="tbclnValorItem" fx:id="tbclnValor" prefWidth="106.0" styleClass="direita" text="Valor do Item" />
+            <TableColumn id="tbclnOperacao" fx:id="tbclnOperacao" minWidth="0.0" prefWidth="99.0" styleClass="centro" text="Operação" />
+            <TableColumn id="tbclnDatadoItem" fx:id="tbclnData" minWidth="0.0" prefWidth="113.0" styleClass="centro" text="Data do Item" />
          </columns>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -122,12 +122,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvwDespesas" layoutX="488.0" layoutY="416.0" prefHeight="222.0" prefWidth="539.0">
+      <TableView id="tbvwDespesas" fx:id="tbvwDespesas" layoutX="488.0" layoutY="416.0" prefHeight="222.0" prefWidth="539.0">
          <columns>
-            <TableColumn id="tbclnNome" fx:id="tbclnNome" prefWidth="181.0" text="Nome" />
-            <TableColumn fx:id="tbclnBeneficiario" minWidth="0.0" prefWidth="163.0" text="Beneficiario" />
-            <TableColumn fx:id="tbclnValorDespesa" prefWidth="85.0" text="Valor" />
-            <TableColumn fx:id="tbclnVencimento" minWidth="0.0" prefWidth="140.0" text="Data de Vencimento" />
+            <TableColumn id="tbclnNome" fx:id="tbclnNome" prefWidth="181.0" styleClass="esquerda" text="Nome" />
+            <TableColumn id="tbclnBene" fx:id="tbclnBeneficiario" minWidth="0.0" prefWidth="163.0" styleClass="esquerda" text="Beneficiario" />
+            <TableColumn id="tbclnValorDespesa" fx:id="tbclnValorDespesa" prefWidth="85.0" styleClass="direita" text="Valor" />
+            <TableColumn id="tbclnDataVenc" fx:id="tbclnVencimento" minWidth="0.0" prefWidth="140.0" styleClass="centro" text="Data de Vencimento" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -11,60 +11,60 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="1233.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerFinancaCliente">
+<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerFinancaCliente">
     <stylesheets>
         <URL value="@/View/CSS/financacliente.css" />
     </stylesheets>
    <children>
-      <Label layoutX="542.0" layoutY="23.0" prefHeight="90.0" prefWidth="237.0" text="Finanças">
+      <Label layoutX="396.0" layoutY="27.0" prefHeight="90.0" prefWidth="237.0" text="Finanças">
          <font>
             <Font size="62.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvwParcelas" layoutX="42.0" layoutY="312.0" prefHeight="476.0" prefWidth="1150.0">
+      <TableView id="tbvwFinanca" fx:id="tbvwParcelas" layoutX="115.0" layoutY="288.0" prefHeight="422.0" prefWidth="799.0">
          <columns>
-            <TableColumn fx:id="numero_parcela" prefWidth="93.0" text="Nº Parcela" />
-            <TableColumn fx:id="data_vencimento" prefWidth="174.0" text="Data de Vencimento" />
-            <TableColumn fx:id="valor_parcela" minWidth="0.0" prefWidth="189.0" text="Valor Parcela" />
-            <TableColumn fx:id="condicao" minWidth="0.0" prefWidth="208.0" text="Condição" />
+            <TableColumn id="clnNParc" fx:id="numero_parcela" prefWidth="93.0" text="Nº Parcela" />
+            <TableColumn id="clnValorParc" fx:id="valor_parcela" minWidth="0.0" prefWidth="189.0" text="Valor Parcela" />
+            <TableColumn id="clnData" fx:id="data_vencimento" prefWidth="174.0" text="Data de Vencimento" />
+            <TableColumn id="clnCond" fx:id="condicao" minWidth="0.0" prefWidth="208.0" text="Condição" />
          </columns>
       </TableView>
-      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="43.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="72.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagens/Icons/voltarIcon.png" />
          </image>
       </ImageView>
-      <Button accessibleHelp="Voltar ao Menu Principal" accessibleRoleDescription="Voltar ao Menu Principal" accessibleText="Voltar ao Menu Principal" layoutX="43.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
+      <Button accessibleHelp="Voltar ao Menu Principal" accessibleRoleDescription="Voltar ao Menu Principal" accessibleText="Voltar ao Menu Principal" layoutX="72.0" layoutY="51.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#voltar" opacity="0.0" prefHeight="43.0" prefWidth="42.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="nome_cliente" layoutX="134.0" layoutY="113.0" prefHeight="53.0" prefWidth="489.0">
+      <Label fx:id="nome_cliente" layoutX="207.0" layoutY="117.0" prefHeight="53.0" prefWidth="489.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="cpf_cliente" layoutX="134.0" layoutY="166.0" prefHeight="53.0" prefWidth="489.0">
+      <Label fx:id="cpf_cliente" layoutX="207.0" layoutY="170.0" prefHeight="53.0" prefWidth="489.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="telefone_cliente" layoutX="134.0" layoutY="219.0" prefHeight="53.0" prefWidth="489.0">
+      <Label fx:id="telefone_cliente" layoutX="207.0" layoutY="223.0" prefHeight="53.0" prefWidth="489.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="nome_cliente1" layoutX="42.0" layoutY="113.0" prefHeight="53.0" prefWidth="78.0" text="Cliente:">
+      <Label fx:id="nome_cliente1" layoutX="115.0" layoutY="117.0" prefHeight="53.0" prefWidth="78.0" text="Cliente:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="cpf_cliente1" layoutX="42.0" layoutY="166.0" prefHeight="53.0" prefWidth="43.0" text="CPF:">
+      <Label fx:id="cpf_cliente1" layoutX="115.0" layoutY="170.0" prefHeight="53.0" prefWidth="43.0" text="CPF:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="telefone_cliente1" layoutX="42.0" layoutY="219.0" prefHeight="53.0" prefWidth="92.0" text="Telefone:">
+      <Label fx:id="telefone_cliente1" layoutX="115.0" layoutY="223.0" prefHeight="53.0" prefWidth="92.0" text="Telefone:">
          <font>
             <Font size="20.0" />
          </font>

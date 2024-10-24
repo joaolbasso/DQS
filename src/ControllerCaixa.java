@@ -373,6 +373,7 @@ public void adicionarItemAVenda(ActionEvent event) throws IOException {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
+        
         Tooltip hintCadastrarCliente = new Tooltip("Cadastrar Novo Cliente");
         btnCadastrarCliente.setTooltip(hintCadastrarCliente);
         

@@ -102,11 +102,11 @@
                </font>
             </TextField>
             <Spinner fx:id="spnrNumeroParcelas" layoutX="313.0" layoutY="211.0" prefHeight="35.0" prefWidth="62.0" />
-            <TableView fx:id="tbvwParcelas" layoutX="75.0" layoutY="252.0" prefHeight="181.0" prefWidth="267.0">
+            <TableView id="tbvwParcela" fx:id="tbvwParcelas" layoutX="75.0" layoutY="252.0" prefHeight="181.0" prefWidth="267.0">
               <columns>
-                <TableColumn fx:id="tbclnParcelaN" prefWidth="77.0" text="Parcela nº" />
+                <TableColumn id="clnNParcela" fx:id="tbclnParcelaN" prefWidth="77.0" text="Parcela nº" />
                   <TableColumn fx:id="tbclnVencimento" prefWidth="124.0" text="Vencimento" />
-                <TableColumn fx:id="tbclnValor" minWidth="0.0" prefWidth="99.0" text="Valor" />
+                <TableColumn id="clnValor" fx:id="tbclnValor" minWidth="0.0" prefWidth="99.0" text="Valor" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

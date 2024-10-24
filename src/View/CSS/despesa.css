@@ -1,16 +1,19 @@
-/*
- * Empty Stylesheet file.
- */
-
-.mainFxmlClass {
-
+#tbvwDespesas .column-header#tbclnNome .label {
+   -fx-alignment: CENTER_LEFT;
 }
 
-.right-aligned {
-    -fx-alignment: CENTER_RIGHT;
+#tbvwDespesas .column-header#tbclnValor .label {
+   -fx-alignment: CENTER_RIGHT;
 }
 
-.left-aligned {
-    -fx-alignment: CENTER_LEFT;
+#tbvwDespesas .column-header#tbclnDataVenc .label {
+   -fx-alignment: CENTER;
 }
 
+#tbvwDespesas .column-header#tbclnDataPag .label {
+   -fx-alignment: CENTER;
+}
+
+#tbvwDespesas .column-header#tbclnBene .label {
+   -fx-alignment: CENTER_LEFT;
+}
