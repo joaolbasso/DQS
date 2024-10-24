@@ -79,8 +79,8 @@ public class ControllerFinancaCliente implements Initializable {
         condicao.setCellValueFactory(new PropertyValueFactory<>("condicao"));
         
         alinharTextoNaColuna(condicao, "CENTER-LEFT");
-        alinharTextoNaColuna(numero_parcela, "CENTER-LEFT");
-        alinharTextoNaColuna(data_vencimento, "CENTER-RIGHT");
+        alinharTextoNaColuna(numero_parcela, "CENTER");
+        alinharTextoNaColuna(data_vencimento, "CENTER");
         alinharTextoNaColuna(valor_parcela, "CENTER-RIGHT");
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -221,7 +221,7 @@ public class ControllerFinancaCliente implements Initializable {
                         } else {
                             setText(item.toString());
                         }
-                        setStyle("-fx-alignment: CENTER-RIGHT;"); // Alinha o texto à direita
+                        setStyle("-fx-alignment: CENTER;"); // Alinha o texto à direita
                     }
                 }
             };

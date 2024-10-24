@@ -52,14 +52,14 @@
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <Pane fx:id="paneAVista" layoutX="294.0" layoutY="171.0" prefHeight="163.0" prefWidth="360.0">
+      <Pane id="pnVista" fx:id="paneAVista" layoutX="294.0" layoutY="169.0" prefHeight="167.0" prefWidth="360.0">
          <children>
             <TextField fx:id="txtfldValorRecebido" alignment="CENTER_RIGHT" layoutX="223.0" layoutY="103.0" prefHeight="35.0" prefWidth="117.0">
                <font>
                   <Font size="16.0" />
                </font>
             </TextField>
-            <Label layoutX="89.0" layoutY="-1.0" prefHeight="30.0" prefWidth="183.0" text="Pagamento a Vista">
+            <Label layoutX="89.0" layoutY="-1.0" prefHeight="35.0" prefWidth="183.0" text="Pagamento a Vista">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -82,7 +82,7 @@
          </children>
       </Pane>
       <ComboBox fx:id="cmbboxMetodoPagamento" layoutX="500.0" layoutY="601.0" prefHeight="35.0" prefWidth="143.0" />
-      <Pane fx:id="paneAPrazo" layoutX="254.0" layoutY="161.0" prefHeight="438.0" prefWidth="406.0">
+      <Pane id="pnPrazo" fx:id="paneAPrazo" layoutX="254.0" layoutY="161.0" prefHeight="438.0" prefWidth="406.0">
          <children>
             <Label fx:id="lblValorVenda_dentro_Aprazo" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="265.0" layoutY="93.0" prefHeight="30.0" prefWidth="110.0" text="R$00,00">
                <font>
@@ -132,7 +132,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="105.0" layoutY="6.0" prefHeight="30.0" prefWidth="183.0" text="Pagamento a Prazo">
+            <Label layoutX="128.0" layoutY="12.0" prefHeight="30.0" prefWidth="183.0" text="Pagamento a Prazo">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

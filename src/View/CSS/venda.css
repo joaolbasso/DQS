@@ -5,3 +5,13 @@
 #tbvwParcela .column-header#clnValor .label {
     -fx-alignment: CENTER_RIGHT;
 }
+
+#pnVista {
+    -fx-border-color: black;
+    -fx-border-radius: 6px;
+}
+
+#pnPrazo {
+    -fx-border-color: black;
+    -fx-border-radius: 6px;
+}
